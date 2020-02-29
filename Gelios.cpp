@@ -40,7 +40,6 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 		Application->MainFormOnTaskBar = true;
 		Application->CreateForm(__classid(TfrmMain), &frmMain);
 		Application->CreateForm(__classid(Topt_sadacha), &opt_sadacha);
-		Application->CreateForm(__classid(TForm1), &Form1);
 		Application->Run();
 	}
 	catch (Exception &exception)

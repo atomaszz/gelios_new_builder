@@ -143,11 +143,11 @@ int GLBOzenk(int Param1, int Param2)
 
 void TfrmMain::InitPieModule()
 {
-   String S = "Œ¯Ë·Í‡ Á‡„ÛÁÍË ÏÓ‰ÛÎˇ œ–ŒÀŒ√ ÒËÒÚÂÏ˚!\r\n";
-   S = S + "¡ÂÁ ‰‡ÌÌÓÈ ÙÛÌÍˆËË ÛÒÎÓ‚Ëˇ ÔÂ‰ËÍ‡ÚÓ‚ “‘≈ ‚ Á‡‰‡˜‡ı ÓÔÚËÏËÁ‡ˆËË ·Û‰ÛÚ Ë„ÌÓËÓ‚‡Ú¸Òˇ!";
+   String S = "–û—à–∏–±–∫–∞ –∑–∞–≥—Ä—É–∑–∫–∏ –º–æ–¥—É–ª—è –ü–†–û–õ–û–ì —Å–∏—Å—Ç–µ–º—ã!\r\n";
+   S = S + "–ë–µ–∑ –¥–∞–Ω–Ω–æ–π —Ñ—É–Ω–∫—Ü–∏–∏ —É—Å–ª–æ–≤–∏—è –ø—Ä–µ–¥–∏–∫–∞—Ç–æ–≤ –¢–§–ï –≤ –∑–∞–¥–∞—á–∞—Ö –æ–ø—Ç–∏–º–∏–∑–∞—Ü–∏–∏ –±—É–¥—É—Ç –∏–≥–Ω–æ—Ä–∏—Ä–æ–≤–∞—Ç—å—Å—è!";
    gPieModule = new TPieModule;
    if (!gPieModule->CheckModule())
-     MessageBox(0, S.c_str(), _T("œÂ‰ÛÔÂÊ‰ÂÌËÂ"), MB_ICONWARNING);
+     MessageBox(0, S.c_str(), _T("–ü—Ä–µ–¥—É–ø—Ä–µ–∂–¥–µ–Ω–∏–µ"), MB_ICONWARNING);
 }
 
 
@@ -293,7 +293,7 @@ void  TfrmMain::CreateSectionBar()
    SectionBar->ApplyDown = true;
    SectionBar->ShowHint = true;
    SectionBar->Sections->Add();
-   SectionBar->Sections->Items[0]->Caption = "ŒÒÌÓ‚Ì˚Â";
+   SectionBar->Sections->Items[0]->Caption = "–û—Å–Ω–æ–≤–Ω—ã–µ";
    SectionBar->Sections->Items[0]->Buttons->Add();
    SectionBar->Sections->Items[0]->Buttons->Add();
    SectionBar->Sections->Items[0]->Buttons->Add();
@@ -307,56 +307,56 @@ void  TfrmMain::CreateSectionBar()
    SectionBar->Sections->Items[0]->Buttons->Add();
    SectionBar->Sections->Items[0]->Buttons->Add();
 
-   SectionBar->Sections->Items[0]->Buttons->Items[0]->Caption = "–‡·. ÓÔÂˆËˇ";
-   SectionBar->Sections->Items[0]->Buttons->Items[0]->Hint = "–‡·Ó˜‡ˇ ÓÔÂ‡ˆËˇ";
+   SectionBar->Sections->Items[0]->Buttons->Items[0]->Caption = "–†–∞–±. –æ–ø–µ—Ä—Ü–∏—è";
+   SectionBar->Sections->Items[0]->Buttons->Items[0]->Hint = "–†–∞–±–æ—á–∞—è –æ–ø–µ—Ä–∞—Ü–∏—è";
    SectionBar->Sections->Items[0]->Buttons->Items[0]->ImageIndex = 0;
 
-   SectionBar->Sections->Items[0]->Buttons->Items[1]->Caption = "œÓÒÎÂ‰. ‡·Ó˜‡ˇ";
-   SectionBar->Sections->Items[0]->Buttons->Items[1]->Hint = "œÓÒÎÂ‰Ó‚‡ÚÂÎ¸Ì‡ˇ ‡·Ó˜‡ˇ ÓÔÂ‡ˆËˇ";
+   SectionBar->Sections->Items[0]->Buttons->Items[1]->Caption = "–ü–æ—Å–ª–µ–¥. —Ä–∞–±–æ—á–∞—è";
+   SectionBar->Sections->Items[0]->Buttons->Items[1]->Hint = "–ü–æ—Å–ª–µ–¥–æ–≤–∞—Ç–µ–ª—å–Ω–∞—è —Ä–∞–±–æ—á–∞—è –æ–ø–µ—Ä–∞—Ü–∏—è";
    SectionBar->Sections->Items[0]->Buttons->Items[1]->ImageIndex = 11;
 
-   SectionBar->Sections->Items[0]->Buttons->Items[2]->Caption = "œ‡‡Î. ‡·Ó˜‡ˇ »";
-   SectionBar->Sections->Items[0]->Buttons->Items[2]->Hint = "œ‡‡ÎÎÂÎ¸Ì‡ˇ ‡·Ó˜‡ˇ ÓÔÂ‡ˆËˇ »";
+   SectionBar->Sections->Items[0]->Buttons->Items[2]->Caption = "–ü–∞—Ä–∞–ª. —Ä–∞–±–æ—á–∞—è –ò";
+   SectionBar->Sections->Items[0]->Buttons->Items[2]->Hint = "–ü–∞—Ä–∞–ª–ª–µ–ª—å–Ω–∞—è —Ä–∞–±–æ—á–∞—è –æ–ø–µ—Ä–∞—Ü–∏—è –ò";
    SectionBar->Sections->Items[0]->Buttons->Items[2]->ImageIndex = 1;
 
-   SectionBar->Sections->Items[0]->Buttons->Items[3]->Caption = "œ‡‡Î. ‡·Ó˜‡ˇ »À»";
-   SectionBar->Sections->Items[0]->Buttons->Items[3]->Hint = "œ‡‡ÎÎÂÎ¸Ì‡ˇ ‡·Ó˜‡ˇ ÓÔÂ‡ˆËˇ »À»";
+   SectionBar->Sections->Items[0]->Buttons->Items[3]->Caption = "–ü–∞—Ä–∞–ª. —Ä–∞–±–æ—á–∞—è –ò–õ–ò";
+   SectionBar->Sections->Items[0]->Buttons->Items[3]->Hint = "–ü–∞—Ä–∞–ª–ª–µ–ª—å–Ω–∞—è —Ä–∞–±–æ—á–∞—è –æ–ø–µ—Ä–∞—Ü–∏—è –ò–õ–ò";
    SectionBar->Sections->Items[0]->Buttons->Items[3]->ImageIndex = 2;
 
 
    //   SectionBar->Sections->Items[0]->Buttons->Items[2]->Enabled = false;
 
-   SectionBar->Sections->Items[0]->Buttons->Items[4]->Caption = " ÓÌÚÓÎ¸ ‡·-ÚË";
-   SectionBar->Sections->Items[0]->Buttons->Items[4]->Hint = " ÓÌÚÓÎ¸ ‡·ÓÚÓÒÔÓÒÓ·ÌÓÒÚË";
+   SectionBar->Sections->Items[0]->Buttons->Items[4]->Caption = "–ö–æ–Ω—Ç—Ä–æ–ª—å —Ä–∞–±-—Ç–∏";
+   SectionBar->Sections->Items[0]->Buttons->Items[4]->Hint = "–ö–æ–Ω—Ç—Ä–æ–ª—å —Ä–∞–±–æ—Ç–æ—Å–ø–æ—Å–æ–±–Ω–æ—Å—Ç–∏";
    SectionBar->Sections->Items[0]->Buttons->Items[4]->ImageIndex = 3;
 
-   SectionBar->Sections->Items[0]->Buttons->Items[5]->Caption = "‘ÛÌÍ-˚È ÍÓÌÚÓÎ¸";
-   SectionBar->Sections->Items[0]->Buttons->Items[5]->Hint = "‘ÛÌÍˆËÓÌ‡Î¸Ì˚È ÍÓÌÚÓÎ¸";
+   SectionBar->Sections->Items[0]->Buttons->Items[5]->Caption = "–§—É–Ω–∫-—ã–π –∫–æ–Ω—Ç—Ä–æ–ª—å";
+   SectionBar->Sections->Items[0]->Buttons->Items[5]->Hint = "–§—É–Ω–∫—Ü–∏–æ–Ω–∞–ª—å–Ω—ã–π –∫–æ–Ω—Ç—Ä–æ–ª—å";
    SectionBar->Sections->Items[0]->Buttons->Items[5]->ImageIndex = 4;
  //  SectionBar->Sections->Items[0]->Buttons->Items[4]->Enabled = false;
 
-   SectionBar->Sections->Items[0]->Buttons->Items[6]->Caption = "–‡Á‚ËÎÍ‡";
-   SectionBar->Sections->Items[0]->Buttons->Items[6]->Hint = "–‡Á‚ËÎÍ‡";
+   SectionBar->Sections->Items[0]->Buttons->Items[6]->Caption = "–†–∞–∑–≤–∏–ª–∫–∞";
+   SectionBar->Sections->Items[0]->Buttons->Items[6]->Hint = "–†–∞–∑–≤–∏–ª–∫–∞";
    SectionBar->Sections->Items[0]->Buttons->Items[6]->ImageIndex = 5;
 
-   SectionBar->Sections->Items[0]->Buttons->Items[7]->Caption = "œÓ‚ÂÍ‡ ÛÒÎÓ‚Ëˇ (Í..)";
-   SectionBar->Sections->Items[0]->Buttons->Items[7]->Hint = "œÓ‚ÂÍ‡ ÛÒÎÓ‚Ëˇ (ÍÓÌÚÓÎ¸ ‡·ÓÚÓÒÔÓÒÓ·ÌÓÒÚË)";
+   SectionBar->Sections->Items[0]->Buttons->Items[7]->Caption = "–ü—Ä–æ–≤–µ—Ä–∫–∞ —É—Å–ª–æ–≤–∏—è (–∫.—Ä.)";
+   SectionBar->Sections->Items[0]->Buttons->Items[7]->Hint = "–ü—Ä–æ–≤–µ—Ä–∫–∞ —É—Å–ª–æ–≤–∏—è (–∫–æ–Ω—Ç—Ä–æ–ª—å —Ä–∞–±–æ—Ç–æ—Å–ø–æ—Å–æ–±–Ω–æ—Å—Ç–∏)";
    SectionBar->Sections->Items[0]->Buttons->Items[7]->ImageIndex = 6;
 
-   SectionBar->Sections->Items[0]->Buttons->Items[8]->Caption = "÷ËÍÎ WHILE DO";
-   SectionBar->Sections->Items[0]->Buttons->Items[8]->Hint = "÷ËÍÎ WHILE DO";
+   SectionBar->Sections->Items[0]->Buttons->Items[8]->Caption = "–¶–∏–∫–ª WHILE DO";
+   SectionBar->Sections->Items[0]->Buttons->Items[8]->Hint = "–¶–∏–∫–ª WHILE DO";
    SectionBar->Sections->Items[0]->Buttons->Items[8]->ImageIndex = 7;
 
-   SectionBar->Sections->Items[0]->Buttons->Items[9]->Caption = "÷ËÍÎ DO WHILE DO";
-   SectionBar->Sections->Items[0]->Buttons->Items[9]->Hint = "÷ËÍÎ DO WHILE DO";
+   SectionBar->Sections->Items[0]->Buttons->Items[9]->Caption = "–¶–∏–∫–ª DO WHILE DO";
+   SectionBar->Sections->Items[0]->Buttons->Items[9]->Hint = "–¶–∏–∫–ª DO WHILE DO";
    SectionBar->Sections->Items[0]->Buttons->Items[9]->ImageIndex = 8;
 
-   SectionBar->Sections->Items[0]->Buttons->Items[10]->Caption = "÷ËÍÎ DO WHILE DO (Ò ‘ )";
-   SectionBar->Sections->Items[0]->Buttons->Items[10]->Hint = "÷ËÍÎ DO WHILE DO Ò ÙÛÌÍˆ. ÍÓÌÚÓÎÂÏ";
+   SectionBar->Sections->Items[0]->Buttons->Items[10]->Caption = "–¶–∏–∫–ª DO WHILE DO (—Å –§–ö)";
+   SectionBar->Sections->Items[0]->Buttons->Items[10]->Hint = "–¶–∏–∫–ª DO WHILE DO —Å —Ñ—É–Ω–∫—Ü. –∫–æ–Ω—Ç—Ä–æ–ª–µ–º";
    SectionBar->Sections->Items[0]->Buttons->Items[10]->ImageIndex = 9;
 
-   SectionBar->Sections->Items[0]->Buttons->Items[11]->Caption = "œÓ‚ÂÍ‡ ÛÒÎÓ‚Ëˇ";
-   SectionBar->Sections->Items[0]->Buttons->Items[11]->Hint = "œÓ‚ÂÍ‡ ÛÒÎÓ‚Ëˇ";
+   SectionBar->Sections->Items[0]->Buttons->Items[11]->Caption = "–ü—Ä–æ–≤–µ—Ä–∫–∞ —É—Å–ª–æ–≤–∏—è";
+   SectionBar->Sections->Items[0]->Buttons->Items[11]->Hint = "–ü—Ä–æ–≤–µ—Ä–∫–∞ —É—Å–ª–æ–≤–∏—è";
    SectionBar->Sections->Items[0]->Buttons->Items[11]->ImageIndex = 10;
    SectionBar->RightMouseDown = GlsBarRigthDown;
    SectionBar->OnButtonApplyDown = GlsBarApplyDown;
@@ -485,7 +485,7 @@ void TfrmMain::ApplySettings()
    Grid->FonColor = f_FonColor;
    Grid->PixelColor = f_PixelColor;
    Grid->WSPenWidth = f_WSPenWidth;
-   f_StepPixel = Grid->StepPixelsGrid; //„Ë‰ ÏÓÊÂÚ Ò‡Ï ÔÂÂÓÔÂ‰ÂÎËÚ¸ ‡ÒÚÓˇÌËÂ Ï‰ ÔËÍÒÂÎ‡ÏË
+   f_StepPixel = Grid->StepPixelsGrid; //–≥—Ä–∏–¥ –º–æ–∂–µ—Ç —Å–∞–º –ø–µ—Ä–µ–æ–ø—Ä–µ–¥–µ–ª–∏—Ç—å —Ä–∞—Å—Ç–æ—è–Ω–∏–µ –º–¥ –ø–∏–∫—Å–µ–ª–∞–º–∏
    Grid->LineColor = f_LineColor;
    Grid->BrushTFE = f_BrushTFE;
    Grid->BrushColor = f_BrushColor;
@@ -735,8 +735,8 @@ void __fastcall TfrmMain::sbXChange(TObject *Sender)
    ScrollDC(pbMain->Canvas->Handle, -X_Ofs, 0, NULL, NULL, NULL, NULL);
    InvalidateRect(pnlMain->Handle, &R, false);
    UpdateWindow(pnlMain->Handle);
-   //Application->ProcessMessages();//Ó˜ÂÌ¸ ‚‡ÊÌ‡ˇ ‚Â˘¸, ÌÂÓ·ıÓ‰ËÏ‡ ‰Îˇ ÔÓ„ÓÌÍË ÓÚËÒÓ‚ÍË
-   //Ë ÍÓ„‰‡ ÌÂÓ·ıÓ‰ËÏÓ Á‡‚ÂÒËÚ¸ ÔÓ„Û
+   //Application->ProcessMessages();//–æ—á–µ–Ω—å –≤–∞–∂–Ω–∞—è –≤–µ—â—å, –Ω–µ–æ–±—Ö–æ–¥–∏–º–∞ –¥–ª—è –ø—Ä–æ–≥–æ–Ω–∫–∏ –æ—Ç—Ä–∏—Å–æ–≤–∫–∏
+   //–∏ –∫–æ–≥–¥–∞ –Ω–µ–æ–±—Ö–æ–¥–∏–º–æ –∑–∞–≤–µ—Å–∏—Ç—å –ø—Ä–æ–≥—É
 //   TimerMain->Enabled = false;
 //   TimerMain->Enabled = true;
 }
@@ -782,7 +782,7 @@ TBaseWorkShape* TfrmMain::FindNextWorkShape(TBaseWorkShape *W)
 
 
 //---------------------------------------------------------------------------
-//Œ·‡·ÓÚÍ‡ ÒÓÓ·˘ÂÌËÈ
+//–û–±—Ä–∞–±–æ—Ç–∫–∞ —Å–æ–æ–±—â–µ–Ω–∏–π
 //------------------------------------------------------------------------
 void __fastcall TfrmMain::M_gd_gettypshape(TMessage& Msg)
 {
@@ -923,11 +923,11 @@ void __fastcall TfrmMain::M_gd_setalternate(TMessage& Msg)
   {
     if ( (m_s != m_e) && (m_e->Tag == 0))
       m_e = FindPriorWorkShape(m_e);
-    Rep = "—ÓÁ‰‡Ú¸ ‡Î¸ÚÂÌ‡ÚË‚˚ ÏÂÊ‰Û “‘— "+IntToStr(m_s->BlockId) + " Ë “‘— " + IntToStr(m_e->BlockId) + " ?";
+    Rep = "–°–æ–∑–¥–∞—Ç—å –∞–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤—ã –º–µ–∂–¥—É –¢–§–° "+IntToStr(m_s->BlockId) + " –∏ –¢–§–° " + IntToStr(m_e->BlockId) + " ?";
 	m_IdAlt = f_AlternateController->IsExistsAlternate(m_s, m_e);
 	if ( m_IdAlt == -1 )
     {
-      if (Application->MessageBox(Rep.c_str(), _T("√›— »ÌÚÂÎÎÂÍÚ-3"), MB_YESNO	) == ID_YES)
+      if (Application->MessageBox(Rep.c_str(), _T("–ì–≠–° –ò–Ω—Ç–µ–ª–ª–µ–∫—Ç-3"), MB_YESNO	) == ID_YES)
       {
          Operation = 0;
          CreateAlternative(m_s, m_e);
@@ -972,8 +972,8 @@ void __fastcall TfrmMain::M_gd_deletetfslist(TMessage& Msg)
   {
  //   if ( (m_s != m_e) && (m_e->Tag == 0))
  //     m_e = FindPriorWorkShape(m_e);
-    Rep = "”‰‡ÎËÚ¸ ·ÎÓÍË ÓÚ “‘— "+IntToStr(m_s->BlockId) + " ‰Ó “‘— " + IntToStr(m_e->BlockId) + " ?";
-    if (Application->MessageBox(Rep.c_str(), _T("√›— »ÌÚÂÎÎÂÍÚ-3"), MB_YESNO	) == ID_YES)
+    Rep = "–£–¥–∞–ª–∏—Ç—å –±–ª–æ–∫–∏ –æ—Ç –¢–§–° "+IntToStr(m_s->BlockId) + " –¥–æ –¢–§–° " + IntToStr(m_e->BlockId) + " ?";
+    if (Application->MessageBox(Rep.c_str(), _T("–ì–≠–° –ò–Ω—Ç–µ–ª–ª–µ–∫—Ç-3"), MB_YESNO	) == ID_YES)
     {
          m_last = m_e->Tag == 1;
          Operation = 0;
@@ -1053,32 +1053,32 @@ void __fastcall TfrmMain::SetOperation(int AValue)
 	  {
 		case 0:
         {
-           if (OldOperation == 1)//·˚Î‡ ‚ÒÚ‡‚Í‡ “‘—
+           if (OldOperation == 1)//–±—ã–ª–∞ –≤—Å—Ç–∞–≤–∫–∞ –¢–§–°
            {
              Grid->Regim = f_Operation;
              Grid->ApplyVisibleFlag(0, false);
            }
-           if (OldOperation == 2)//·˚Î‡ ‚ÒÚ‡‚Í‡ ‡Î¸ÚÂÌ‡ÚË‚
+           if (OldOperation == 2)//–±—ã–ª–∞ –≤—Å—Ç–∞–≤–∫–∞ –∞–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤
            {
              Grid->Regim = f_Operation;
              Grid->ApplyVisibleFlagForAlternative(false);
            }
-           if (OldOperation == 4)//·˚Î‡ ‚ÒÚ‡‚Í‡ ‡Î¸ÚÂÌ‡ÚË‚
+           if (OldOperation == 4)//–±—ã–ª–∞ –≤—Å—Ç–∞–≤–∫–∞ –∞–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤
            {
              Grid->Regim = f_Operation;
              Grid->ApplyVisibleFlagForDeleteTFS(false);
            }
-           if (OldOperation == 5)//·˚Î‡ ‚ÒÚ‡‚Í‡ “‘— ËÁ Ù‡ÈÎ‡
+           if (OldOperation == 5)//–±—ã–ª–∞ –≤—Å—Ç–∞–≤–∫–∞ –¢–§–° –∏–∑ —Ñ–∞–π–ª–∞
            {
              Grid->Regim = f_Operation;
              Grid->ApplyVisibleFlag(0, false);
            }
-           if (OldOperation == 6)//·˚Î‡ ‚ÒÚ‡‚Í‡ ‡Î¸ÚÂÌ‡ÚË‚
+           if (OldOperation == 6)//–±—ã–ª–∞ –≤—Å—Ç–∞–≤–∫–∞ –∞–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤
            {
              Grid->Regim = f_Operation;
              Grid->ApplyVisibleFlagForDeleteTFS(false);
            }
-           if (OldOperation == 7)//·˚Î‡ ‚ÒÚ‡‚Í‡ “‘— ËÁ ·ÛÙÂ‡
+           if (OldOperation == 7)//–±—ã–ª–∞ –≤—Å—Ç–∞–≤–∫–∞ –¢–§–° –∏–∑ –±—É—Ñ–µ—Ä–∞
            {
              Grid->Regim = f_Operation;
              Grid->ApplyVisibleFlag(0, false);
@@ -1452,7 +1452,7 @@ void TfrmMain::PrepareTabs(int ANumActive)
    Item = f_AltSelector->FindFirst(f_IdAlternative, LevelController->ParentShapeID);
    while (Item)
    {
-      S = "¿Î¸ÚÂÌ‡ÚË‚‡ π("+IntToStr(f_IdAlternative)+"/"+ IntToStr(Item->Num)+")";
+      S = "–ê–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤–∞ ‚Ññ("+IntToStr(f_IdAlternative)+"/"+ IntToStr(Item->Num)+")";
       tcMain->Tabs->AddObject(S, reinterpret_cast<TObject*>(Item->Num));
       Item = f_AltSelector->FindNext();
    }
@@ -1635,7 +1635,7 @@ void TfrmMain::MenuAlternateItemCreate(TAlternateItem *AItem, int AX, int AY)
          NewItem->Tag = m_num;
 //         NewItem->Action = acAltShow;
          NewItem->OnClick =  AltShow;
-         NewItem->Caption = "¿Î¸ÚÂÌ‡ÚË‚‡ π"+IntToStr(m_num);
+         NewItem->Caption = "–ê–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤–∞ ‚Ññ"+IntToStr(m_num);
          PmAlternate->Items->Add(NewItem);
          f_MenuController->AddMenu(NewItem);
 	  }
@@ -1647,11 +1647,11 @@ void TfrmMain::MenuAlternateItemCreate(TAlternateItem *AItem, int AX, int AY)
 /*
   TMenuItem *NewItem = new TMenuItem(this);
   if (NewItem){
-  NewItem->Caption = "ÃˇÌ˛";
+  NewItem->Caption = "–ú—è–Ω—é";
   NewItem->Name = "BNM";
  // cnt++;
   NewItem->Tag = cnt;
-  NewItem->OnClick = ManuClick; // ===> ÚÓ ˜ÚÓ ÚÂ·Â Ì‡‰Ó
+  NewItem->OnClick = ManuClick; // ===> —Ç–æ —á—Ç–æ —Ç–µ–±–µ –Ω–∞–¥–æ
   PopupMenu1->Items->Add (NewItem);
   ShowMessage(IntToStr(PopupMenu1->Items->Count));
   }
@@ -1704,8 +1704,8 @@ void TfrmMain::CheckEmptyAlternate(int AId)
 void __fastcall TfrmMain::acNewExecute(TObject *Sender)
 {
    if (MainList->IsEmpty()) return;
-   if (!f_IsDebug && (Application->MessageBox(_T("¬˚ ‰ÂÈÒÚ‚ËÚÂÎ¸ÌÓ ıÓÚËÚÂ Û‰‡ÎËÚ¸ ‚ÒÂ “‘—?"),
-	_T("√›— »ÌÚÂÎÎÂÍÚ-3"), MB_ICONWARNING | MB_YESNO) == ID_NO)) return;
+   if (!f_IsDebug && (Application->MessageBox(_T("–í—ã –¥–µ–π—Å—Ç–≤–∏—Ç–µ–ª—å–Ω–æ —Ö–æ—Ç–∏—Ç–µ —É–¥–∞–ª–∏—Ç—å –≤—Å–µ –¢–§–°?"),
+	_T("–ì–≠–° –ò–Ω—Ç–µ–ª–ª–µ–∫—Ç-3"), MB_ICONWARNING | MB_YESNO) == ID_NO)) return;
    ClearWorkSpace();
 }
 
@@ -1823,7 +1823,7 @@ void __fastcall TfrmMain::acDeleteTFSExecute(TObject *Sender)
    bool fs = (Grid->FirstWorkShape == Grid->SelectedTFS);
 //   if ( MainList->CheckAlternateWS(Grid->SelectedTFS)  > 0 )
 //   {
-//     Application->MessageBox("”‰‡ÎÂÌËÂ ÌÂ ‰ÓÔÛÒÍ‡ÂÚÒˇ!","√ÂÎËÓÒ", NULL);
+//     Application->MessageBox("–£–¥–∞–ª–µ–Ω–∏–µ –Ω–µ –¥–æ–ø—É—Å–∫–∞–µ—Ç—Å—è!","–ì–µ–ª–∏–æ—Å", NULL);
 //     return;
 //   }
    DeleteWorkSahpeWithAlternate(Grid->SelectedTFS);
@@ -1881,7 +1881,7 @@ void TfrmMain::DeleteTFSList(TBaseWorkShape* AFirst, TBaseWorkShape* ALast, bool
    {
     /* if ( MainList->CheckAlternateWS(static_cast<TBaseWorkShape*>(m_l->Items[i]))  > 0 )
      {
-        Application->MessageBox("”‰‡ÎÂÌËÂ ÌÂ ‰ÓÔÛÒÍ‡ÂÚÒˇ!", "√ÂÎËÓÒ", NULL);
+        Application->MessageBox("–£–¥–∞–ª–µ–Ω–∏–µ –Ω–µ –¥–æ–ø—É—Å–∫–∞–µ—Ç—Å—è!", "–ì–µ–ª–∏–æ—Å", NULL);
         delete m_l;
         return;
      }*/
@@ -2269,7 +2269,7 @@ void TfrmMain::DoLoadAlternate(TLoaderTFS* ALoaderTFS, int AParentID, int AParen
    for (int i = 0; i <= ALoaderTFS->AlternateCount - 1; i++)
    {
 	  Item = ALoaderTFS->Alternate[i];
-      Ancestor  = ALoaderTFS->FindAncestorOutBlockID(Item->NodeStartID); //ÔÂ‚˚È ÛÁÂÎ ‚ÒÂ„‰‡ ‰ÓÎÊÂÌ ·˚Ú¸
+      Ancestor  = ALoaderTFS->FindAncestorOutBlockID(Item->NodeStartID); //–ø–µ—Ä–≤—ã–π —É–∑–µ–ª –≤—Å–µ–≥–¥–∞ –¥–æ–ª–∂–µ–Ω –±—ã—Ç—å
       if(Ancestor)
         m_ParentShapeID = Ancestor->IdShapeAncestor;
       else
@@ -2368,13 +2368,13 @@ AnsiString TfrmMain::DoLoadMainListNew(TLoaderTFS* ALoaderTFS, int AParentShapeI
       m_minTfeId = MainItem->MinTFE;
       Alt = ALoaderTFS->FindAlternativeNew(MainItem);
       if (!Alt)
-        return "Œ¯Ë·Í‡ Á‡„ÛÁÍË ‡Î¸ÚÂÌ‡ÚË‚! " + IntToStr(MainItem->Id);
+        return "–û—à–∏–±–∫–∞ –∑–∞–≥—Ä—É–∑–∫–∏ –∞–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤! " + IntToStr(MainItem->Id);
 	  Ancestor  = ALoaderTFS->FindAncestorNew(MainItem);
 	  WS =  DoCreateWorkShape(MainItem->TypeId, m_minTfeId , m_minTfsId,  m_minLineId);
       WS->StartPoint = MainItem->StartPoint;
       WS->BaseStartPoint = MainItem->StartPoint;
 	  WS->Init();
-      //WS->Prepare(); //Û·‡Î 10.12.2006 ÔÓÒÚ‡‚ËÎ ÌËÊÂ
+      //WS->Prepare(); //—É–±—Ä–∞–ª 10.12.2006 –ø–æ—Å—Ç–∞–≤–∏–ª –Ω–∏–∂–µ
 	  m_minLineId = WS->LastLineId;
       ANode = MainList->CreateNode(WS);
       ANode->IdAlternate = Alt->Id;
@@ -2394,10 +2394,10 @@ AnsiString TfrmMain::DoLoadMainListNew(TLoaderTFS* ALoaderTFS, int AParentShapeI
       MainItem->Tag = ANode;
       WS->SetOffsetPosition(MainItem->OffsetX , MainItem->OffsetY );
 	  WS->SetBaseOffsetPosition(MainItem->OffsetX, MainItem->OffsetY);
-	  WS->Prepare(); // ÔÓÒÚ‡‚ËÎ  10.12.2006
+	  WS->Prepare(); // –ø–æ—Å—Ç–∞–≤–∏–ª  10.12.2006
 
       /*
-         Á‡„ÛÁÍ‡ Ô‡‡ÏÂÚË˜ÂÒÍËı ‡Î¸ÚÂÌ‡ÚË‚
+         –∑–∞–≥—Ä—É–∑–∫–∞ –ø–∞—Ä–∞–º–µ—Ç—Ä–∏—á–µ—Å–∫–∏—Ö –∞–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤
       */
       DoLoadParamAlt(WS, MainItem, m_minTfeId);
 
@@ -2424,7 +2424,7 @@ void TfrmMain::DoLoadMainListPrepareLink(TLoaderTFS* ALoaderTFS)
      else
      {
         NPrior = MainList->FindLastNodeToAlternate(ANode->IdAlternate, ANode->NumAlt, ANode->IdParentShape);
-		if (NPrior && (!NPrior->TypeCreate)) //ÌÂ ÔÂ‚˚È ÛÁÂÎ
+		if (NPrior && (!NPrior->TypeCreate)) //–Ω–µ –ø–µ—Ä–≤—ã–π —É–∑–µ–ª
         {
            NPrior->Next = ANode;
            ANode->Prior = NPrior;
@@ -2988,7 +2988,7 @@ void __fastcall TfrmMain::acHelpExecute(TObject *Sender)
    if (ex)
 	 ShowHelp(S, false, f_HelpHideBar);
    else
-	 Application->MessageBox(_T("ÕÂ Ì‡È‰ÂÌ Ù‡ÈÎ ÒÔ‡‚ÍË!"), _T("√›— »ÌÚÂÎÎÂÍÚ-3"), MB_ICONWARNING);
+	 Application->MessageBox(_T("–ù–µ –Ω–∞–π–¥–µ–Ω —Ñ–∞–π–ª —Å–ø—Ä–∞–≤–∫–∏!"), _T("–ì–≠–° –ò–Ω—Ç–µ–ª–ª–µ–∫—Ç-3"), MB_ICONWARNING);
 }
 //---------------------------------------------------------------------------
 
@@ -3206,7 +3206,7 @@ void TfrmMain::ApplyShortCutToActions()
   for (int i = 0; i <= f_ActList->Count - 1; i++)
   {
      AI = f_ActList->Items[i];
-     if ( !SameText(AI->SCut, "[ÌÂÚ]") )
+     if ( !SameText(AI->SCut, "[–Ω–µ—Ç]") )
        AI->Action->ShortCut = MakeShortCut(AI->SCut, AI->Shift, AI->Ctrl, AI->Alt );
      else
        AI->Action->ShortCut = 0;
@@ -3247,7 +3247,7 @@ void TfrmMain::RestoreActions()
 
      S = f_RSettings->GetString("NAME");
      if (S.Length() == 0)
-       S = "[ÌÂÚ]";
+       S = "[–Ω–µ—Ç]";
      AI->SCut = S;
 
      AI->Shift = f_RSettings->GetBool("SHIFT", false);
@@ -3299,7 +3299,7 @@ void __fastcall TfrmMain::acFindDecisionExecute(TObject *Sender)
    String S;
    S = f_Zadacha->Check();
    if ( S.Length() > 0 )
-	 Application->MessageBox(S.c_str(), _T("Œ¯Ë·Í‡"), MB_ICONWARNING);
+	 Application->MessageBox(S.c_str(), _T("–û—à–∏–±–∫–∞"), MB_ICONWARNING);
    else
    {
 	 if ( CreateStartDecision(f_Zadacha, f_TypeParam, opt_sadacha->get_type_metod()) )
@@ -3346,8 +3346,8 @@ void __fastcall TfrmMain::M_gd_copytfslist(TMessage& Msg)
   {
     if ( (m_s != m_e) && (m_e->Tag == 0))
       m_e = FindPriorWorkShape(m_e);
-	String Rep = " ÓÔËÓ‚‡Ú¸ ·ÎÓÍË ÓÚ “‘— "+IntToStr(m_s->BlockId) + " ‰Ó “‘— " + IntToStr(m_e->BlockId) + " ?";
-	Application->MessageBox(Rep.c_str(), _T("√›— »ÌÚÂÎÎÂÍÚ-3"), MB_YESNO);
+	String Rep = "–ö–æ–ø–∏—Ä–æ–≤–∞—Ç—å –±–ª–æ–∫–∏ –æ—Ç –¢–§–° "+IntToStr(m_s->BlockId) + " –¥–æ –¢–§–° " + IntToStr(m_e->BlockId) + " ?";
+	Application->MessageBox(Rep.c_str(), _T("–ì–≠–° –ò–Ω—Ç–µ–ª–ª–µ–∫—Ç-3"), MB_YESNO);
   }
   f_ClipCopyTFS->CopyTfsList(MainList, LevelController->ParentShapeID, m_s, m_e);
 /*      TTreeList* m_TreeList = new TTreeList;
@@ -3534,9 +3534,9 @@ void __fastcall TfrmMain::acMetodSuperPosExecute(TObject *Sender)
 {
    if ( IsOptAnp() )
    {
-	 String S = "»ÒÔÓÎ¸ÁÛÂÚÒˇ ÂÊËÏ ÓÔÚËÏËÁ‡ˆËË ‚ÓÁÏÓÊÌÓ„Ó ¿Õœ.\r\n";
-	 S = S + "»ÁÏÂÌÂÌËÂ ÏÂÚÓ‰‡ ÔÓÒÚÓÂÌËˇ ÒÛÔÂÔÓÁËˆËË ÌÂ ÔÓ‚ÎËˇÂÚ Ì‡ ‡Î„ÓËÚÏ ÔÓËÒÍ‡ Â¯ÂÌËˇ!";
-	 MessageBox(0, S.c_str(), _T("¬ÌËÏ‡ÌËÂ!"), MB_ICONWARNING);
+	 String S = "–ò—Å–ø–æ–ª—å–∑—É–µ—Ç—Å—è —Ä–µ–∂–∏–º –æ–ø—Ç–∏–º–∏–∑–∞—Ü–∏–∏ –≤–æ–∑–º–æ–∂–Ω–æ–≥–æ –ê–ù–ü.\r\n";
+	 S = S + "–ò–∑–º–µ–Ω–µ–Ω–∏–µ –º–µ—Ç–æ–¥–∞ –ø–æ—Å—Ç—Ä–æ–µ–Ω–∏—è —Å—É–ø–µ—Ä–ø–æ–∑–∏—Ü–∏–∏ –Ω–µ –ø–æ–≤–ª–∏—è–µ—Ç –Ω–∞ –∞–ª–≥–æ—Ä–∏—Ç–º –ø–æ–∏—Å–∫–∞ —Ä–µ—à–µ–Ω–∏—è!";
+	 MessageBox(0, S.c_str(), _T("–í–Ω–∏–º–∞–Ω–∏–µ!"), MB_ICONWARNING);
    }
    f_PredicatePath->Init();
    InitTrashCounter();
@@ -3610,7 +3610,7 @@ void __fastcall TfrmMain::acMetodSuperPosUpdate(TObject *Sender)
 void __fastcall TfrmMain::Button1Click(TObject *Sender)
 {
 /*
-  //¬ÌËÏ‡ÌËÂ ƒÎˇ ‰Ó·‡‚ÎÂÌËˇ ÔÓÒÎÂ‰Ó‚‡ÚÂÎ¸ÌÓÈ –Œ ÌÛÊÌÓ ‰‚‡Ê‰˚ ‚˚Á˚‚‡Ú¸ Maker->AddTFSToCurrentLevel(1) ÚÂ ˝ÚÓ ‰‚Â Ó·˚˜Ì˚ı –Œ;
+  //–í–Ω–∏–º–∞–Ω–∏–µ –î–ª—è –¥–æ–±–∞–≤–ª–µ–Ω–∏—è –ø–æ—Å–ª–µ–¥–æ–≤–∞—Ç–µ–ª—å–Ω–æ–π –†–û –Ω—É–∂–Ω–æ –¥–≤–∞–∂–¥—ã –≤—ã–∑—ã–≤–∞—Ç—å Maker->AddTFSToCurrentLevel(1) —Ç–µ —ç—Ç–æ –¥–≤–µ –æ–±—ã—á–Ω—ã—Ö –†–û;
   TParamAlternativeItem* PA;
   TMakerTFS* Maker = new TMakerTFS(MainList, Grid, &ShapeCopy,
 	f_CurrIDShape, f_CurrIDBlock, f_CurrIDLine);
@@ -3635,7 +3635,7 @@ void __fastcall TfrmMain::Button1Click(TObject *Sender)
     Maker->AddTFSToCurrentLevel(11);
     Maker->AddTFSToCurrentLevel(12);
 
-    //‰Ó·‡‚ÎÂÌËÂ ‰‚Ûı Ô‡‡ÏÂÚË˜ÂÒÍËı ‡Î¸ÚÂÌ‡ÚË‚ ‰Îˇ “‘≈ 5
+    //–¥–æ–±–∞–≤–ª–µ–Ω–∏–µ –¥–≤—É—Ö –ø–∞—Ä–∞–º–µ—Ç—Ä–∏—á–µ—Å–∫–∏—Ö –∞–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤ –¥–ª—è –¢–§–ï 5
     PA = Maker->CreateNewParamAlternative(5);
     PA->B = 12.67;
     PA->T = 100;
@@ -3677,7 +3677,7 @@ void __fastcall TfrmMain::Button1Click(TObject *Sender)
 
 }
 //---------------------------------------------------------------------------
-/* stas19 ›ÚÓ ‚ÓÁÏÓÊÌÓ ·˚Î ÔËÏÂ ‰Îˇ „ÂÌË‡ÚÛÎËÌÓÈ*/
+/* stas19 –≠—Ç–æ –≤–æ–∑–º–æ–∂–Ω–æ –±—ã–ª –ø—Ä–∏–º–µ—Ä –¥–ª—è –≥–µ–Ω–∏–∞—Ç—É–ª–∏–Ω–æ–π*/
 
 void __fastcall TfrmMain::Button2Click(TObject *Sender)
 {
@@ -3689,35 +3689,35 @@ void __fastcall TfrmMain::Button2Click(TObject *Sender)
   {
 	Maker->SetCurrentLevel(LevelController->ParentShapeID);
 
-	int m_Last_id = MainList->TFEMaxID; //›ÚÓ ÔÓÒÎÂ‰ÌËÈ ÌÓÏÂ ÚÙÂ
+	int m_Last_id = MainList->TFEMaxID; //–≠—Ç–æ –ø–æ—Å–ª–µ–¥–Ω–∏–π –Ω–æ–º–µ—Ä —Ç—Ñ–µ
 
-	WS = Maker->AddTFSToCurrentLevel(3, f_IdAlternative, f_NumAlternative); // ‰Ó·‡‚ÎÂÌËÂ Ô‡‡ÎÂ¸ÌÓÈ –Œ
-	//‰Ó·‡‚ÎÂÌËÂ Ô‡‡ÏÂÚË˜ÂÒÍÓÈ ‡Î¸ÚÂÌ‡ÚË‚˚ ‰Îˇ ÔÂ‚ÓÈ “‘≈ ËÁ ‰Ó·‡‚ÎÂÌÌÓÈ Ô‡‡ÎÂ¸ÌÓÈ –Œ
-	PA = Maker->CreateNewParamAlternative(m_Last_id + 1); // ˝ÚÓÚ ÌÓÏÂ Ì‡‰Ó ‡Ò˜ËÚ˚‚‡Ú¸
+	WS = Maker->AddTFSToCurrentLevel(3, f_IdAlternative, f_NumAlternative); // –¥–æ–±–∞–≤–ª–µ–Ω–∏–µ –ø–∞—Ä–∞–ª–µ—å–Ω–æ–π –†–û
+	//–¥–æ–±–∞–≤–ª–µ–Ω–∏–µ –ø–∞—Ä–∞–º–µ—Ç—Ä–∏—á–µ—Å–∫–æ–π –∞–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤—ã –¥–ª—è –ø–µ—Ä–≤–æ–π –¢–§–ï –∏–∑ –¥–æ–±–∞–≤–ª–µ–Ω–Ω–æ–π –ø–∞—Ä–∞–ª–µ—å–Ω–æ–π –†–û
+	PA = Maker->CreateNewParamAlternative(m_Last_id + 1); // —ç—Ç–æ—Ç –Ω–æ–º–µ—Ä –Ω–∞–¥–æ —Ä–∞—Å—á–∏—Ç—ã–≤–∞—Ç—å
 	PA->B = 10;
 	PA->T = 100;
 	PA->V = 1000;
 
-	//‰Ó·‡‚ÎÂÌËÂ Ô‡‡ÏÂÚË˜ÂÒÍÓÈ ‡Î¸ÚÂÌ‡ÚË‚˚ ‰Îˇ ‚ÚÓÈ “‘≈ ËÁ ‰Ó·‡‚ÎÂÌÌÓÈ Ô‡‡ÎÂ¸ÌÓÈ –Œ
+	//–¥–æ–±–∞–≤–ª–µ–Ω–∏–µ –ø–∞—Ä–∞–º–µ—Ç—Ä–∏—á–µ—Å–∫–æ–π –∞–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤—ã –¥–ª—è –≤—Ç—Ä–æ–π –¢–§–ï –∏–∑ –¥–æ–±–∞–≤–ª–µ–Ω–Ω–æ–π –ø–∞—Ä–∞–ª–µ—å–Ω–æ–π –†–û
 	PA = Maker->CreateNewParamAlternative(m_Last_id + 2);
 	PA->B = 30;
 	PA->T = 300;
 	PA->V = 3000;
 
-	//‰Ó·‡‚ÎÂÌËÂ Â˘Â Ó‰ÌÓÈ Ô‡‡ÏÂÚË˜ÂÒÍÓÈ ‡Î¸ÚÂÌ‡ÚË‚˚ ‰Îˇ ‚ÚÓÈ “‘≈ ËÁ ‰Ó·‡‚ÎÂÌÌÓÈ Ô‡‡ÎÂ¸ÌÓÈ –Œ
+	//–¥–æ–±–∞–≤–ª–µ–Ω–∏–µ –µ—â–µ –æ–¥–Ω–æ–π –ø–∞—Ä–∞–º–µ—Ç—Ä–∏—á–µ—Å–∫–æ–π –∞–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤—ã –¥–ª—è –≤—Ç—Ä–æ–π –¢–§–ï –∏–∑ –¥–æ–±–∞–≤–ª–µ–Ω–Ω–æ–π –ø–∞—Ä–∞–ª–µ—å–Ω–æ–π –†–û
 	PA = Maker->CreateNewParamAlternative(m_Last_id + 2);
 	PA->B = 50;
 	PA->T = 500;
 	PA->V = 5000;
 
 
-	//ÛÒÚ‡Ì‡‚ÎË‚‡ÂÏ ÚÂÍÛ˘ËÈ ÛÓ‚ÂÌ¸ ‰Îˇ ÔÂ‚ÓÈ “‘≈ ËÁ ‰Ó·‡‚ÎÂÌÌÓÈ “‘—
+	//—É—Å—Ç–∞–Ω–∞–≤–ª–∏–≤–∞–µ–º —Ç–µ–∫—É—â–∏–π —É—Ä–æ–≤–µ–Ω—å –¥–ª—è –ø–µ—Ä–≤–æ–π –¢–§–ï –∏–∑ –¥–æ–±–∞–≤–ª–µ–Ω–Ω–æ–π –¢–§–°
 	Maker->SetCurrentLevel(m_Last_id + 1);
-	Maker->AddTFSToCurrentLevel(6, f_IdAlternative, f_NumAlternative); // ‰Ó·‡‚ÎÂÌËÂ ‘ÛÌÍ-˚È ÍÓÌÚÓÎ¸
+	Maker->AddTFSToCurrentLevel(6, f_IdAlternative, f_NumAlternative); // –¥–æ–±–∞–≤–ª–µ–Ω–∏–µ –§—É–Ω–∫-—ã–π –∫–æ–Ω—Ç—Ä–æ–ª—å
 
 
 	Maker->SetCurrentLevel(2);
-	Maker->AddTFSToCurrentLevel(4, f_IdAlternative, f_NumAlternative); // ‰Ó·‡‚ÎÂÌËÂ Ô‡‡ÎÂ¸ÌÓÈ –Œ
+	Maker->AddTFSToCurrentLevel(4, f_IdAlternative, f_NumAlternative); // –¥–æ–±–∞–≤–ª–µ–Ω–∏–µ –ø–∞—Ä–∞–ª–µ—å–Ω–æ–π –†–û
 
 	TAltSelectorItem* Item = f_AltSelector->CreateNewAlternateID(LevelController->ParentShapeID, 1);
 	 if ( !MainList->CreateAlternate(WS, WS, Item->ID, Item->Num) )
@@ -3726,8 +3726,8 @@ void __fastcall TfrmMain::Button2Click(TObject *Sender)
 	   0, 0);
 
 	Maker->SetCurrentLevel(0);
-	Grid->PrepareLevel();  // ÚÓÍ‡ Ó‰ËÌ ‡Á ËÒÛÂÏ ÌÓ‚˚È ÛÓ‚ÂÌ¸ ‡ÎÚÂÌ‡ÚË‚
-	Maker->AddTFSToCurrentLevel(4, Item->ID, Item->Num); // ‰Ó·‡‚ÎÂÌËÂ Ô‡‡ÎÂ¸ÌÓÈ –Œ
+	Grid->PrepareLevel();  // —Ç–æ–∫–∞ –æ–¥–∏–Ω —Ä–∞–∑ —Ä–∏—Å—É–µ–º –Ω–æ–≤—ã–π —É—Ä–æ–≤–µ–Ω—å –∞–ª—Ç–µ—Ä–Ω–∞—Ç–∏–≤
+	Maker->AddTFSToCurrentLevel(4, Item->ID, Item->Num); // –¥–æ–±–∞–≤–ª–µ–Ω–∏–µ –ø–∞—Ä–∞–ª–µ—å–Ω–æ–π –†–û
 
 	f_CurrIDBlock = Maker->CurrIDBlock;
 	f_CurrIDShape = Maker->CurrIDShape;
@@ -3812,7 +3812,7 @@ void __fastcall TfrmMain::acAboutExecute(TObject *Sender)
   ShowAbout();
 }
 
-/* stas19 Ó˜ÂÂ‰ÌÓÈ ÔËÏÂ ‰Îˇ „ÂÌË‡ÚÛÎËÌÓÈ
+/* stas19 –æ—á–µ—Ä–µ–¥–Ω–æ–π –ø—Ä–∏–º–µ—Ä –¥–ª—è –≥–µ–Ω–∏–∞—Ç—É–ª–∏–Ω–æ–π
 //---------------------------------------------------------------------------
 void __fastcall TfrmMain::Button3Click(TObject *Sender)
 {
@@ -3879,7 +3879,7 @@ void TfrmMain::CreateZadachaOptAnp()
 
 void __fastcall TfrmMain::acToolBinRelExecute(TObject *Sender)
 {
-  ShowToolTFS("≈≈≈≈");
+  ShowToolTFS("–ï–ï–ï–ï");
 }
 //---------------------------------------------------------------------------
 
@@ -3887,6 +3887,7 @@ void __fastcall TfrmMain::acToolBinRelExecute(TObject *Sender)
 void __fastcall TfrmMain::acToolGenerStruct(TObject *Sender)
 {
   ShowToolGenerStruct(this);
+  InvalidateRgn(pbMain->Parent->Handle, NULL, false);
 }
 //---------------------------------------------------------------------------
 

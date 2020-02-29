@@ -232,15 +232,15 @@ __published:	// IDE-managed Components
 
 
 public:	// User declarations
-        int f_IdAlternative; //текущая альтернатива
-        int f_NumAlternative; //текущая альтернатива номер
-        int f_IdAlternativeParent; //предок текущей альтернативы
-        int f_NumAlternativeParent; //нмер предка текущей альтернативы
+        int f_IdAlternative; //С‚РµРєСѓС‰Р°СЏ Р°Р»СЊС‚РµСЂРЅР°С‚РёРІР°
+        int f_NumAlternative; //С‚РµРєСѓС‰Р°СЏ Р°Р»СЊС‚РµСЂРЅР°С‚РёРІР° РЅРѕРјРµСЂ
+        int f_IdAlternativeParent; //РїСЂРµРґРѕРє С‚РµРєСѓС‰РµР№ Р°Р»СЊС‚РµСЂРЅР°С‚РёРІС‹
+        int f_NumAlternativeParent; //РЅРјРµСЂ РїСЂРµРґРєР° С‚РµРєСѓС‰РµР№ Р°Р»СЊС‚РµСЂРЅР°С‚РёРІС‹
 
-        int f_CurrIDBlock; //текущий блок
-        int f_CurrIDShape; //текущая фигура
-        int f_CurrIDLine;//текущая линия
-        int f_Operation;//текущая операция
+        int f_CurrIDBlock; //С‚РµРєСѓС‰РёР№ Р±Р»РѕРє
+        int f_CurrIDShape; //С‚РµРєСѓС‰Р°СЏ С„РёРіСѓСЂР°
+        int f_CurrIDLine;//С‚РµРєСѓС‰Р°СЏ Р»РёРЅРёСЏ
+        int f_Operation;//С‚РµРєСѓС‰Р°СЏ РѕРїРµСЂР°С†РёСЏ
 
         TPaintGrid* Grid;
         int f_StepPixel;

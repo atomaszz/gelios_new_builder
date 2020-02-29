@@ -784,15 +784,16 @@
             <DependentOn>UnitForm\uMetodOpt.h</DependentOn>
             <BuildOrder>140</BuildOrder>
         </CppCompile>
+        <FormResources Include="UnitForm\ufmPredicatePathView.dfm"/>
         <FormResources Include="UnitForm\ufmStartDecision.dfm"/>
         <FormResources Include="UnitForm\ufmTrackShow.dfm"/>
         <FormResources Include="UnitForm\ufmViewDecision.dfm"/>
-        <FormResources Include="UnitForm\ufmViewPredicateTrackConstructor.dfm"/>
-        <FormResources Include="UnitForm\ufmPredicatePathView.dfm"/>
+        <FormResources Include="UnitForm\ufmPredicatePathConstructorOgr.dfm"/>
+        <FormResources Include="UnitForm\uFmParamAlternative.dfm"/>
         <FormResources Include="UnitForm\ufmParamAlternativeLoader.dfm"/>
         <FormResources Include="UnitForm\ufmPredicateFull.dfm"/>
         <FormResources Include="UnitForm\ufmPredicatePathConstructor.dfm"/>
-        <FormResources Include="UnitForm\ufmPredicatePathConstructorOgr.dfm"/>
+        <FormResources Include="UnitForm\ufmViewPredicateTrackConstructor.dfm"/>
         <FormResources Include="UnitForm\uFrmHelp.dfm"/>
         <FormResources Include="UnitForm\ufrmPredicateView.dfm"/>
         <FormResources Include="UnitForm\ufSetup.dfm"/>
@@ -802,15 +803,14 @@
         <FormResources Include="UnitForm\ufmViewResult.dfm"/>
         <FormResources Include="UnitForm\ufrmAlternateView.dfm"/>
         <FormResources Include="UnitForm\ufrmAlternateViewSelect.dfm"/>
-        <FormResources Include="UnitForm\uFmParamAlternative.dfm"/>
         <FormResources Include="UnitForm\ufAbount.dfm"/>
         <FormResources Include="UnitForm\uFmGridSovm.dfm"/>
         <FormResources Include="UnitForm\ufmOzenkView.dfm"/>
-        <FormResources Include="TFSTools\ufToolMain.dfm"/>
-        <FormResources Include="ImportModule\opim_f.dfm"/>
         <FormResources Include="ImportModule\REDACT_F.dfm"/>
-        <FormResources Include="uMainFrm.dfm"/>
         <FormResources Include="GSTools\ufGenerStruct.dfm"/>
+        <FormResources Include="ImportModule\opim_f.dfm"/>
+        <FormResources Include="TFSTools\ufToolMain.dfm"/>
+        <FormResources Include="uMainFrm.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

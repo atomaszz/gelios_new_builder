@@ -150,6 +150,7 @@ __published:	// IDE-managed Components
 	TAction *acToolBinRel;
 	TMenuItem *N43;
 	TMenuItem *N44;
+	TMenuItem *N45;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall Button1Click(TObject *Sender);
@@ -227,6 +228,7 @@ __published:	// IDE-managed Components
 	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
 	void __fastcall Button2Click(TObject *Sender);
 	void __fastcall acToolBinRelExecute(TObject *Sender);
+	void __fastcall acToolGenerStruct(TObject *Sender);
 
 
 private:	// User declarations

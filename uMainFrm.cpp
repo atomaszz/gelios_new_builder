@@ -3887,6 +3887,7 @@ void __fastcall TfrmMain::acToolBinRelExecute(TObject *Sender)
 void __fastcall TfrmMain::acToolGenerStruct(TObject *Sender)
 {
   ShowToolGenerStruct(this);
+  InvalidateRgn(pbMain->Parent->Handle, NULL, false);
 }
 //---------------------------------------------------------------------------
 

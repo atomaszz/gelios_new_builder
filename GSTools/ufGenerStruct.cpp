@@ -14,6 +14,7 @@ TfrmMain *pMain;
 __fastcall TfmToolGenerStruct::TfmToolGenerStruct(TComponent* Owner)
 	: TForm(Owner)
 {
+	InitTablesHeader();
 }
 //---------------------------------------------------------------------------
 
@@ -26,7 +27,7 @@ bool ShowToolGenerStruct(TfrmMain *frmMain)
   fmToolGenerStruct->Release();
   return res;
 }
-void __fastcall TfmToolGenerStruct::Button3Click(TObject *Sender)
+void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 {
   TBaseWorkShape* WS;
   TParamAlternativeItem* PA;
@@ -95,4 +96,46 @@ void __fastcall TfmToolGenerStruct::Button3Click(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+void TfmToolGenerStruct::InitTablesHeader()
+{
+	sgWorkOperation->ColCount    = 5;
+	sgWorkOperation->RowCount    = 2;
+	sgWorkOperation->FixedRows   = 1;
+	sgWorkOperation->Cells[0][0] = "¹";
+	sgWorkOperation->Cells[1][0] = "ÍÀÇÂÀÍÈÅ 1-ÎÉ ÀËÜÒÅÐ.";
+	sgWorkOperation->Cells[2][0] = "ÊÎË-ÂÎ ÀËÜÒÅÐÍÀÒÈÂ";
+	sgWorkOperation->Cells[3][0] = "ÏÐÅÄØÅÑÒÂ. ÎÏÅÐÀÖÈÈ";
+	sgWorkOperation->Cells[4][0] = "ÈÍÄÈÂÈÄ. ÊÎÍÒÐÎËÜ";
+
+	sgWorkOperation->ColWidths[0] = 40;
+	sgWorkOperation->ColWidths[1] = 190;
+	sgWorkOperation->ColWidths[2] = 190;
+	sgWorkOperation->ColWidths[3] = 185;
+	sgWorkOperation->ColWidths[4] = 175;
+
+	/*----*/
+
+	sgControlOperation->ColCount    = 4;
+	sgControlOperation->RowCount    = 2;
+	sgControlOperation->FixedRows   = 1;
+	sgControlOperation->Cells[0][0] = "¹";
+	sgControlOperation->Cells[1][0] = "ÍÀÇÂÀÍÈÅ 1-ÎÉ ÀËÜÒÅÐ.";
+	sgControlOperation->Cells[2][0] = "ÊÎË-ÂÎ ÀËÜÒÅÐÍÀÒÈÂ";
+	sgControlOperation->Cells[3][0] = "ÊÎÍÒÐÎËÜ. ÎÏÅÐÀÖÈÈ";
+
+	sgControlOperation->ColWidths[0] = 40;
+	sgControlOperation->ColWidths[1] = 190;
+	sgControlOperation->ColWidths[2] = 190;
+	sgControlOperation->ColWidths[3] = 185;
+
+}
+
+
+
+void __fastcall TfmToolGenerStruct::addWorkBtnClick(TObject *Sender)
+{
+  TAlternateItem* Item;
+
+}
+//---------------------------------------------------------------------------
 

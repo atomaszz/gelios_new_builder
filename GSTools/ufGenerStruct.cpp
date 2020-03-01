@@ -95,3 +95,4 @@ void __fastcall TfmToolGenerStruct::Button3Click(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+

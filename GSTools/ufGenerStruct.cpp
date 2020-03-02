@@ -139,3 +139,40 @@ void __fastcall TfmToolGenerStruct::addWorkBtnClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TfmToolGenerStruct::PageControl2Change(TObject *Sender)
+{
+	if (PageControl2->ActivePageIndex == 0)
+		PageControl3->ActivePageIndex = 0;
+	else if (PageControl2->ActivePageIndex == 1)
+		PageControl3->ActivePageIndex = 1;
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TfmToolGenerStruct::PageControl3Change(TObject *Sender)
+{
+	if (PageControl3->ActivePageIndex == 0)
+		PageControl2->ActivePageIndex = 0;
+	else if (PageControl3->ActivePageIndex == 1)
+		PageControl2->ActivePageIndex = 1;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfmToolGenerStruct::PageControl1Change(TObject *Sender)
+{
+	if (PageControl1->ActivePageIndex == 0)
+		PageControl4->ActivePageIndex = 0;
+	else if (PageControl1->ActivePageIndex == 1)
+		PageControl4->ActivePageIndex = 1;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfmToolGenerStruct::PageControl4Change(TObject *Sender)
+{
+	if (PageControl4->ActivePageIndex == 0)
+		PageControl1->ActivePageIndex = 0;
+	else if (PageControl4->ActivePageIndex == 1)
+		PageControl1->ActivePageIndex = 1;
+}
+//---------------------------------------------------------------------------
+

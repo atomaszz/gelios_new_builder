@@ -12,6 +12,42 @@
 #include <Vcl.Grids.hpp>
 #include <Vcl.ComCtrls.hpp>
 //---------------------------------------------------------------------------
+
+struct WorkAlternativ
+{
+	int m_nWorkID, m_nID;
+	AnsiString  m_sName;
+	double m_dB, m_dT, m_dV;
+};
+
+struct WorkOperation
+{
+	int m_nID, m_nNumAlt;
+	AnsiString  m_sNameFirstAlt;
+	int m_nNumMasBefore;
+	int m_nMasBefore [200];
+	bool m_bAloneControl;
+	TList *m_ListWorkAlter;
+};
+
+struct CheckAlternativ
+{
+	int m_nCheckID, m_nID;
+	AnsiString  m_sName;
+	double m_dP00, m_dP11, m_dB;
+};
+
+struct CheckOperation
+{
+	int m_nID, m_nNumAlt;
+	AnsiString  m_sNameFirstAlt;
+	int m_nNumMasCheck;
+	int m_nMasCheck [200];
+	TList *m_ListCheckAlter;
+};
+
+//---------------------------------------------------------------------------
+
 class TfmToolGenerStruct : public TForm
 {
 __published:	// IDE-managed Components
@@ -80,14 +116,17 @@ __published:	// IDE-managed Components
 	TLabel *textNumeWorkOper;
 	TLabel *Label16;
 	TLabel *Label17;
-	TStringGrid *sgWokAlterOper;
-	TStringGrid *sgCheckAlterOper;
+	TStringGrid *sgWorkAlterOperation;
+	TStringGrid *sgControlAlterOperation;
 	void __fastcall acptBtnClick(TObject *Sender);
 	void __fastcall addWorkBtnClick(TObject *Sender);
 	void __fastcall PageControl2Change(TObject *Sender);
 	void __fastcall PageControl3Change(TObject *Sender);
 	void __fastcall PageControl1Change(TObject *Sender);
 	void __fastcall PageControl4Change(TObject *Sender);
+	void __fastcall addControlBtnClick(TObject *Sender);
+	void __fastcall sgWorkOperationSelectCell(TObject *Sender, int ACol, int ARow, bool &CanSelect);
+
 private:	// User declarations
 	void InitWorkTablesHeader();
 	void InitWorkAlterTablesHeader();
@@ -102,7 +141,22 @@ public:		// User declarations
 
 	TList *m_ListCheckOper;
 	void RefillCheckGrid();
+
+	void EnableWorkControls();
+	void EnableCheckControls();
+
+	WorkAlternativ* currWorkAlter;
+	WorkOperation* currWorkOper;
+	CheckAlternativ* currCheckAlter;
+	CheckOperation* currCheckOper;
+
+	void InitCurrWorkAlter(int idx);
+	void InitCurrWorkOper(int idx);
+	void InitCurrCheckAlter(int idx);
+	void InitCurrCheckOper(int idx);
+
 };
+
 //---------------------------------------------------------------------------
 extern PACKAGE TfmToolGenerStruct *fmToolGenerStruct;
 //---------------------------------------------------------------------------
@@ -111,36 +165,4 @@ bool ShowToolGenerStruct(TfrmMain *frmMain);
 
 //---------------------------------------------------------------------------
 
-struct WorkAlternativ
-{
-	int m_nWorkID, m_nID;
-	AnsiString  m_sName;
-	double m_dB, m_dT, m_dV;
-};
-
-struct WorkOperation
-{
-	int m_nID, m_nNumAlt;
-	AnsiString  m_sNameFirstAlt;
-	int m_nNumMasBefore;
-	int m_nMasBefore [200];
-	bool m_bAloneControl;
-	int m_nNumMasaAlter;
-	TList *m_ListWorkAlter;
-};
-
-struct CheckAlternativ
-{
-	int m_nCheckID, m_nID;
-	AnsiString  m_sName;
-	double m_dP00, m_dP11, m_dB;
-};
-
-struct CheckOperation
-{
-	int m_nID, m_nNumAlt;
-	AnsiString  m_sNameFirstAlt;
-	int m_nNumMasaAlter;
-	TList *m_ListCheckAlter;
-};
 #endif

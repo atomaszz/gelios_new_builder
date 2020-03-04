@@ -80,8 +80,8 @@ __published:	// IDE-managed Components
 	TLabel *textNumeWorkOper;
 	TLabel *Label16;
 	TLabel *Label17;
-	TStringGrid *sgWokAlterOper;
-	TStringGrid *sgCheckAlterOper;
+	TStringGrid *sgWorkAlterOperation;
+	TStringGrid *sgControlAlterOperation;
 	void __fastcall acptBtnClick(TObject *Sender);
 	void __fastcall addWorkBtnClick(TObject *Sender);
 	void __fastcall PageControl2Change(TObject *Sender);

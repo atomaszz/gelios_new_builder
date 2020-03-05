@@ -118,7 +118,7 @@ void TfmToolGenerStruct::InitWorkTablesHeader()
 	sgWorkOperation->Cells[1][0] = "ÍÀÇÂÀÍÈÅ 1-ÎÉ ÀËÜÒÅÐ.";
 	sgWorkOperation->Cells[2][0] = "ÊÎË-ÂÎ ÀËÜÒÅÐÍÀÒÈÂ";
 	sgWorkOperation->Cells[3][0] = "ÏÐÅÄØÅÑÒÂ. ÎÏÅÐÀÖÈÈ";
-	sgWorkOperation->Cells[4][0] = "ÈÍÄÈÂÈÄ. ÊÎÍÒÐÎËÜ";
+	sgWorkOperation->Cells[4][0] = "ÊÎÍÒÐÎËÜ";
 
 	sgWorkOperation->ColWidths[0] = 40;
 	sgWorkOperation->ColWidths[1] = 190;
@@ -154,7 +154,7 @@ void TfmToolGenerStruct::InitCheckTablesHeader()
 	sgControlOperation->Cells[0][0] = "¹";
 	sgControlOperation->Cells[1][0] = "ÍÀÇÂÀÍÈÅ 1-ÎÉ ÀËÜÒÅÐ.";
 	sgControlOperation->Cells[2][0] = "ÊÎË-ÂÎ ÀËÜÒÅÐÍÀÒÈÂ";
-	sgControlOperation->Cells[3][0] = "ÊÎÍÒÐÎËÜ. ÎÏÅÐÀÖÈÈ";
+	sgControlOperation->Cells[3][0] = "ÊÎÍÒÐÎËÈÐ. ÎÏÅÐÀÖÈÈ";
 
 	sgControlOperation->ColWidths[0] = 40;
 	sgControlOperation->ColWidths[1] = 190;
@@ -270,7 +270,10 @@ void __fastcall TfmToolGenerStruct::addWorkBtnClick(TObject *Sender)
 
 		m_ListWorkOper->Add(Item);
 		RefillWorkGrid();
-		InitCurrWorkAlter(1);
+		if (currWorkOper == NULL)
+		{
+			InitCurrWorkOper(1);
+		}
 	}
 	else
 	{
@@ -333,16 +336,17 @@ void TfmToolGenerStruct::EnableWorkControls()
 	if (PageControl2->ActivePageIndex == 0)
 	{
 	   bEButt = (m_ListWorkOper->Count >0) && (currWorkOper!=NULL);
+	   editBeforeOperation->Enabled = bEButt;
 	}
 	else if (PageControl2->ActivePageIndex == 1)
 	{
 
 	}
 
-/*	delWorkBtn->Enabled = bEButt;
-	editWorkBtn =   bEButt;
+	delWorkBtn->Enabled = bEButt;
+	editWorkBtn->Enabled =   bEButt;
 
-	editBeforeOperation
+/*	editBeforeOperation
 	CheckBoxAloneCheck
 
 	editNameAlter
@@ -350,6 +354,25 @@ void TfmToolGenerStruct::EnableWorkControls()
 	editT
 	editV        */
 
+}
+
+void TfmToolGenerStruct::InitFieldsWorkOper()
+{
+	if (currWorkOper->m_nNumMasBefore>0)
+	{
+		for (int i=0; i < currWorkOper->m_nNumMasBefore; i++)
+		{
+			editBeforeOperation->Text = editBeforeOperation->Text +currWorkOper->m_nMasBefore[i] + " ";
+		}
+	}
+	else
+		editBeforeOperation->Text ="";
+	if (currWorkOper->m_ListWorkAlter) {
+		editNumAlter->Text = IntToStr(currWorkOper->m_ListWorkAlter->Count);
+	}
+	else
+	  editNumAlter->Text = IntToStr(0);
+	editFirstAlterName->Text =  currWorkOper->m_sNameFirstAlt;
 }
 
 void TfmToolGenerStruct::EnableCheckControls()
@@ -386,22 +409,24 @@ void __fastcall TfmToolGenerStruct::addControlBtnClick(TObject *Sender)
 	}
 }
 //---------------------------------------------------------------------------
-void TfmToolGenerStruct::InitCurrWorkAlter(int idx)
+void TfmToolGenerStruct::InitCurrWorkOper(int idx)
 {
 	if (idx>0 && m_ListWorkOper->Count>0) {
 	   currWorkOper = static_cast<WorkOperation*>(m_ListWorkOper->Items[idx-1]);
+	   InitFieldsWorkOper();
 	}
 	else
 	{
 		currWorkOper = NULL;
-    }
+	}
+	EnableWorkControls();
 }
 
 
 void __fastcall TfmToolGenerStruct::sgWorkOperationSelectCell(TObject *Sender, int ACol,
 		  int ARow, bool &CanSelect)
 {
-	InitCurrWorkAlter(ARow);
+	InitCurrWorkOper(ARow);
 }
 //---------------------------------------------------------------------------
 

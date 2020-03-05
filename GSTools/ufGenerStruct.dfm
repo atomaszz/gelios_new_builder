@@ -23,7 +23,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 1001
     DesignSize = (
       1037
       41)
@@ -37,7 +36,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
       ModalResult = 1
       TabOrder = 0
       OnClick = acptBtnClick
-      ExplicitLeft = 907
     end
     object extBtn: TButton
       Left = 854
@@ -48,7 +46,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
       Caption = #1047#1072#1082#1088#1099#1090#1100
       ModalResult = 2
       TabOrder = 1
-      ExplicitLeft = 818
     end
   end
   object Panel3: TPanel
@@ -59,7 +56,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 1001
     object Panel4: TPanel
       Left = 0
       Top = 0
@@ -75,7 +71,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 0
-      ExplicitWidth = 1001
     end
     object Panel2: TPanel
       Left = 759
@@ -84,7 +79,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
       Height = 272
       Align = alRight
       TabOrder = 1
-      ExplicitLeft = 723
       object Panel8: TPanel
         Left = 1
         Top = 230
@@ -160,22 +154,13 @@ object fmToolGenerStruct: TfmToolGenerStruct
               Height = 13
               Caption = #1053#1072#1080#1084#1077#1085#1086#1074#1072#1085#1080#1077' 1-'#1086#1081' '#1072#1083#1100#1090#1077#1088#1085#1072#1090#1080#1074#1099':'
             end
-            object CheckBoxAloneCheck: TCheckBox
-              Left = 6
-              Top = 159
-              Width = 177
-              Height = 17
-              Caption = #1048#1085#1076#1080#1074#1080#1076#1091#1072#1083#1100#1085#1099#1081' '#1082#1086#1085#1090#1088#1086#1083#1100
-              Enabled = False
-              TabOrder = 0
-            end
             object editNumAlter: TEdit
               Left = 144
               Top = 67
               Width = 51
               Height = 21
               Enabled = False
-              TabOrder = 1
+              TabOrder = 0
             end
             object editBeforeOperation: TEdit
               Left = 6
@@ -183,7 +168,7 @@ object fmToolGenerStruct: TfmToolGenerStruct
               Width = 191
               Height = 21
               Enabled = False
-              TabOrder = 2
+              TabOrder = 1
             end
             object editFirstAlterName: TEdit
               Left = 6
@@ -191,7 +176,7 @@ object fmToolGenerStruct: TfmToolGenerStruct
               Width = 188
               Height = 21
               Enabled = False
-              TabOrder = 3
+              TabOrder = 2
             end
           end
         end
@@ -225,26 +210,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
             Width = 137
             Height = 13
             Caption = #1047#1072#1090#1088#1072#1090#1099' '#1085#1072' '#1074#1099#1087#1086#1083#1085#1077#1085#1080#1077' V:'
-          end
-          object Label15: TLabel
-            Left = 150
-            Top = 6
-            Width = 68
-            Height = 13
-            Caption = #8470' '#1086#1087#1077#1088#1072#1094#1080#1080':'
-          end
-          object textNumeWorkOper: TLabel
-            Left = 224
-            Top = 6
-            Width = 35
-            Height = 13
-            Caption = '_____'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-            ParentFont = False
           end
           object editNameAlter: TEdit
             Left = 6
@@ -291,10 +256,8 @@ object fmToolGenerStruct: TfmToolGenerStruct
       Style = tsFlatButtons
       TabOrder = 2
       OnChange = PageControl2Change
-      ExplicitWidth = 723
       object TabSheet3: TTabSheet
         Caption = #1056#1072#1073#1086#1095#1080#1077' '#1086#1087#1077#1088#1072#1094#1080#1080
-        ExplicitWidth = 715
         object sgWorkOperation: TStringGrid
           Left = 0
           Top = 0
@@ -315,13 +278,13 @@ object fmToolGenerStruct: TfmToolGenerStruct
           ParentFont = False
           TabOrder = 0
           OnSelectCell = sgWorkOperationSelectCell
-          ExplicitWidth = 715
+          ExplicitLeft = 3
+          ExplicitTop = -2
         end
       end
       object TabSheet4: TTabSheet
         Caption = #1040#1083#1100#1090#1077#1088#1085#1072#1090#1080#1074#1099
         ImageIndex = 1
-        ExplicitWidth = 715
         object sgWorkAlterOperation: TStringGrid
           Left = 0
           Top = 0
@@ -341,7 +304,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goDrawFocusSelected, goColSizing, goRowSelect]
           ParentFont = False
           TabOrder = 0
-          ExplicitWidth = 715
         end
       end
     end
@@ -355,7 +317,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
     BevelOuter = bvNone
     Constraints.MinWidth = 550
     TabOrder = 2
-    ExplicitWidth = 1001
     object Panel6: TPanel
       Left = 0
       Top = 0
@@ -371,7 +332,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 0
-      ExplicitWidth = 1001
     end
     object Panel7: TPanel
       Left = 759
@@ -380,7 +340,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
       Height = 209
       Align = alRight
       TabOrder = 1
-      ExplicitLeft = 723
       object Panel10: TPanel
         Left = 1
         Top = 167
@@ -505,26 +464,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
             Height = 13
             Caption = #1042#1077#1088#1086#1103#1090#1085#1086#1089#1090#1100' '#1055'_00:'
           end
-          object Label16: TLabel
-            Left = 150
-            Top = 6
-            Width = 68
-            Height = 13
-            Caption = #8470' '#1086#1087#1077#1088#1072#1094#1080#1080':'
-          end
-          object Label17: TLabel
-            Left = 224
-            Top = 6
-            Width = 35
-            Height = 13
-            Caption = '_____'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-            ParentFont = False
-          end
           object editP11: TEdit
             Left = 109
             Top = 55
@@ -570,10 +509,8 @@ object fmToolGenerStruct: TfmToolGenerStruct
       Style = tsFlatButtons
       TabOrder = 2
       OnChange = PageControl1Change
-      ExplicitWidth = 723
       object TabSheet1: TTabSheet
         Caption = #1054#1087#1077#1088#1072#1094#1080#1080' '#1082#1086#1085#1090#1088#1086#1083#1103
-        ExplicitWidth = 715
         object sgControlOperation: TStringGrid
           Left = 0
           Top = 0
@@ -593,13 +530,11 @@ object fmToolGenerStruct: TfmToolGenerStruct
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goDrawFocusSelected, goColSizing, goRowSelect]
           ParentFont = False
           TabOrder = 0
-          ExplicitWidth = 715
         end
       end
       object TabSheet2: TTabSheet
         Caption = #1040#1083#1100#1090#1077#1088#1085#1072#1090#1080#1074#1099
         ImageIndex = 1
-        ExplicitWidth = 715
         object sgControlAlterOperation: TStringGrid
           Left = 0
           Top = 0
@@ -619,7 +554,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goDrawFocusSelected, goColSizing, goRowSelect]
           ParentFont = False
           TabOrder = 0
-          ExplicitWidth = 715
         end
       end
     end

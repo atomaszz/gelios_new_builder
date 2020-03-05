@@ -66,7 +66,6 @@ __published:	// IDE-managed Components
 	TButton *editWorkBtn;
 	TButton *delWorkBtn;
 	TPanel *Panel8;
-	TCheckBox *CheckBoxAloneCheck;
 	TLabel *Label1;
 	TLabel *Label2;
 	TEdit *editNumAlter;
@@ -112,10 +111,6 @@ __published:	// IDE-managed Components
 	TLabel *Label13;
 	TEdit *editP00;
 	TLabel *Label14;
-	TLabel *Label15;
-	TLabel *textNumeWorkOper;
-	TLabel *Label16;
-	TLabel *Label17;
 	TStringGrid *sgWorkAlterOperation;
 	TStringGrid *sgControlAlterOperation;
 	void __fastcall acptBtnClick(TObject *Sender);
@@ -143,7 +138,10 @@ public:		// User declarations
 	void RefillCheckGrid();
 
 	void EnableWorkControls();
+	void InitFieldsWorkOper();
+
 	void EnableCheckControls();
+	void InitFieldsCheckOper();
 
 	WorkAlternativ* currWorkAlter;
 	WorkOperation* currWorkOper;

@@ -133,6 +133,7 @@ public:		// User declarations
 
 	TList *m_ListWorkOper;
 	void RefillWorkGrid();
+    void RefillWorkAlterGrid();
 
 	TList *m_ListCheckOper;
 	void RefillCheckGrid();

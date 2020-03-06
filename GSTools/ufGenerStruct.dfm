@@ -278,8 +278,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
           ParentFont = False
           TabOrder = 0
           OnSelectCell = sgWorkOperationSelectCell
-          ExplicitLeft = 3
-          ExplicitTop = -2
         end
       end
       object TabSheet4: TTabSheet

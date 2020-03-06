@@ -199,11 +199,11 @@ void TfmToolGenerStruct::RefillWorkGrid()
 		{
 			sgWorkOperation->Cells[1][i+1] = WO->m_sNameFirstAlt;
 		}
-		sgWorkOperation->Cells[2][i+1] = WO->m_nNumAlt;
+		sgWorkOperation->Cells[2][i+1] = IntToStr(WO->m_ListWorkAlter->Count);
 		AnsiString  sMAsAlt ="-";
 		if (WO->m_nNumMasBefore>0)
 		{
-            sMAsAlt ="";
+			sMAsAlt ="";
 			for (int j = 0; j < WO->m_nNumMasBefore; j++)
 			{
 				sMAsAlt += IntToStr(WO->m_nMasBefore[j]) + " ";
@@ -211,6 +211,21 @@ void TfmToolGenerStruct::RefillWorkGrid()
 		}
 		sgWorkOperation->Cells[3][i+1] = sMAsAlt;
 		sgWorkOperation->Cells[4][i+1] = WO->m_bAloneControl ? "дю" : "мер";
+	}
+}
+
+void TfmToolGenerStruct::RefillWorkAlterGrid()
+{
+	for(int i =0; i< sgWorkAlterOperation->RowCount; i++)
+		sgWorkAlterOperation->Rows[i+1]->Clear();
+
+	sgWorkAlterOperation->RowCount    = currWorkOper->m_ListWorkAlter->Count+1;
+	WorkAlternativ* WOA;
+	for (int i = 0; i <= currWorkOper->m_ListWorkAlter->Count - 1; i++ )
+	{
+		WOA = static_cast<WorkAlternativ*>(currWorkOper->m_ListWorkAlter->Items[i]);
+		sgWorkAlterOperation->Cells[0][i+1] = i+1;
+
 	}
 }
 
@@ -258,6 +273,7 @@ void __fastcall TfmToolGenerStruct::addWorkBtnClick(TObject *Sender)
 		Item->m_sNameFirstAlt = "";
 
 		Item->m_nNumMasBefore = 0;
+		Item->m_ListWorkAlter = new TList;
 	/*	TStringList * list = new TStringList();
 		list->DelimitedText = Trim(editBeforeOperation->Text);
 		list->Delimiter = ' ';
@@ -286,6 +302,15 @@ void __fastcall TfmToolGenerStruct::addWorkBtnClick(TObject *Sender)
 		ItemA->m_dV = 1;
 		ItemA->m_dT = 1;
 
+		if(currWorkOper!=NULL)
+		{
+			currWorkOper->m_ListWorkAlter->Add(ItemA);
+
+			WorkAlternativ * tmp =   static_cast<WorkAlternativ*>(currWorkOper->m_ListWorkAlter->Items[0]);
+			currWorkOper->m_sNameFirstAlt =  tmp->m_sName;
+			RefillWorkAlterGrid();
+		}
+
 	}
 
 }
@@ -294,9 +319,15 @@ void __fastcall TfmToolGenerStruct::addWorkBtnClick(TObject *Sender)
 void __fastcall TfmToolGenerStruct::PageControl2Change(TObject *Sender)
 {
 	if (PageControl2->ActivePageIndex == 0)
+	{
 		PageControl3->ActivePageIndex = 0;
+		InitFieldsWorkOper();
+		RefillWorkGrid();
+	}
 	else if (PageControl2->ActivePageIndex == 1)
 		PageControl3->ActivePageIndex = 1;
+
+	EnableWorkControls();
 }
 //---------------------------------------------------------------------------
 
@@ -304,9 +335,15 @@ void __fastcall TfmToolGenerStruct::PageControl2Change(TObject *Sender)
 void __fastcall TfmToolGenerStruct::PageControl3Change(TObject *Sender)
 {
 	if (PageControl3->ActivePageIndex == 0)
+	{
 		PageControl2->ActivePageIndex = 0;
+		InitFieldsWorkOper();
+		RefillWorkGrid();
+	}
 	else if (PageControl3->ActivePageIndex == 1)
 		PageControl2->ActivePageIndex = 1;
+
+	EnableWorkControls();
 }
 //---------------------------------------------------------------------------
 
@@ -337,14 +374,16 @@ void TfmToolGenerStruct::EnableWorkControls()
 	{
 	   bEButt = (m_ListWorkOper->Count >0) && (currWorkOper!=NULL);
 	   editBeforeOperation->Enabled = bEButt;
+	   addWorkBtn->Enabled = true;
 	}
 	else if (PageControl2->ActivePageIndex == 1)
 	{
-
+		bEButt = (m_ListWorkOper->Count >0) && (currWorkOper!=NULL);
+		addWorkBtn->Enabled = bEButt;
 	}
 
 	delWorkBtn->Enabled = bEButt;
-	editWorkBtn->Enabled =   bEButt;
+	editWorkBtn->Enabled = bEButt;
 
 /*	editBeforeOperation
 	CheckBoxAloneCheck

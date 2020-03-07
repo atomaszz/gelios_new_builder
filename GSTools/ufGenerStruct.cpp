@@ -182,6 +182,9 @@ void TfmToolGenerStruct::InitCheckAlterTablesHeader()
 
 void TfmToolGenerStruct::RefillWorkGrid()
 {
+	if (m_ListWorkOper->Count==0)
+	   return;
+
 	for(int i =0; i< sgWorkOperation->RowCount; i++)
 		sgWorkOperation->Rows[i+1]->Clear();
 
@@ -191,14 +194,12 @@ void TfmToolGenerStruct::RefillWorkGrid()
 	{
 		WO = static_cast<WorkOperation*>(m_ListWorkOper->Items[i]);
 		sgWorkOperation->Cells[0][i+1] = i+1;
-		if (WO->m_sNameFirstAlt=="")
-		{
-			sgWorkOperation->Cells[1][i+1] = "-";
-		}
+
+		if (WO->m_ListWorkAlter && WO->m_ListWorkAlter->Count>0)
+			sgWorkOperation->Cells[1][i+1] = static_cast<WorkAlternativ*>(WO->m_ListWorkAlter->Items[0])->m_sName;
 		else
-		{
-			sgWorkOperation->Cells[1][i+1] = WO->m_sNameFirstAlt;
-		}
+			sgWorkOperation->Cells[1][i+1] = "-";
+
 		sgWorkOperation->Cells[2][i+1] = IntToStr(WO->m_ListWorkAlter->Count);
 		AnsiString  sMAsAlt ="-";
 		if (WO->m_nNumMasBefore>0)
@@ -210,12 +211,16 @@ void TfmToolGenerStruct::RefillWorkGrid()
 			}
 		}
 		sgWorkOperation->Cells[3][i+1] = sMAsAlt;
-		sgWorkOperation->Cells[4][i+1] = WO->m_bAloneControl ? "ДА" : "НЕТ";
+		sgWorkOperation->Cells[4][i+1] = WO->m_bControl ? "ДА" : "НЕТ";
 	}
 }
 
 void TfmToolGenerStruct::RefillWorkAlterGrid()
 {
+	if (!currWorkOper || !currWorkOper->m_ListWorkAlter
+	|| currWorkOper->m_ListWorkAlter->Count==0)
+	   return;
+
 	for(int i =0; i< sgWorkAlterOperation->RowCount; i++)
 		sgWorkAlterOperation->Rows[i+1]->Clear();
 
@@ -225,12 +230,40 @@ void TfmToolGenerStruct::RefillWorkAlterGrid()
 	{
 		WOA = static_cast<WorkAlternativ*>(currWorkOper->m_ListWorkAlter->Items[i]);
 		sgWorkAlterOperation->Cells[0][i+1] = i+1;
+		sgWorkAlterOperation->Cells[1][i+1] = WOA->m_sName;
+		sgWorkAlterOperation->Cells[2][i+1] = FloatToStrF(WOA->m_dB,ffFixed,3,5);
+		sgWorkAlterOperation->Cells[3][i+1] = FloatToStrF(WOA->m_dT,ffFixed,3,5);
+		sgWorkAlterOperation->Cells[4][i+1] = FloatToStrF(WOA->m_dV,ffFixed,3,5);
+	}
+}
 
+void TfmToolGenerStruct::RefillCheckAlterGrid()
+{
+	if (!currCheckOper || !currCheckOper->m_ListCheckAlter
+	|| currCheckOper->m_ListCheckAlter->Count==0)
+	   return;
+
+	for(int i =0; i< sgControlAlterOperation->RowCount; i++)
+		sgControlAlterOperation->Rows[i+1]->Clear();
+
+	sgControlAlterOperation->RowCount    = currCheckOper->m_ListCheckAlter->Count+1;
+	CheckAlternativ* WOA;
+	for (int i = 0; i <= currCheckOper->m_ListCheckAlter->Count - 1; i++ )
+	{
+		WOA = static_cast<CheckAlternativ*>(currCheckOper->m_ListCheckAlter->Items[i]);
+		sgControlAlterOperation->Cells[0][i+1] = i+1;
+		sgControlAlterOperation->Cells[1][i+1] = WOA->m_sName;
+		sgControlAlterOperation->Cells[2][i+1] = FloatToStrF(WOA->m_dP00,ffFixed,3,5);
+		sgControlAlterOperation->Cells[3][i+1] = FloatToStrF(WOA->m_dP11,ffFixed,3,5);
+		sgControlAlterOperation->Cells[4][i+1] = FloatToStrF(WOA->m_dB,ffFixed,3,5);
 	}
 }
 
 void TfmToolGenerStruct::RefillCheckGrid()
 {
+	if (m_ListCheckOper->Count==0)
+	   return;
+
 	for(int i =0; i< sgControlOperation->RowCount; i++)
 		sgControlOperation->Rows[i+1]->Clear();
 
@@ -240,15 +273,14 @@ void TfmToolGenerStruct::RefillCheckGrid()
 	{
 		CO = static_cast<CheckOperation*>(m_ListCheckOper->Items[i]);
 		sgControlOperation->Cells[0][i+1] = i+1;
-		if(CO->m_sNameFirstAlt =="")
-		{
-			sgControlOperation->Cells[1][i+1] = "-";
-		}
+
+		if (CO->m_ListCheckAlter && CO->m_ListCheckAlter->Count>0)
+			sgControlOperation->Cells[1][i+1] = static_cast<CheckAlternativ*>(CO->m_ListCheckAlter->Items[0])->m_sName;
 		else
-		{
-		   sgControlOperation->Cells[1][i+1] = CO->m_sNameFirstAlt;
-		}
-		sgControlOperation->Cells[2][i+1] = CO->m_nNumAlt;
+			sgControlOperation->Cells[1][i+1] = "-";
+
+		sgControlOperation->Cells[2][i+1] = CO->m_ListCheckAlter->Count;
+
 		AnsiString  sMasCheck ="-";
 		if (CO->m_nNumMasCheck>0)
 		{
@@ -268,21 +300,9 @@ void __fastcall TfmToolGenerStruct::addWorkBtnClick(TObject *Sender)
 	{
 		WorkOperation* Item = new WorkOperation;
 
-		Item->m_nID = m_ListWorkOper->Count+1;
-		Item->m_nNumAlt = 0;
-		Item->m_sNameFirstAlt = "";
-
 		Item->m_nNumMasBefore = 0;
 		Item->m_ListWorkAlter = new TList;
-	/*	TStringList * list = new TStringList();
-		list->DelimitedText = Trim(editBeforeOperation->Text);
-		list->Delimiter = ' ';
-		for (int i=0; i < list->Count; i++)
-		{
-			Item->m_nNumMasBefore++;
-			Item->m_nMasBefore[i] = StrToInt(list->Strings[i]);
-		}
-		Item->m_bAloneControl = CheckBoxAloneCheck->Checked;      */
+		Item->m_bControl = false;
 
 		m_ListWorkOper->Add(Item);
 		RefillWorkGrid();
@@ -295,9 +315,7 @@ void __fastcall TfmToolGenerStruct::addWorkBtnClick(TObject *Sender)
 	{
 		WorkAlternativ * ItemA = new WorkAlternativ;
 
-		ItemA->m_nID = 1;
-		ItemA->m_nWorkID = 1;
-		ItemA->m_sName = "test";
+		ItemA->m_sName = "-";
 		ItemA->m_dB = 1;
 		ItemA->m_dV = 1;
 		ItemA->m_dT = 1;
@@ -305,14 +323,41 @@ void __fastcall TfmToolGenerStruct::addWorkBtnClick(TObject *Sender)
 		if(currWorkOper!=NULL)
 		{
 			currWorkOper->m_ListWorkAlter->Add(ItemA);
-
-			WorkAlternativ * tmp =   static_cast<WorkAlternativ*>(currWorkOper->m_ListWorkAlter->Items[0]);
-			currWorkOper->m_sNameFirstAlt =  tmp->m_sName;
 			RefillWorkAlterGrid();
+			if (currWorkAlter == NULL)
+			{
+				InitCurrWorkAlter(1);
+			}
 		}
 
 	}
 
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfmToolGenerStruct::editWorkBtnClick(TObject *Sender)
+{
+	if (PageControl2->ActivePageIndex == 0)
+	{
+		TStringList * list = new TStringList();
+		list->DelimitedText = Trim(editBeforeOperation->Text);
+		list->Delimiter = ' ';
+		currWorkOper->m_nNumMasBefore = 0;
+		for (int i=0; i < list->Count; i++)
+		{
+			currWorkOper->m_nNumMasBefore++;
+			currWorkOper->m_nMasBefore[i] = StrToInt(list->Strings[i]);
+		}
+		RefillWorkGrid();
+	}
+	else
+	{
+	   currWorkAlter->m_sName = editNameAlter->Text;
+	   currWorkAlter->m_dB = exit_proverka_0_1(editB);
+	   currWorkAlter->m_dV = exit_proverka_0_1(editV);
+	   currWorkAlter->m_dT = exit_proverka_0_1(editT);
+	   RefillWorkAlterGrid();
+	}
 }
 //---------------------------------------------------------------------------
 
@@ -325,7 +370,11 @@ void __fastcall TfmToolGenerStruct::PageControl2Change(TObject *Sender)
 		RefillWorkGrid();
 	}
 	else if (PageControl2->ActivePageIndex == 1)
+	{
 		PageControl3->ActivePageIndex = 1;
+		InitFieldsWorkAlter();
+		RefillWorkAlterGrid();
+	}
 
 	EnableWorkControls();
 }
@@ -341,7 +390,11 @@ void __fastcall TfmToolGenerStruct::PageControl3Change(TObject *Sender)
 		RefillWorkGrid();
 	}
 	else if (PageControl3->ActivePageIndex == 1)
+	{
 		PageControl2->ActivePageIndex = 1;
+		InitFieldsWorkAlter();
+		RefillWorkAlterGrid();
+	}
 
 	EnableWorkControls();
 }
@@ -350,26 +403,42 @@ void __fastcall TfmToolGenerStruct::PageControl3Change(TObject *Sender)
 void __fastcall TfmToolGenerStruct::PageControl1Change(TObject *Sender)
 {
 	if (PageControl1->ActivePageIndex == 0)
+	{
 		PageControl4->ActivePageIndex = 0;
+		InitFieldsCheckOper();
+		RefillCheckGrid();
+	}
 	else if (PageControl1->ActivePageIndex == 1)
+	{
 		PageControl4->ActivePageIndex = 1;
+		InitFieldsCheckAlter();
+		RefillCheckAlterGrid();
+	}
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfmToolGenerStruct::PageControl4Change(TObject *Sender)
 {
 	if (PageControl4->ActivePageIndex == 0)
+	{
 		PageControl1->ActivePageIndex = 0;
+		InitFieldsCheckOper();
+		RefillCheckGrid();
+	}
 	else if (PageControl4->ActivePageIndex == 1)
+	{
 		PageControl1->ActivePageIndex = 1;
+		InitFieldsCheckAlter();
+		RefillCheckAlterGrid();
+	}
 }
 //---------------------------------------------------------------------------
 
 void TfmToolGenerStruct::EnableWorkControls()
 {
 	bool bEButt = false;
-	bool bEWork = false;
 	bool bEAlter = false;
+
 	if (PageControl2->ActivePageIndex == 0)
 	{
 	   bEButt = (m_ListWorkOper->Count >0) && (currWorkOper!=NULL);
@@ -380,23 +449,30 @@ void TfmToolGenerStruct::EnableWorkControls()
 	{
 		bEButt = (m_ListWorkOper->Count >0) && (currWorkOper!=NULL);
 		addWorkBtn->Enabled = bEButt;
+
+		bEAlter = (currWorkOper!=NULL && currWorkAlter!=NULL);
+		editNameAlter->Enabled = bEAlter;
+		editV->Enabled = bEAlter;
+		editT->Enabled = bEAlter;
+		editB->Enabled = bEAlter;
 	}
 
 	delWorkBtn->Enabled = bEButt;
 	editWorkBtn->Enabled = bEButt;
 
-/*	editBeforeOperation
-	CheckBoxAloneCheck
-
-	editNameAlter
-	editB
-	editT
-	editV        */
-
 }
 
 void TfmToolGenerStruct::InitFieldsWorkOper()
 {
+	if(!currWorkOper)
+	{
+		editBeforeOperation->Text = "";
+		editNumAlter->Text = "";
+		editFirstAlterName->Text = "";
+		return;
+	}
+
+	editBeforeOperation->Text = "";
 	if (currWorkOper->m_nNumMasBefore>0)
 	{
 		for (int i=0; i < currWorkOper->m_nNumMasBefore; i++)
@@ -411,12 +487,105 @@ void TfmToolGenerStruct::InitFieldsWorkOper()
 	}
 	else
 	  editNumAlter->Text = IntToStr(0);
-	editFirstAlterName->Text =  currWorkOper->m_sNameFirstAlt;
+	if (currWorkOper->m_ListWorkAlter && currWorkOper->m_ListWorkAlter->Count>0)
+		editFirstAlterName->Text =  static_cast<WorkAlternativ*>(currWorkOper->m_ListWorkAlter->Items[0])->m_sName;
+	else
+		editFirstAlterName->Text = "-";
 }
+
+void TfmToolGenerStruct::InitFieldsCheckOper()
+{
+	if(!currCheckOper)
+	{
+		editNameCheckAlter->Text = "";
+		editP11->Text = "";
+		editP00->Text = "";
+		editPDiagn->Text = "";
+		return;
+	}
+
+    editCheckOperation->Text ="";
+	if (currCheckOper->m_nNumMasCheck>0)
+	{
+
+		for (int i=0; i < currCheckOper->m_nNumMasCheck; i++)
+		{
+			editCheckOperation->Text = editCheckOperation->Text +currCheckOper->m_nMasCheck[i] + " ";
+		}
+	}
+	else
+		editCheckOperation->Text ="";
+	if (currCheckOper->m_ListCheckAlter) {
+		editNumCheckAlter->Text = IntToStr(currCheckOper->m_ListCheckAlter->Count);
+	}
+	else
+	  editNumCheckAlter->Text = IntToStr(0);
+	if (currCheckOper->m_ListCheckAlter && currCheckOper->m_ListCheckAlter->Count>0)
+		editFirstNameAlter->Text =  static_cast<CheckAlternativ*>(currCheckOper->m_ListCheckAlter->Items[0])->m_sName;
+	else
+		editFirstNameAlter->Text = "-";
+}
+
+void TfmToolGenerStruct::InitFieldsWorkAlter()
+{
+	if(!currWorkAlter)
+	{
+		editNameAlter->Text = "";
+		editB->Text = "";
+		editT->Text = "";
+		editV->Text = "";
+		return;
+	}
+
+   editNameAlter->Text = currWorkAlter->m_sName;
+   editB->Text =  FloatToStrF(currWorkAlter->m_dB,ffGeneral,3,5);
+   editT->Text =  FloatToStrF(currWorkAlter->m_dT,ffGeneral,3,5);
+   editV->Text =  FloatToStrF(currWorkAlter->m_dV,ffGeneral,3,5);
+}
+
+void TfmToolGenerStruct::InitFieldsCheckAlter()
+{
+	if(!currCheckAlter)
+	{
+		editNameCheckAlter->Text = "";
+		editP11->Text = "";
+		editP00->Text = "";
+		editPDiagn->Text = "";
+		return;
+	}
+
+   editNameCheckAlter->Text = currCheckAlter->m_sName;
+   editP11->Text =  FloatToStrF(currCheckAlter->m_dP11,ffGeneral,3,5);
+   editP00->Text =  FloatToStrF(currCheckAlter->m_dP00,ffGeneral,3,5);
+   editPDiagn->Text =  FloatToStrF(currCheckAlter->m_dB,ffGeneral,3,5);
+}
+
 
 void TfmToolGenerStruct::EnableCheckControls()
 {
+	bool bEButt = false;
+	bool bEAlter = false;
 
+	if (PageControl1->ActivePageIndex == 0)
+	{
+	   bEButt = (m_ListCheckOper->Count >0) && (currCheckOper!=NULL);
+	   editCheckOperation->Enabled = bEButt;
+	   addControlBtn->Enabled = true;
+	}
+	else if (PageControl1->ActivePageIndex == 1)
+	{
+		bEButt = (m_ListCheckOper->Count >0) && (currCheckOper!=NULL);
+		addControlBtn->Enabled = bEButt;
+
+		bEAlter = (currCheckOper!=NULL && currCheckAlter!=NULL);
+		editNameCheckAlter->Enabled = bEAlter;
+		editP11->Enabled = bEAlter;
+		editP00->Enabled = bEAlter;
+		editPDiagn->Enabled = bEAlter;
+	}
+
+	delControlBtn->Enabled = bEButt;
+	editControlBtn->Enabled = bEButt;
 }
 
 //---------------------------------------------------------------------------
@@ -426,24 +595,32 @@ void __fastcall TfmToolGenerStruct::addControlBtnClick(TObject *Sender)
 	{
 		CheckOperation* Item = new CheckOperation;
 
-		Item->m_nID = m_ListCheckOper->Count+1;
-		Item->m_nNumAlt = 0;
-		Item->m_sNameFirstAlt = "";
-		Item->m_nNumAlt = 0;
-
+		Item->m_ListCheckAlter = new TList;
 		m_ListCheckOper->Add(Item);
 		RefillCheckGrid();
+		if (currCheckOper == NULL)
+		{
+			InitCurrCheckOper(1);
+		}
 	}
 	else
 	{
-		WorkAlternativ * ItemA = new WorkAlternativ;
+		CheckAlternativ * ItemA = new CheckAlternativ;
 
-		ItemA->m_nID = 1;
-		ItemA->m_nWorkID = 1;
-		ItemA->m_sName = "test";
+		ItemA->m_sName = "-";
+		ItemA->m_dP00 = 1;
+		ItemA->m_dP11 = 1;
 		ItemA->m_dB = 1;
-		ItemA->m_dV = 1;
-		ItemA->m_dT = 1;
+
+		if(currCheckOper!=NULL)
+		{
+			currCheckOper->m_ListCheckAlter->Add(ItemA);
+			RefillCheckAlterGrid();
+			if (currCheckAlter == NULL)
+			{
+				InitCurrCheckAlter(1);
+			}
+		}
 
 	}
 }
@@ -461,11 +638,146 @@ void TfmToolGenerStruct::InitCurrWorkOper(int idx)
 	EnableWorkControls();
 }
 
+void TfmToolGenerStruct::InitCurrWorkAlter(int idx)
+{
+	if(currWorkOper)
+	{
+	   if (idx>0 && currWorkOper->m_ListWorkAlter->Count>0)
+	   {
+			currWorkAlter = static_cast<WorkAlternativ*>(currWorkOper->m_ListWorkAlter->Items[idx-1]);
+			InitFieldsWorkAlter();
+	   }
+	   else
+	   {
+		   currWorkAlter = NULL;
+	   }
+	}
+	else
+	{
+		currWorkAlter = NULL;
+	}
+	EnableWorkControls();
+}
+
+void TfmToolGenerStruct::InitCurrCheckOper(int idx)
+{
+	if (idx>0 && m_ListCheckOper->Count>0) {
+	   currCheckOper = static_cast<CheckOperation*>(m_ListCheckOper->Items[idx-1]);
+	   InitFieldsCheckOper();
+	}
+	else
+	{
+		currCheckOper = NULL;
+	}
+	EnableCheckControls();
+}
+
+void TfmToolGenerStruct::InitCurrCheckAlter(int idx)
+{
+	if(currCheckOper)
+	{
+	   if (idx>0 && currCheckOper->m_ListCheckAlter->Count>0)
+	   {
+			currCheckAlter = static_cast<CheckAlternativ*>(currCheckOper->m_ListCheckAlter->Items[idx-1]);
+			InitFieldsCheckAlter();
+	   }
+	   else
+	   {
+		   currCheckAlter = NULL;
+	   }
+	}
+	else
+	{
+		currCheckAlter = NULL;
+	}
+	EnableCheckControls();
+}
 
 void __fastcall TfmToolGenerStruct::sgWorkOperationSelectCell(TObject *Sender, int ACol,
 		  int ARow, bool &CanSelect)
 {
 	InitCurrWorkOper(ARow);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfmToolGenerStruct::sgWorkAlterOperationSelectCell(TObject *Sender,
+		  int ACol, int ARow, bool &CanSelect)
+{
+	InitCurrWorkAlter(ARow);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfmToolGenerStruct::sgControlOperationSelectCell(TObject *Sender,
+          int ACol, int ARow, bool &CanSelect)
+{
+		InitCurrCheckOper(ARow);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfmToolGenerStruct::sgControlAlterOperationSelectCell(TObject *Sender,
+          int ACol, int ARow, bool &CanSelect)
+{
+		InitCurrCheckAlter(ARow);
+}
+//---------------------------------------------------------------------------
+
+int TfmToolGenerStruct::exit_proverka_simb(TEdit *Edit)
+{
+  if(read_float(AnsiString(Edit->Text).c_str()))
+  {
+//	Application->MessageBox(_T("Использован недопустимый символ."), _T("Ошибка"), MB_OK);
+ //	Edit->SetFocus();
+	return 0;
+  }
+  return 1;
+}
+
+float TfmToolGenerStruct::exit_proverka_0_1(TEdit *Edit)
+{
+  float i;
+ /* if(exit_proverka_simb(Edit)==0)
+	return 0;        */
+
+
+  AnsiString sTmp = StringReplace(Edit->Text, ",", ".",
+	   TReplaceFlags() << rfReplaceAll);
+
+  i=atof(sTmp.c_str());
+
+  if(i<0||i>1)
+  {
+//    Application->MessageBox(_T("Значение должно быть в интервале [0,1]."), _T("Ошибка!"), MB_OK);
+  //  Edit->SetFocus();
+    return 0 ;
+  }
+
+  return i;
+}
+
+
+void __fastcall TfmToolGenerStruct::editControlBtnClick(TObject *Sender)
+{
+	if (PageControl1->ActivePageIndex == 0)
+	{
+		TStringList * list = new TStringList();
+		list->DelimitedText = Trim(editCheckOperation->Text);
+		list->Delimiter = ' ';
+		currCheckOper->m_nNumMasCheck = 0;
+		for (int i=0; i < list->Count; i++)
+		{
+			currCheckOper->m_nNumMasCheck++;
+			currCheckOper->m_nMasCheck[i] = StrToInt(list->Strings[i]);
+		}
+		RefillCheckGrid();
+	}
+	else
+	{
+	   currCheckAlter->m_sName = editNameCheckAlter->Text;
+	   currCheckAlter->m_dP00 = exit_proverka_0_1(editP00);
+	   currCheckAlter->m_dP11 = exit_proverka_0_1(editP11);
+	   currCheckAlter->m_dB = exit_proverka_0_1(editPDiagn);
+	   RefillCheckAlterGrid();
+	}
 }
 //---------------------------------------------------------------------------
 

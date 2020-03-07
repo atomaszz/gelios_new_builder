@@ -15,32 +15,26 @@
 
 struct WorkAlternativ
 {
-	int m_nWorkID, m_nID;
 	AnsiString  m_sName;
 	double m_dB, m_dT, m_dV;
 };
 
 struct WorkOperation
 {
-	int m_nID, m_nNumAlt;
-	AnsiString  m_sNameFirstAlt;
 	int m_nNumMasBefore;
 	int m_nMasBefore [200];
-	bool m_bAloneControl;
+	bool m_bControl;
 	TList *m_ListWorkAlter;
 };
 
 struct CheckAlternativ
 {
-	int m_nCheckID, m_nID;
 	AnsiString  m_sName;
 	double m_dP00, m_dP11, m_dB;
 };
 
 struct CheckOperation
 {
-	int m_nID, m_nNumAlt;
-	AnsiString  m_sNameFirstAlt;
 	int m_nNumMasCheck;
 	int m_nMasCheck [200];
 	TList *m_ListCheckAlter;
@@ -121,6 +115,14 @@ __published:	// IDE-managed Components
 	void __fastcall PageControl4Change(TObject *Sender);
 	void __fastcall addControlBtnClick(TObject *Sender);
 	void __fastcall sgWorkOperationSelectCell(TObject *Sender, int ACol, int ARow, bool &CanSelect);
+	void __fastcall editWorkBtnClick(TObject *Sender);
+	void __fastcall sgWorkAlterOperationSelectCell(TObject *Sender, int ACol, int ARow,
+          bool &CanSelect);
+	void __fastcall sgControlOperationSelectCell(TObject *Sender, int ACol, int ARow,
+          bool &CanSelect);
+	void __fastcall sgControlAlterOperationSelectCell(TObject *Sender, int ACol, int ARow,
+          bool &CanSelect);
+	void __fastcall editControlBtnClick(TObject *Sender);
 
 private:	// User declarations
 	void InitWorkTablesHeader();
@@ -132,27 +134,41 @@ public:		// User declarations
 	__fastcall TfmToolGenerStruct(TComponent* Owner);
 
 	TList *m_ListWorkOper;
+	WorkOperation* currWorkOper;
 	void RefillWorkGrid();
-    void RefillWorkAlterGrid();
-
-	TList *m_ListCheckOper;
-	void RefillCheckGrid();
-
-	void EnableWorkControls();
 	void InitFieldsWorkOper();
-
-	void EnableCheckControls();
-	void InitFieldsCheckOper();
+	void InitCurrWorkOper(int idx);
 
 	WorkAlternativ* currWorkAlter;
-	WorkOperation* currWorkOper;
-	CheckAlternativ* currCheckAlter;
-	CheckOperation* currCheckOper;
-
+	void RefillWorkAlterGrid();
+	void InitFieldsWorkAlter();
 	void InitCurrWorkAlter(int idx);
-	void InitCurrWorkOper(int idx);
-	void InitCurrCheckAlter(int idx);
+
+	void EnableWorkControls();
+
+
+	TList *m_ListCheckOper;
+	CheckOperation* currCheckOper;
+	void RefillCheckGrid();
+	void InitFieldsCheckOper();
 	void InitCurrCheckOper(int idx);
+
+	CheckAlternativ* currCheckAlter;
+	void RefillCheckAlterGrid();
+	void InitFieldsCheckAlter();
+	void InitCurrCheckAlter(int idx);
+
+	void EnableCheckControls();
+
+
+
+
+
+
+
+
+	int TfmToolGenerStruct::exit_proverka_simb(TEdit *Edit);
+	float TfmToolGenerStruct::exit_proverka_0_1(TEdit *Edit);
 
 };
 

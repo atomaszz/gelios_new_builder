@@ -112,6 +112,7 @@ object fmToolGenerStruct: TfmToolGenerStruct
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           Enabled = False
           TabOrder = 2
+          OnClick = editWorkBtnClick
         end
       end
       object PageControl3: TPageControl
@@ -220,7 +221,7 @@ object fmToolGenerStruct: TfmToolGenerStruct
             TabOrder = 0
           end
           object editB: TEdit
-            Left = 6
+            Left = 3
             Top = 79
             Width = 191
             Height = 21
@@ -302,6 +303,7 @@ object fmToolGenerStruct: TfmToolGenerStruct
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goDrawFocusSelected, goColSizing, goRowSelect]
           ParentFont = False
           TabOrder = 0
+          OnSelectCell = sgWorkAlterOperationSelectCell
         end
       end
     end
@@ -371,6 +373,7 @@ object fmToolGenerStruct: TfmToolGenerStruct
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           Enabled = False
           TabOrder = 2
+          OnClick = editControlBtnClick
         end
       end
       object PageControl4: TPageControl
@@ -528,6 +531,7 @@ object fmToolGenerStruct: TfmToolGenerStruct
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goDrawFocusSelected, goColSizing, goRowSelect]
           ParentFont = False
           TabOrder = 0
+          OnSelectCell = sgControlOperationSelectCell
         end
       end
       object TabSheet2: TTabSheet
@@ -552,6 +556,7 @@ object fmToolGenerStruct: TfmToolGenerStruct
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goDrawFocusSelected, goColSizing, goRowSelect]
           ParentFont = False
           TabOrder = 0
+          OnSelectCell = sgControlAlterOperationSelectCell
         end
       end
     end

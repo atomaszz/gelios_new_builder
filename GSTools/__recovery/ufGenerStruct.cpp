@@ -50,35 +50,35 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
   {
 	Maker->SetCurrentLevel(pMain->LevelController->ParentShapeID);
 
-	int m_Last_id = pMain->MainList->TFEMaxID; //›ÚÓ ÔÓÒÎÂ‰ÌËÈ ÌÓÏÂ ÚÙÂ
+	int m_Last_id = pMain->MainList->TFEMaxID; //–≠—Ç–æ –ø–æ—Å–ª–µ–¥–Ω–∏–π –Ω–æ–º–µ—Ä —Ç—Ñ–µ
 
-	WS = Maker->AddTFSToCurrentLevel(3, pMain->f_IdAlternative, pMain->f_NumAlternative); // ‰Ó·‡‚ÎÂÌËÂ Ô‡‡ÎÂ¸ÌÓÈ –Œ
-	//‰Ó·‡‚ÎÂÌËÂ Ô‡‡ÏÂÚË˜ÂÒÍÓÈ ‡Î¸ÚÂÌ‡ÚË‚˚ ‰Îˇ ÔÂ‚ÓÈ “‘≈ ËÁ ‰Ó·‡‚ÎÂÌÌÓÈ Ô‡‡ÎÂ¸ÌÓÈ –Œ
-	PA = Maker->CreateNewParamAlternative(m_Last_id + 1); // ˝ÚÓÚ ÌÓÏÂ Ì‡‰Ó ‡Ò˜ËÚ˚‚‡Ú¸
+	WS = Maker->AddTFSToCurrentLevel(3, pMain->f_IdAlternative, pMain->f_NumAlternative); // –¥–æ–±–∞–≤–ª–µ–Ω–∏–µ –ø–∞—Ä–∞–ª–µ—å–Ω–æ–π –†–û
+	//–¥–æ–±–∞–≤–ª–µ–Ω–∏–µ –ø–∞—Ä–∞–º–µ—Ç—Ä–∏—á–µ—Å–∫–æ–π –∞–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤—ã –¥–ª—è –ø–µ—Ä–≤–æ–π –¢–§–ï –∏–∑ –¥–æ–±–∞–≤–ª–µ–Ω–Ω–æ–π –ø–∞—Ä–∞–ª–µ—å–Ω–æ–π –†–û
+	PA = Maker->CreateNewParamAlternative(m_Last_id + 1); // —ç—Ç–æ—Ç –Ω–æ–º–µ—Ä –Ω–∞–¥–æ —Ä–∞—Å—á–∏—Ç—ã–≤–∞—Ç—å
 	PA->B = 10;
 	PA->T = 100;
 	PA->V = 1000;
 
-	//‰Ó·‡‚ÎÂÌËÂ Ô‡‡ÏÂÚË˜ÂÒÍÓÈ ‡Î¸ÚÂÌ‡ÚË‚˚ ‰Îˇ ‚ÚÓÈ “‘≈ ËÁ ‰Ó·‡‚ÎÂÌÌÓÈ Ô‡‡ÎÂ¸ÌÓÈ –Œ
+	//–¥–æ–±–∞–≤–ª–µ–Ω–∏–µ –ø–∞—Ä–∞–º–µ—Ç—Ä–∏—á–µ—Å–∫–æ–π –∞–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤—ã –¥–ª—è –≤—Ç—Ä–æ–π –¢–§–ï –∏–∑ –¥–æ–±–∞–≤–ª–µ–Ω–Ω–æ–π –ø–∞—Ä–∞–ª–µ—å–Ω–æ–π –†–û
 	PA = Maker->CreateNewParamAlternative(m_Last_id + 2);
 	PA->B = 30;
 	PA->T = 300;
 	PA->V = 3000;
 
-	//‰Ó·‡‚ÎÂÌËÂ Â˘Â Ó‰ÌÓÈ Ô‡‡ÏÂÚË˜ÂÒÍÓÈ ‡Î¸ÚÂÌ‡ÚË‚˚ ‰Îˇ ‚ÚÓÈ “‘≈ ËÁ ‰Ó·‡‚ÎÂÌÌÓÈ Ô‡‡ÎÂ¸ÌÓÈ –Œ
+	//–¥–æ–±–∞–≤–ª–µ–Ω–∏–µ –µ—â–µ –æ–¥–Ω–æ–π –ø–∞—Ä–∞–º–µ—Ç—Ä–∏—á–µ—Å–∫–æ–π –∞–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤—ã –¥–ª—è –≤—Ç—Ä–æ–π –¢–§–ï –∏–∑ –¥–æ–±–∞–≤–ª–µ–Ω–Ω–æ–π –ø–∞—Ä–∞–ª–µ—å–Ω–æ–π –†–û
 	PA = Maker->CreateNewParamAlternative(m_Last_id + 2);
 	PA->B = 50;
 	PA->T = 500;
 	PA->V = 5000;
 
 
-	//ÛÒÚ‡Ì‡‚ÎË‚‡ÂÏ ÚÂÍÛ˘ËÈ ÛÓ‚ÂÌ¸ ‰Îˇ ÔÂ‚ÓÈ “‘≈ ËÁ ‰Ó·‡‚ÎÂÌÌÓÈ “‘—
+	//—É—Å—Ç–∞–Ω–∞–≤–ª–∏–≤–∞–µ–º —Ç–µ–∫—É—â–∏–π —É—Ä–æ–≤–µ–Ω—å –¥–ª—è –ø–µ—Ä–≤–æ–π –¢–§–ï –∏–∑ –¥–æ–±–∞–≤–ª–µ–Ω–Ω–æ–π –¢–§–°
 	Maker->SetCurrentLevel(m_Last_id + 1);
-	Maker->AddTFSToCurrentLevel(6, pMain->f_IdAlternative, pMain->f_NumAlternative); // ‰Ó·‡‚ÎÂÌËÂ ‘ÛÌÍ-˚È ÍÓÌÚÓÎ¸
+	Maker->AddTFSToCurrentLevel(6, pMain->f_IdAlternative, pMain->f_NumAlternative); // –¥–æ–±–∞–≤–ª–µ–Ω–∏–µ –§—É–Ω–∫-—ã–π –∫–æ–Ω—Ç—Ä–æ–ª—å
 
 
 	Maker->SetCurrentLevel(2);
-	Maker->AddTFSToCurrentLevel(4, pMain->f_IdAlternative, pMain->f_NumAlternative); // ‰Ó·‡‚ÎÂÌËÂ Ô‡‡ÎÂ¸ÌÓÈ –Œ
+	Maker->AddTFSToCurrentLevel(4, pMain->f_IdAlternative, pMain->f_NumAlternative); // –¥–æ–±–∞–≤–ª–µ–Ω–∏–µ –ø–∞—Ä–∞–ª–µ—å–Ω–æ–π –†–û
 
 	TAltSelectorItem* Item = pMain->f_AltSelector->CreateNewAlternateID(pMain->LevelController->ParentShapeID, 1);
 	 if ( !pMain->MainList->CreateAlternate(WS, WS, Item->ID, Item->Num) )
@@ -87,8 +87,8 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 	   0, 0);
 
 	Maker->SetCurrentLevel(0);
-	pMain->Grid->PrepareLevel();  // ÚÓÍ‡ Ó‰ËÌ ‡Á ËÒÛÂÏ ÌÓ‚˚È ÛÓ‚ÂÌ¸ ‡ÎÚÂÌ‡ÚË‚
-	Maker->AddTFSToCurrentLevel(4, Item->ID, Item->Num); // ‰Ó·‡‚ÎÂÌËÂ Ô‡‡ÎÂ¸ÌÓÈ –Œ
+	pMain->Grid->PrepareLevel();  // —Ç–æ–∫–∞ –æ–¥–∏–Ω —Ä–∞–∑ —Ä–∏—Å—É–µ–º –Ω–æ–≤—ã–π —É—Ä–æ–≤–µ–Ω—å –∞–ª—Ç–µ—Ä–Ω–∞—Ç–∏–≤
+	Maker->AddTFSToCurrentLevel(4, Item->ID, Item->Num); // –¥–æ–±–∞–≤–ª–µ–Ω–∏–µ –ø–∞—Ä–∞–ª–µ—å–Ω–æ–π –†–û
 
    pMain->f_CurrIDBlock = Maker->CurrIDBlock;
    pMain->f_CurrIDShape = Maker->CurrIDShape;
@@ -114,11 +114,11 @@ void TfmToolGenerStruct::InitWorkTablesHeader()
 	sgWorkOperation->ColCount    = 5;
 	sgWorkOperation->RowCount    = 2;
 	sgWorkOperation->FixedRows   = 1;
-	sgWorkOperation->Cells[0][0] = "π";
-	sgWorkOperation->Cells[1][0] = "Õ¿«¬¿Õ»≈ 1-Œ… ¿À‹“≈–.";
-	sgWorkOperation->Cells[2][0] = " ŒÀ-¬Œ ¿À‹“≈–Õ¿“»¬";
-	sgWorkOperation->Cells[3][0] = "œ–≈ƒÿ≈—“¬. Œœ≈–¿÷»»";
-	sgWorkOperation->Cells[4][0] = " ŒÕ“–ŒÀ‹";
+	sgWorkOperation->Cells[0][0] = "‚Ññ";
+	sgWorkOperation->Cells[1][0] = "–ù–ê–ó–í–ê–ù–ò–ï 1-–û–ô –ê–õ–¨–¢–ï–†.";
+	sgWorkOperation->Cells[2][0] = "–ö–û–õ-–í–û –ê–õ–¨–¢–ï–†–ù–ê–¢–ò–í";
+	sgWorkOperation->Cells[3][0] = "–ü–†–ï–î–®–ï–°–¢–í. –û–ü–ï–†–ê–¶–ò–ò";
+	sgWorkOperation->Cells[4][0] = "–ö–û–ù–¢–†–û–õ–¨";
 
 	sgWorkOperation->ColWidths[0] = 40;
 	sgWorkOperation->ColWidths[1] = 190;
@@ -132,11 +132,11 @@ void TfmToolGenerStruct::InitWorkAlterTablesHeader()
 	sgWorkAlterOperation->ColCount    = 5;
 	sgWorkAlterOperation->RowCount    = 2;
 	sgWorkAlterOperation->FixedRows   = 1;
-	sgWorkAlterOperation->Cells[0][0] = "π";
-	sgWorkAlterOperation->Cells[1][0] = "Õ¿«¬¿Õ»≈";
-	sgWorkAlterOperation->Cells[2][0] = "¬≈–Œﬂ“ÕŒ—“‹ B";
-	sgWorkAlterOperation->Cells[3][0] = "¬–≈Ãﬂ ¬€œŒÀÕ≈Õ»ﬂ T";
-	sgWorkAlterOperation->Cells[4][0] = "«¿“–¿“€ Õ¿ ¬€œŒÀÕ≈Õ»≈ V";
+	sgWorkAlterOperation->Cells[0][0] = "‚Ññ";
+	sgWorkAlterOperation->Cells[1][0] = "–ù–ê–ó–í–ê–ù–ò–ï";
+	sgWorkAlterOperation->Cells[2][0] = "–í–ï–†–û–Ø–¢–ù–û–°–¢–¨ B";
+	sgWorkAlterOperation->Cells[3][0] = "–í–†–ï–ú–Ø –í–´–ü–û–õ–ù–ï–ù–ò–Ø T";
+	sgWorkAlterOperation->Cells[4][0] = "–ó–ê–¢–†–ê–¢–´ –ù–ê –í–´–ü–û–õ–ù–ï–ù–ò–ï V";
 
 	sgWorkAlterOperation->ColWidths[0] = 40;
 	sgWorkAlterOperation->ColWidths[1] = 190;
@@ -151,10 +151,10 @@ void TfmToolGenerStruct::InitCheckTablesHeader()
 	sgControlOperation->ColCount    = 4;
 	sgControlOperation->RowCount    = 2;
 	sgControlOperation->FixedRows   = 1;
-	sgControlOperation->Cells[0][0] = "π";
-	sgControlOperation->Cells[1][0] = "Õ¿«¬¿Õ»≈ 1-Œ… ¿À‹“≈–.";
-	sgControlOperation->Cells[2][0] = " ŒÀ-¬Œ ¿À‹“≈–Õ¿“»¬";
-	sgControlOperation->Cells[3][0] = " ŒÕ“–ŒÀ»–. Œœ≈–¿÷»»";
+	sgControlOperation->Cells[0][0] = "‚Ññ";
+	sgControlOperation->Cells[1][0] = "–ù–ê–ó–í–ê–ù–ò–ï 1-–û–ô –ê–õ–¨–¢–ï–†.";
+	sgControlOperation->Cells[2][0] = "–ö–û–õ-–í–û –ê–õ–¨–¢–ï–†–ù–ê–¢–ò–í";
+	sgControlOperation->Cells[3][0] = "–ö–û–ù–¢–†–û–õ–ò–†. –û–ü–ï–†–ê–¶–ò–ò";
 
 	sgControlOperation->ColWidths[0] = 40;
 	sgControlOperation->ColWidths[1] = 190;
@@ -167,11 +167,11 @@ void TfmToolGenerStruct::InitCheckAlterTablesHeader()
 	sgControlAlterOperation->ColCount    = 5;
 	sgControlAlterOperation->RowCount    = 2;
 	sgControlAlterOperation->FixedRows   = 1;
-	sgControlAlterOperation->Cells[0][0] = "π";
-	sgControlAlterOperation->Cells[1][0] = "Õ¿«¬¿Õ»≈";
-	sgControlAlterOperation->Cells[2][0] = "¬≈–Œﬂ“ÕŒ—“‹ œ_11";
-	sgControlAlterOperation->Cells[3][0] = "¬≈–Œﬂ“ÕŒ—“‹ œ_00";
-	sgControlAlterOperation->Cells[4][0] = "¬≈–Œﬂ“ÕŒ—“‹ –¿¡Œ“Œ—-“»";
+	sgControlAlterOperation->Cells[0][0] = "‚Ññ";
+	sgControlAlterOperation->Cells[1][0] = "–ù–ê–ó–í–ê–ù–ò–ï";
+	sgControlAlterOperation->Cells[2][0] = "–í–ï–†–û–Ø–¢–ù–û–°–¢–¨ –ü_11";
+	sgControlAlterOperation->Cells[3][0] = "–í–ï–†–û–Ø–¢–ù–û–°–¢–¨ –ü_00";
+	sgControlAlterOperation->Cells[4][0] = "–í–ï–†–û–Ø–¢–ù–û–°–¢–¨ –†–ê–ë–û–¢–û–°-–¢–ò";
 
 	sgControlAlterOperation->ColWidths[0] = 40;
 	sgControlAlterOperation->ColWidths[1] = 190;
@@ -212,13 +212,24 @@ void TfmToolGenerStruct::RefillWorkGrid()
 			for (int j = 0; j < WO->m_ListWorkBefore->Count; j++)
 			{
 				WOT =  static_cast<WorkOperation*>(WO->m_ListWorkBefore->Items[j]);
-				if (WOT) {
+				if (WOT && WOT->m_nID>0) {
 					sMAsAlt += IntToStr(WOT->m_nID) + " ";
 				}
+				else
+					WO->m_ListWorkBefore->Delete(j--);
 			}
 		}
 		sgWorkOperation->Cells[3][i+1] = sMAsAlt;
-		sgWorkOperation->Cells[4][i+1] = WO->m_ListCheckBy->Count>0 ? "ƒ¿" : "Õ≈“";
+
+		CheckOperation* COTT;
+		for (int j = 0; j < WO->m_ListCheckBy->Count; j++) {
+		  COTT = static_cast<CheckOperation*>(WO->m_ListCheckBy->Items[j]);
+		  if (COTT->m_nID<=0) {
+			WO->m_ListCheckBy->Delete(j--);  
+		  } 
+		}
+		
+		sgWorkOperation->Cells[4][i+1] = WO->m_ListCheckBy->Count>0 ? "–î–ê" : "–ù–ï–¢";
 	}
 }
 
@@ -305,9 +316,11 @@ void TfmToolGenerStruct::RefillCheckGrid()
 			for (int j = 0; j < CO->m_ListCheckWork->Count; j++)
 			{
 				COT = static_cast<CheckOperation*>(CO->m_ListCheckWork->Items[j]);
-				if (COT) {
+				if (COT && COT->m_nID>0) {
 				  sMasCheck += IntToStr(COT->m_nID) + " ";
 				}
+				else
+				  CO->m_ListCheckWork->Delete(j--);
 			}
 		}
 		sgControlOperation->Cells[3][i+1] = sMasCheck;
@@ -766,7 +779,7 @@ int TfmToolGenerStruct::exit_proverka_simb(TEdit *Edit)
 {
   if(read_float(AnsiString(Edit->Text).c_str()))
   {
-//	Application->MessageBox(_T("»ÒÔÓÎ¸ÁÓ‚‡Ì ÌÂ‰ÓÔÛÒÚËÏ˚È ÒËÏ‚ÓÎ."), _T("Œ¯Ë·Í‡"), MB_OK);
+//	Application->MessageBox(_T("–ò—Å–ø–æ–ª—å–∑–æ–≤–∞–Ω –Ω–µ–¥–æ–ø—É—Å—Ç–∏–º—ã–π —Å–∏–º–≤–æ–ª."), _T("–û—à–∏–±–∫–∞"), MB_OK);
  //	Edit->SetFocus();
 	return 0;
   }
@@ -787,7 +800,7 @@ float TfmToolGenerStruct::exit_proverka_0_1(TEdit *Edit)
 
   if(i<0||i>1)
   {
-//    Application->MessageBox(_T("«Ì‡˜ÂÌËÂ ‰ÓÎÊÌÓ ·˚Ú¸ ‚ ËÌÚÂ‚‡ÎÂ [0,1]."), _T("Œ¯Ë·Í‡!"), MB_OK);
+//    Application->MessageBox(_T("–ó–Ω–∞—á–µ–Ω–∏–µ –¥–æ–ª–∂–Ω–æ –±—ã—Ç—å –≤ –∏–Ω—Ç–µ—Ä–≤–∞–ª–µ [0,1]."), _T("–û—à–∏–±–∫–∞!"), MB_OK);
   //  Edit->SetFocus();
     return 0 ;
   }
@@ -854,8 +867,7 @@ void __fastcall TfmToolGenerStruct::delWorkBtnClick(TObject *Sender)
 		{
 			idx =  currWorkOper->m_nID-1;
 			currWorkOper->m_nID = -1;
-			m_ListWorkOper->Delete(currWorkOper->m_nID-1);
-			delete currWorkOper;
+			m_ListWorkOper->Delete(idx);
 		}
 		InitCurrWorkOper(idx);
 		InitFieldsWorkOper();
@@ -897,12 +909,11 @@ void __fastcall TfmToolGenerStruct::delControlBtnClick(TObject *Sender)
 			idx =  currCheckOper->m_nID-1;
 			m_ListCheckOper->Delete(idx);
 			currCheckOper->m_nID = -1;
-			delete currCheckOper;
 		}
 		InitCurrCheckOper(idx);
 		InitFieldsCheckOper();
 		RefillCheckGrid();
-        RefillWorkGrid();
+		RefillWorkGrid();
 	}
 	else
 	{

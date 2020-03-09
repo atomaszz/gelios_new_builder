@@ -52,7 +52,32 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 
 	int m_Last_id = pMain->MainList->TFEMaxID; //Это последний номер тфе
 
-	WS = Maker->AddTFSToCurrentLevel(3, pMain->f_IdAlternative, pMain->f_NumAlternative); // добавление паралеьной РО
+	int idx =1;
+	WorkOperation* WO;
+	WorkAlternativ* WA;
+	for (int i = 0; i < m_ListWorkOper->Count; i++) 
+	{
+		WS = Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative); // добавление паралеьной РО
+		WO = static_cast<WorkOperation*>(m_ListWorkOper->Items[i]);
+
+		for (int j = 0; j < WO->m_ListWorkAlter->Count; j++) 
+		{
+		   WA = static_cast<WorkAlternativ*>(WO->m_ListWorkAlter->Items[j]);
+		   PA = Maker->CreateNewParamAlternative(m_Last_id + idx); // этот номер надо расчитывать
+		   if (WA->m_sName!="" && WA->m_sName!="-") 
+			PA->NAME = WA->m_sName; 
+		   PA->B = WA->m_dB;
+		   PA->T = WA->m_dT;
+		   PA->V = WA->m_dV;  
+		}
+		idx++;
+	}
+
+
+
+	
+
+   /*	WS = Maker->AddTFSToCurrentLevel(3, pMain->f_IdAlternative, pMain->f_NumAlternative); // добавление паралеьной РО
 	//добавление параметрической альтернативы для первой ТФЕ из добавленной паралеьной РО
 	PA = Maker->CreateNewParamAlternative(m_Last_id + 1); // этот номер надо расчитывать
 	PA->B = 10;
@@ -88,7 +113,7 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 
 	Maker->SetCurrentLevel(0);
 	pMain->Grid->PrepareLevel();  // тока один раз рисуем новый уровень алтернатив
-	Maker->AddTFSToCurrentLevel(4, Item->ID, Item->Num); // добавление паралеьной РО
+	Maker->AddTFSToCurrentLevel(4, Item->ID, Item->Num); // добавление паралеьной РО      */
 
    pMain->f_CurrIDBlock = Maker->CurrIDBlock;
    pMain->f_CurrIDShape = Maker->CurrIDShape;
@@ -212,12 +237,23 @@ void TfmToolGenerStruct::RefillWorkGrid()
 			for (int j = 0; j < WO->m_ListWorkBefore->Count; j++)
 			{
 				WOT =  static_cast<WorkOperation*>(WO->m_ListWorkBefore->Items[j]);
-				if (WOT) {
+				if (WOT && WOT->m_nID>0) {
 					sMAsAlt += IntToStr(WOT->m_nID) + " ";
 				}
+				else
+					WO->m_ListWorkBefore->Delete(j--);
 			}
 		}
 		sgWorkOperation->Cells[3][i+1] = sMAsAlt;
+
+		CheckOperation* COTT;
+		for (int j = 0; j < WO->m_ListCheckBy->Count; j++) {
+		  COTT = static_cast<CheckOperation*>(WO->m_ListCheckBy->Items[j]);
+		  if (COTT->m_nID<=0) {
+			WO->m_ListCheckBy->Delete(j--);  
+		  } 
+		}
+		
 		sgWorkOperation->Cells[4][i+1] = WO->m_ListCheckBy->Count>0 ? "ДА" : "НЕТ";
 	}
 }
@@ -305,9 +341,11 @@ void TfmToolGenerStruct::RefillCheckGrid()
 			for (int j = 0; j < CO->m_ListCheckWork->Count; j++)
 			{
 				COT = static_cast<CheckOperation*>(CO->m_ListCheckWork->Items[j]);
-				if (COT) {
+				if (COT && COT->m_nID>0) {
 				  sMasCheck += IntToStr(COT->m_nID) + " ";
 				}
+				else
+				  CO->m_ListCheckWork->Delete(j--);
 			}
 		}
 		sgControlOperation->Cells[3][i+1] = sMasCheck;
@@ -854,8 +892,7 @@ void __fastcall TfmToolGenerStruct::delWorkBtnClick(TObject *Sender)
 		{
 			idx =  currWorkOper->m_nID-1;
 			currWorkOper->m_nID = -1;
-			m_ListWorkOper->Delete(currWorkOper->m_nID-1);
-			delete currWorkOper;
+			m_ListWorkOper->Delete(idx);
 		}
 		InitCurrWorkOper(idx);
 		InitFieldsWorkOper();
@@ -897,12 +934,11 @@ void __fastcall TfmToolGenerStruct::delControlBtnClick(TObject *Sender)
 			idx =  currCheckOper->m_nID-1;
 			m_ListCheckOper->Delete(idx);
 			currCheckOper->m_nID = -1;
-			delete currCheckOper;
 		}
 		InitCurrCheckOper(idx);
 		InitFieldsCheckOper();
 		RefillCheckGrid();
-        RefillWorkGrid();
+		RefillWorkGrid();
 	}
 	else
 	{

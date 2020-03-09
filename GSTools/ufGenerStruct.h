@@ -20,28 +20,31 @@ struct WorkAlternativ
 	double m_dB, m_dT, m_dV;
 };
 
-struct WorkOperation
-{
-	int m_nID;
-	TList *m_ListWorkBefore;
-
-	TList *m_ListCheckBy;
-	TList *m_ListWorkAlter;
-};
-
-struct CheckAlternativ
-{
-    int m_nID;
-	AnsiString  m_sName;
-	double m_dP00, m_dP11, m_dB;
-};
-
 struct CheckOperation
 {
 	int m_nID;
 	TList *m_ListCheckWork;
 	TList *m_ListCheckAlter;
 };
+
+struct WorkOperation
+{
+	int m_nID;
+	TList *m_ListWorkBefore;
+	TList *m_ListWorkAlter;
+
+	CheckOperation* m_pCheckAlone;
+    CheckOperation* m_pGroupCheck;
+};
+
+struct CheckAlternativ
+{
+    int m_nID;
+	AnsiString  m_sName;
+	double m_dK00, m_dK11, m_dTf, m_dVf;
+};
+
+
 
 //---------------------------------------------------------------------------
 
@@ -100,16 +103,18 @@ __published:	// IDE-managed Components
 	TLabel *Label10;
 	TEdit *editV;
 	TEdit *editFirstAlterName;
-	TEdit *editP11;
+	TEdit *editK11;
 	TLabel *Label11;
 	TLabel *Label12;
 	TEdit *editNameCheckAlter;
-	TEdit *editPDiagn;
+	TEdit *editTf;
 	TLabel *Label13;
-	TEdit *editP00;
+	TEdit *editK00;
 	TLabel *Label14;
 	TStringGrid *sgWorkAlterOperation;
 	TStringGrid *sgControlAlterOperation;
+	TLabel *Label15;
+	TEdit *editVf;
 	void __fastcall acptBtnClick(TObject *Sender);
 	void __fastcall addWorkBtnClick(TObject *Sender);
 	void __fastcall PageControl2Change(TObject *Sender);
@@ -128,6 +133,7 @@ __published:	// IDE-managed Components
 	void __fastcall editControlBtnClick(TObject *Sender);
 	void __fastcall delWorkBtnClick(TObject *Sender);
 	void __fastcall delControlBtnClick(TObject *Sender);
+	void __fastcall extBtnClick(TObject *Sender);
 
 private:	// User declarations
 	void InitWorkTablesHeader();

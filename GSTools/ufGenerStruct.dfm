@@ -46,6 +46,7 @@ object fmToolGenerStruct: TfmToolGenerStruct
       Caption = #1047#1072#1082#1088#1099#1090#1100
       ModalResult = 2
       TabOrder = 1
+      OnClick = extBtnClick
     end
   end
   object Panel3: TPanel
@@ -439,12 +440,14 @@ object fmToolGenerStruct: TfmToolGenerStruct
         object TabSheet8: TTabSheet
           Caption = #1040#1083#1100#1090#1077#1088#1088#1085#1072#1090#1080#1074#1072
           ImageIndex = 1
+          ExplicitLeft = 1
+          ExplicitTop = 25
           object Label11: TLabel
             Left = 6
-            Top = 60
+            Top = 36
             Width = 97
             Height = 13
-            Caption = #1042#1077#1088#1086#1103#1090#1085#1086#1089#1090#1100' '#1055'_11:'
+            Caption = #1042#1077#1088#1086#1103#1090#1085#1086#1089#1090#1100' '#1050'_11:'
           end
           object Label12: TLabel
             Left = 6
@@ -455,49 +458,76 @@ object fmToolGenerStruct: TfmToolGenerStruct
           end
           object Label13: TLabel
             Left = 6
-            Top = 115
-            Width = 129
+            Top = 92
+            Width = 165
             Height = 13
-            Caption = #1042#1077#1088#1086#1103#1090#1085#1086#1089#1090#1100' '#1088#1072#1073#1086#1090#1086#1089'-'#1090#1080':'
+            Caption = #1057#1088#1077#1076#1085#1077#1077' '#1074#1088#1077#1084#1103' '#1074#1099#1087#1086#1083#1085#1077#1085#1080#1103' T_f:'
           end
           object Label14: TLabel
             Left = 6
-            Top = 87
+            Top = 65
             Width = 97
             Height = 13
-            Caption = #1042#1077#1088#1086#1103#1090#1085#1086#1089#1090#1100' '#1055'_00:'
+            Caption = #1042#1077#1088#1086#1103#1090#1085#1086#1089#1090#1100' '#1050'_00:'
           end
-          object editP11: TEdit
+          object Label15: TLabel
+            Left = 6
+            Top = 116
+            Width = 179
+            Height = 13
+            Caption = #1057#1088#1077#1076'. '#1079#1072#1090#1088#1072#1090#1099' '#1085#1072' '#1074#1099#1087#1086#1083#1085#1077#1085#1080#1077' V_f:'
+          end
+          object editK11: TEdit
             Left = 109
-            Top = 55
+            Top = 30
             Width = 88
             Height = 21
             Enabled = False
             TabOrder = 0
           end
           object editNameCheckAlter: TEdit
-            Left = 6
-            Top = 25
+            Left = 64
+            Top = 3
             Width = 191
             Height = 21
             Enabled = False
             TabOrder = 1
           end
-          object editPDiagn: TEdit
-            Left = 141
-            Top = 111
-            Width = 55
+          object editTf: TEdit
+            Left = 177
+            Top = 84
+            Width = 75
             Height = 21
             Enabled = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
             TabOrder = 2
           end
-          object editP00: TEdit
+          object editK00: TEdit
             Left = 109
-            Top = 84
+            Top = 57
             Width = 88
             Height = 21
             Enabled = False
             TabOrder = 3
+          end
+          object editVf: TEdit
+            Left = 190
+            Top = 111
+            Width = 62
+            Height = 21
+            Enabled = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
+            TabOrder = 4
           end
         end
       end

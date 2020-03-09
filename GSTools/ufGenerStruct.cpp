@@ -55,25 +55,36 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 	int idx =1;
 	WorkOperation* WO;
 	WorkAlternativ* WA;
-	for (int i = 0; i < m_ListWorkOper->Count; i++) 
+	for (int i = 0; i < m_ListWorkOper->Count; i++)
 	{
-		WS = Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative); // добавление паралеьной РО
 		WO = static_cast<WorkOperation*>(m_ListWorkOper->Items[i]);
-
-		for (int j = 0; j < WO->m_ListWorkAlter->Count; j++) 
+		if (WO->m_pCheckAlone!=NULL)
+		{
+			WS = Maker->AddTFSToCurrentLevel(6, pMain->f_IdAlternative, pMain->f_NumAlternative);
+		}
+		else
+		{
+			WS = Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
+		}
+		for (int j = 0; j < WO->m_ListWorkAlter->Count; j++)
 		{
 		   WA = static_cast<WorkAlternativ*>(WO->m_ListWorkAlter->Items[j]);
 		   PA = Maker->CreateNewParamAlternative(m_Last_id + idx); // этот номер надо расчитывать
-		   if (WA->m_sName!="" && WA->m_sName!="-") 
-			PA->NAME = WA->m_sName; 
+		   if (WA->m_sName!="" && WA->m_sName!="-")
+			PA->NAME = WA->m_sName;
 		   PA->B = WA->m_dB;
 		   PA->T = WA->m_dT;
-		   PA->V = WA->m_dV;  
+		   PA->V = WA->m_dV;
 		}
 		idx++;
 	}
 
-
+    	/*	PA = Maker->CreateNewParamAlternative(2);
+		PA->NAME = "tEST";
+		   PA->K_11 = 0.5;
+		   PA->K_00 = 0.6;
+		   PA->T_F = 0.1;
+		   PA->V_F = 0.2;      */
 
 	
 
@@ -189,20 +200,22 @@ void TfmToolGenerStruct::InitCheckTablesHeader()
 
 void TfmToolGenerStruct::InitCheckAlterTablesHeader()
 {
-	sgControlAlterOperation->ColCount    = 5;
+	sgControlAlterOperation->ColCount    = 6;
 	sgControlAlterOperation->RowCount    = 2;
 	sgControlAlterOperation->FixedRows   = 1;
 	sgControlAlterOperation->Cells[0][0] = "№";
 	sgControlAlterOperation->Cells[1][0] = "НАЗВАНИЕ";
-	sgControlAlterOperation->Cells[2][0] = "ВЕРОЯТНОСТЬ П_11";
-	sgControlAlterOperation->Cells[3][0] = "ВЕРОЯТНОСТЬ П_00";
-	sgControlAlterOperation->Cells[4][0] = "ВЕРОЯТНОСТЬ РАБОТОС-ТИ";
+	sgControlAlterOperation->Cells[2][0] = "ВЕРОЯТНОСТЬ K_11";
+	sgControlAlterOperation->Cells[3][0] = "ВЕРОЯТНОСТЬ K_00";
+	sgControlAlterOperation->Cells[4][0] = "СР. ВРЕМЯ ВЫПОЛН. T_f";
+	sgControlAlterOperation->Cells[4][0] = "СР. ЗАТРАТЫ НА ВЫПОЛН. V_f";
 
 	sgControlAlterOperation->ColWidths[0] = 40;
 	sgControlAlterOperation->ColWidths[1] = 190;
 	sgControlAlterOperation->ColWidths[2] = 230;
 	sgControlAlterOperation->ColWidths[3] = 230;
-	sgControlAlterOperation->ColWidths[4] = 245;
+	sgControlAlterOperation->ColWidths[4] = 250;
+	sgControlAlterOperation->ColWidths[5] = 250;
 }
 
 void TfmToolGenerStruct::RefillWorkGrid()
@@ -245,16 +258,7 @@ void TfmToolGenerStruct::RefillWorkGrid()
 			}
 		}
 		sgWorkOperation->Cells[3][i+1] = sMAsAlt;
-
-		CheckOperation* COTT;
-		for (int j = 0; j < WO->m_ListCheckBy->Count; j++) {
-		  COTT = static_cast<CheckOperation*>(WO->m_ListCheckBy->Items[j]);
-		  if (COTT->m_nID<=0) {
-			WO->m_ListCheckBy->Delete(j--);  
-		  } 
-		}
-		
-		sgWorkOperation->Cells[4][i+1] = WO->m_ListCheckBy->Count>0 ? "ДА" : "НЕТ";
+		sgWorkOperation->Cells[4][i+1] = WO->m_pGroupCheck!=NULL || WO->m_pCheckAlone!=NULL ? "ДА" : "НЕТ";
 	}
 }
 
@@ -302,9 +306,10 @@ void TfmToolGenerStruct::RefillCheckAlterGrid()
 		WOA = static_cast<CheckAlternativ*>(currCheckOper->m_ListCheckAlter->Items[i]);
 		sgControlAlterOperation->Cells[0][i+1] = i+1;
 		sgControlAlterOperation->Cells[1][i+1] = WOA->m_sName;
-		sgControlAlterOperation->Cells[2][i+1] = FloatToStrF(WOA->m_dP00,ffFixed,3,5);
-		sgControlAlterOperation->Cells[3][i+1] = FloatToStrF(WOA->m_dP11,ffFixed,3,5);
-		sgControlAlterOperation->Cells[4][i+1] = FloatToStrF(WOA->m_dB,ffFixed,3,5);
+		sgControlAlterOperation->Cells[2][i+1] = FloatToStrF(WOA->m_dK00,ffFixed,3,5);
+		sgControlAlterOperation->Cells[3][i+1] = FloatToStrF(WOA->m_dK11,ffFixed,3,5);
+		sgControlAlterOperation->Cells[4][i+1] = FloatToStrF(WOA->m_dTf,ffFixed,3,5);
+		sgControlAlterOperation->Cells[5][i+1] = FloatToStrF(WOA->m_dVf,ffFixed,3,5);
 	}
 }
 
@@ -360,9 +365,9 @@ void __fastcall TfmToolGenerStruct::addWorkBtnClick(TObject *Sender)
 
 		Item->m_nID = m_ListWorkOper->Count+1;
 		Item->m_ListWorkBefore = new TList;
-		Item->m_ListCheckBy = new TList;
+		Item->m_pGroupCheck = NULL;
 		Item->m_ListWorkAlter = new TList;
-
+		Item->m_pCheckAlone = NULL;
 		m_ListWorkOper->Add(Item);
 		RefillWorkGrid();
 		if (currWorkOper == NULL)
@@ -552,9 +557,10 @@ void TfmToolGenerStruct::EnableCheckControls()
 
 		bEAlter = (currCheckOper!=NULL && currCheckAlter!=NULL);
 		editNameCheckAlter->Enabled = bEAlter;
-		editP11->Enabled = bEAlter;
-		editP00->Enabled = bEAlter;
-		editPDiagn->Enabled = bEAlter;
+		editK11->Enabled = bEAlter;
+		editK00->Enabled = bEAlter;
+		editTf->Enabled = bEAlter;
+		editVf->Enabled = bEAlter;
 		delControlBtn->Enabled = bEAlter;
 		editControlBtn->Enabled = bEAlter;
 	}
@@ -652,16 +658,18 @@ void TfmToolGenerStruct::InitFieldsCheckAlter()
 	if(!currCheckAlter)
 	{
 		editNameCheckAlter->Text = "";
-		editP11->Text = "";
-		editP00->Text = "";
-		editPDiagn->Text = "";
+		editK11->Text = "";
+		editK00->Text = "";
+		editTf->Text = "";
+		editVf->Text = "";
 		return;
 	}
 
    editNameCheckAlter->Text = currCheckAlter->m_sName;
-   editP11->Text =  FloatToStrF(currCheckAlter->m_dP11,ffGeneral,3,5);
-   editP00->Text =  FloatToStrF(currCheckAlter->m_dP00,ffGeneral,3,5);
-   editPDiagn->Text =  FloatToStrF(currCheckAlter->m_dB,ffGeneral,3,5);
+   editK11->Text =  FloatToStrF(currCheckAlter->m_dK11,ffGeneral,3,5);
+   editK00->Text =  FloatToStrF(currCheckAlter->m_dK00,ffGeneral,3,5);
+   editTf->Text =  FloatToStrF(currCheckAlter->m_dTf,ffGeneral,3,5);
+   editVf->Text =  FloatToStrF(currCheckAlter->m_dVf,ffGeneral,3,5);
 }
 
 //---------------------------------------------------------------------------
@@ -687,9 +695,10 @@ void __fastcall TfmToolGenerStruct::addControlBtnClick(TObject *Sender)
 
 		ItemA->m_nID = currCheckOper->m_ListCheckAlter->Count+1;
 		ItemA->m_sName = "-";
-		ItemA->m_dP00 = 1;
-		ItemA->m_dP11 = 1;
-		ItemA->m_dB = 1;
+		ItemA->m_dK00 = 1;
+		ItemA->m_dK11 = 1;
+		ItemA->m_dTf = 1;
+		ItemA->m_dVf = 1;
 
 		if(currCheckOper!=NULL)
 		{
@@ -841,26 +850,54 @@ void __fastcall TfmToolGenerStruct::editControlBtnClick(TObject *Sender)
 		TStringList * list = new TStringList();
 		list->DelimitedText = Trim(editCheckOperation->Text);
 		list->Delimiter = ' ';
-		currCheckOper->m_ListCheckWork->Clear();
-		WorkOperation* WOT;
-		for (int i=0; i < list->Count; i++)
-		{
-			int idx = StrToInt(list->Strings[i]);
-			if (idx<=0 || idx>m_ListWorkOper->Count)
-				continue;
 
-			WOT = static_cast<WorkOperation*>(m_ListWorkOper->Items[idx-1]);
-			if (WOT) {
-			   currCheckOper->m_ListCheckWork->Add(WOT);
-			   bool bDoAdd = true;
-			   for (int j = 0; j < WOT->m_ListCheckBy->Count; j++) {
-				 if (static_cast<WorkOperation*>(WOT->m_ListCheckBy->Items[j])->m_nID == currCheckOper->m_nID) {
-					 bDoAdd = false;
-				 }
-			   }
-			   if (bDoAdd) {
-				 WOT->m_ListCheckBy->Add(currCheckOper);
-			   }
+		WorkOperation* WOT;
+		if (currCheckOper->m_ListCheckWork->Count == 1) {
+		  WOT = static_cast<WorkOperation*>(currCheckOper->m_ListCheckWork->Items[0]);
+		  WOT->m_pCheckAlone = NULL;
+		}
+		currCheckOper->m_ListCheckWork->Clear();
+
+		if (list->Count == 1) {
+			int idx = StrToInt(list->Strings[0]);
+			if (idx>0 && idx<=m_ListWorkOper->Count)
+			{
+			  WOT = static_cast<WorkOperation*>(m_ListWorkOper->Items[idx-1]);
+			  if (WOT->m_pCheckAlone == NULL) {
+				WOT->m_pCheckAlone = currCheckOper;
+				currCheckOper->m_ListCheckWork->Add(WOT);
+			  }
+			  else
+			  {
+				Application->MessageBox(_T("Индивидуальный контроль данной операции уже осуществляется."), _T("Ошибка!"), MB_OK);
+				return;
+              }
+			}
+
+		}
+		else
+		{
+			for (int i = 0; i < currCheckOper->m_ListCheckWork->Count; i++) {
+				WOT = static_cast<WorkOperation*>(m_ListWorkOper->Items[i]);
+				WOT->m_pGroupCheck =NULL;
+			}
+			currCheckOper->m_ListCheckWork->Clear();
+			for (int i=0; i < list->Count; i++)
+			{
+				int idx = StrToInt(list->Strings[i]);
+				if (idx<=0 || idx>m_ListWorkOper->Count)
+					continue;
+
+				WOT = static_cast<WorkOperation*>(m_ListWorkOper->Items[idx-1]);
+				if (WOT->m_pGroupCheck == NULL) {
+				   WOT->m_pGroupCheck = currCheckOper;
+				   currCheckOper->m_ListCheckWork->Add(WOT);
+				}
+				else
+				{
+					Application->MessageBox(_T("Одна из операций уже пренадлежит другой группе контроля."), _T("Ошибка!"), MB_OK);
+					return;
+                }
 			}
 		}
 		RefillCheckGrid();
@@ -869,9 +906,10 @@ void __fastcall TfmToolGenerStruct::editControlBtnClick(TObject *Sender)
 	else
 	{
 	   currCheckAlter->m_sName = editNameCheckAlter->Text;
-	   currCheckAlter->m_dP00 = exit_proverka_0_1(editP00);
-	   currCheckAlter->m_dP11 = exit_proverka_0_1(editP11);
-	   currCheckAlter->m_dB = exit_proverka_0_1(editPDiagn);
+	   currCheckAlter->m_dK00 = exit_proverka_0_1(editK00);
+	   currCheckAlter->m_dK11 = exit_proverka_0_1(editK11);
+	   currCheckAlter->m_dTf = exit_proverka_0_1(editTf);
+       currCheckAlter->m_dVf = exit_proverka_0_1(editVf);
 	   RefillCheckAlterGrid();
 	}
 }
@@ -956,6 +994,74 @@ void __fastcall TfmToolGenerStruct::delControlBtnClick(TObject *Sender)
 	   InitFieldsCheckAlter();
 	   RefillCheckAlterGrid();
 	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfmToolGenerStruct::extBtnClick(TObject *Sender)
+{
+  TBaseWorkShape* WS;
+  TParamAlternativeItem* PA;
+  TMakerTFS* Maker = new TMakerTFS(pMain->MainList, pMain->Grid, &pMain->ShapeCopy,
+	pMain->f_CurrIDShape, pMain->f_CurrIDBlock, pMain->f_CurrIDLine);
+  try
+  {
+	Maker->SetCurrentLevel(pMain->LevelController->ParentShapeID);
+
+	int m_Last_id = pMain->MainList->TFEMaxID; //Это последний номер тфе
+
+	WS = Maker->AddTFSToCurrentLevel(3, pMain->f_IdAlternative, pMain->f_NumAlternative); // добавление паралеьной РО
+	//добавление параметрической альтернативы для первой ТФЕ из добавленной паралеьной РО
+	PA = Maker->CreateNewParamAlternative(m_Last_id + 1); // этот номер надо расчитывать
+	PA->B = 10;
+	PA->T = 100;
+	PA->V = 1000;
+
+	//добавление параметрической альтернативы для втрой ТФЕ из добавленной паралеьной РО
+	PA = Maker->CreateNewParamAlternative(m_Last_id + 2);
+	PA->B = 30;
+	PA->T = 300;
+	PA->V = 3000;
+
+	//добавление еще одной параметрической альтернативы для втрой ТФЕ из добавленной паралеьной РО
+	PA = Maker->CreateNewParamAlternative(m_Last_id + 2);
+	PA->B = 50;
+	PA->T = 500;
+	PA->V = 5000;
+
+
+	//устанавливаем текущий уровень для первой ТФЕ из добавленной ТФС
+	Maker->SetCurrentLevel(m_Last_id + 1);
+	Maker->AddTFSToCurrentLevel(6, pMain->f_IdAlternative, pMain->f_NumAlternative); // добавление Функ-ый контроль
+
+
+	Maker->SetCurrentLevel(2);
+	Maker->AddTFSToCurrentLevel(4, pMain->f_IdAlternative, pMain->f_NumAlternative); // добавление паралеьной РО
+
+	TAltSelectorItem* Item = pMain->f_AltSelector->CreateNewAlternateID(pMain->LevelController->ParentShapeID, 1);
+	 if ( !pMain->MainList->CreateAlternate(WS, WS, Item->ID, Item->Num) )
+			pMain->MainList->AddAlternate(Item->ID, Item->Num);
+	pMain->f_AlternateController->AddAlternateItem(WS, WS, Item->ID, Item->Num,
+	   0, 0);
+
+	Maker->SetCurrentLevel(0);
+	pMain->Grid->PrepareLevel();  // тока один раз рисуем новый уровень алтернатив
+	Maker->AddTFSToCurrentLevel(4, Item->ID, Item->Num); // добавление паралеьной РО
+
+	pMain->f_CurrIDBlock = Maker->CurrIDBlock;
+	pMain->f_CurrIDShape = Maker->CurrIDShape;
+	pMain->f_CurrIDLine = Maker->CurrIDLine;
+  }
+  catch(...){}
+  delete Maker;
+
+	pMain->MainList->ClearNodeTypeCreate();
+	pMain->ListChange();
+	pMain->AlternateListChange();
+	pMain->Grid->PrepareLevelOnOffset();
+	pMain->Grid->PreparePaint();
+	pMain->f_AlternateController->CoordinateCorrect();
+	pMain->SetNewPolygon();
+
 }
 //---------------------------------------------------------------------------
 

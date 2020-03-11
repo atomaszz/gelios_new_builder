@@ -8,6 +8,7 @@
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.Forms.hpp>
 #include "uMainFrm.h"
+#include "uMakerTFS.h"
 #include <Vcl.ExtCtrls.hpp>
 #include <Vcl.Grids.hpp>
 #include <Vcl.ComCtrls.hpp>
@@ -20,31 +21,61 @@ struct WorkAlternativ
 	double m_dB, m_dT, m_dV;
 };
 
-struct CheckOperation
+struct CheckAlternativ
 {
+	int m_nID;
+	AnsiString  m_sName;
+	double m_dK00, m_dK11, m_dTf, m_dVf;
+};
+
+class BasisOperation
+{
+public:
+	virtual void PutOnWork(TMakerTFS* Maker) {};
+	virtual void PutOnAlter(TMakerTFS* Maker, int nId) {};
+};
+
+class CheckOperation : public BasisOperation
+{
+public:
 	int m_nID;
 	TList *m_ListCheckWork;
 	TList *m_ListCheckAlter;
+
+	TList *m_ListOperationBefore;
+
+	void PutOnWork(TMakerTFS* Maker);
+	void PutOnAlter(TMakerTFS* Maker, int nId);
 };
 
-struct WorkOperation
+class WorkOperation : public BasisOperation
 {
+public:
 	int m_nID;
 	TList *m_ListWorkBefore;
 	TList *m_ListWorkAlter;
 
 	CheckOperation* m_pCheckAlone;
-    CheckOperation* m_pGroupCheck;
+	CheckOperation* m_pGroupCheck;
+
+	void PutOnWork(TMakerTFS* Maker);
+	void PutOnAlter(TMakerTFS* Maker, int nId);
 };
 
-struct CheckAlternativ
+class ParallWorkOperation : public BasisOperation
 {
-    int m_nID;
-	AnsiString  m_sName;
-	double m_dK00, m_dK11, m_dTf, m_dVf;
+public:
+	WorkOperation *m_op1, *m_op11, *m_op2, *m_op22;
+	bool m_bParal1, m_bParal2;
+	void PutOnWork(TMakerTFS* Maker);
+	void PutOnAlter(TMakerTFS* Maker, int nId);
+
+	ParallWorkOperation()
+	{
+		m_bParal1 = false;
+        m_bParal2 = false;
+	}
 };
-
-
 
 //---------------------------------------------------------------------------
 
@@ -140,7 +171,7 @@ private:	// User declarations
 	void InitWorkAlterTablesHeader();
 
 	void InitCheckTablesHeader();
-    void InitCheckAlterTablesHeader();
+	void InitCheckAlterTablesHeader();
 public:		// User declarations
 	__fastcall TfmToolGenerStruct(TComponent* Owner);
 

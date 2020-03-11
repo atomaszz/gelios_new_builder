@@ -440,8 +440,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
         object TabSheet8: TTabSheet
           Caption = #1040#1083#1100#1090#1077#1088#1088#1085#1072#1090#1080#1074#1072
           ImageIndex = 1
-          ExplicitLeft = 1
-          ExplicitTop = 25
           object Label11: TLabel
             Left = 6
             Top = 36

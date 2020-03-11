@@ -5,7 +5,8 @@
     <Transaction>1899.12.30 00:00:00.000.879,=C:\Users\Atom\GitHub\gelios_new_builder\Unit1.cpp</Transaction>
     <Transaction>1899.12.30 00:00:00.000.640,C:\Users\Atom\GitHub\gelios_new_builder\Unit1.cpp=C:\Users\Atom\GitHub\gelios_new_builder\GSTools\ufGenerStruct.cpp</Transaction>
     <Transaction>1899.12.30 00:00:00.000.640,C:\Users\Atom\GitHub\gelios_new_builder\Unit1.dfm=C:\Users\Atom\GitHub\gelios_new_builder\GSTools\ufGenerStruct.dfm</Transaction>
-  </Transactions>  <ProjectSortOrder AutoSort="0" SortType="0">
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="GSTools"/>
     <File Path="GSTools\ufGenerStruct.cpp"/>
     <File Path="GSTools\ufGenerStruct.cpp"/>

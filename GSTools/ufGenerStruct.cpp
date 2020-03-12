@@ -41,6 +41,7 @@ bool ShowToolGenerStruct(TfrmMain *frmMain)
 }
 void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 {
+	m_ListOut = new TList;
 	CheckOperation* CO;
 	//Отсавляем только групповой контроль
 	for (int i = 0; i < m_ListCheckOper->Count; i++)
@@ -92,113 +93,13 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 	int idx =1;
 	WorkOperation* WO;
 	WorkAlternativ* WA;
-	for (int i = 0; i < m_ListWorkOper->Count; i++)
-	{
-  //		BasisOperation* BS = static_cast<BasisOperation*>(m_ListWorkOper->Items[i]);
-  //		BS->PutOnWork(Maker);
- /*		WO = static_cast<WorkOperation*>(m_ListWorkOper->Items[i]);
-		if (WO->m_pCheckAlone!=NULL)
-		{
-			WS = Maker->AddTFSToCurrentLevel(6, pMain->f_IdAlternative, pMain->f_NumAlternative);
-		}
-		else
-		{
-			WS = Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
-		}
-		for (int j = 0; j < WO->m_ListWorkAlter->Count; j++)
-		{
-		   WA = static_cast<WorkAlternativ*>(WO->m_ListWorkAlter->Items[j]);
-		   PA = Maker->CreateNewParamAlternative(m_Last_id + idx); // этот номер надо расчитывать
-		   if (WA->m_sName!="" && WA->m_sName!="-")
-			PA->NAME = WA->m_sName;
-		   PA->B = WA->m_dB;
-		   PA->T = WA->m_dT;
-		   PA->V = WA->m_dV;
-		}
-		idx++;  */
-	}
 	TList* ll = new TList;
-	ParallWorkOperation* PWP1 = new ParallWorkOperation;
-	PWP1->m_op1 = static_cast<WorkOperation*>(m_ListWorkOper->Items[0]);
-	PWP1->m_op11 = static_cast<WorkOperation*>(m_ListWorkOper->Items[1]);
-	PWP1->m_bParal1 =true;
-	ll->Add(PWP1);
 
-	ParallWorkOperation* PWP2 = new ParallWorkOperation;
-	PWP2->m_op1 = static_cast<WorkOperation*>(m_ListWorkOper->Items[0]);
-	PWP2->m_op11 = static_cast<WorkOperation*>(m_ListWorkOper->Items[1]);
-	PWP2->m_op2 = static_cast<WorkOperation*>(m_ListWorkOper->Items[2]);
-	PWP2->m_bParal1 =true;
-	ll->Add(PWP2);
-
-   ParallWorkOperation* PWP3 = new ParallWorkOperation;
-	PWP3->m_op1 = static_cast<WorkOperation*>(m_ListWorkOper->Items[0]);
-	PWP3->m_op11 = static_cast<WorkOperation*>(m_ListWorkOper->Items[1]);
-	PWP3->m_op2 = static_cast<WorkOperation*>(m_ListWorkOper->Items[2]);
-	PWP3->m_op22 = static_cast<WorkOperation*>(m_ListWorkOper->Items[3]);
-	PWP3->m_bParal1 =true;
-	ll->Add(PWP3);
-
-	ParallWorkOperation* PWP4 = new ParallWorkOperation;
-	PWP4->m_op1 = static_cast<WorkOperation*>(m_ListWorkOper->Items[0]);
-	PWP4->m_op11 = static_cast<WorkOperation*>(m_ListWorkOper->Items[1]);
-	PWP4->m_op2 = static_cast<WorkOperation*>(m_ListWorkOper->Items[2]);
-	PWP4->m_op22 = static_cast<WorkOperation*>(m_ListWorkOper->Items[3]);
-	PWP4->m_bParal1 =true;
-	PWP4->m_bParal2 =true;
-	ll->Add(PWP4);
-	for (int i = 0; i < ll->Count; i++)
+	for (int i = 0; i < m_ListOut->Count; i++)
 	{
 		BasisOperation* BS = static_cast<BasisOperation*>(ll->Items[i]);
 		BS->PutOnWork(Maker);
     }
-
-		/*	PA = Maker->CreateNewParamAlternative(2);
-		PA->NAME = "tEST";
-		   PA->K_11 = 0.5;
-		   PA->K_00 = 0.6;
-		   PA->T_F = 0.1;
-		   PA->V_F = 0.2;      */
-
-	
-
-   /*	WS = Maker->AddTFSToCurrentLevel(3, pMain->f_IdAlternative, pMain->f_NumAlternative); // добавление паралеьной РО
-	//добавление параметрической альтернативы для первой ТФЕ из добавленной паралеьной РО
-	PA = Maker->CreateNewParamAlternative(m_Last_id + 1); // этот номер надо расчитывать
-	PA->B = 10;
-	PA->T = 100;
-	PA->V = 1000;
-
-	//добавление параметрической альтернативы для втрой ТФЕ из добавленной паралеьной РО
-	PA = Maker->CreateNewParamAlternative(m_Last_id + 2);
-	PA->B = 30;
-	PA->T = 300;
-	PA->V = 3000;
-
-	//добавление еще одной параметрической альтернативы для втрой ТФЕ из добавленной паралеьной РО
-	PA = Maker->CreateNewParamAlternative(m_Last_id + 2);
-	PA->B = 50;
-	PA->T = 500;
-	PA->V = 5000;
-
-
-	//устанавливаем текущий уровень для первой ТФЕ из добавленной ТФС
-	Maker->SetCurrentLevel(m_Last_id + 1);
-	Maker->AddTFSToCurrentLevel(6, pMain->f_IdAlternative, pMain->f_NumAlternative); // добавление Функ-ый контроль
-
-
-	Maker->SetCurrentLevel(2);
-	Maker->AddTFSToCurrentLevel(4, pMain->f_IdAlternative, pMain->f_NumAlternative); // добавление паралеьной РО
-
-	TAltSelectorItem* Item = pMain->f_AltSelector->CreateNewAlternateID(pMain->LevelController->ParentShapeID, 1);
-	 if ( !pMain->MainList->CreateAlternate(WS, WS, Item->ID, Item->Num) )
-			pMain->MainList->AddAlternate(Item->ID, Item->Num);
-	pMain->f_AlternateController->AddAlternateItem(WS, WS, Item->ID, Item->Num,
-	   0, 0);
-
-	Maker->SetCurrentLevel(0);
-	pMain->Grid->PrepareLevel();  // тока один раз рисуем новый уровень алтернатив
-	Maker->AddTFSToCurrentLevel(4, Item->ID, Item->Num); // добавление паралеьной РО      */
 
    pMain->f_CurrIDBlock = Maker->CurrIDBlock;
    pMain->f_CurrIDShape = Maker->CurrIDShape;

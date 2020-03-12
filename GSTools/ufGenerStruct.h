@@ -205,6 +205,8 @@ public:		// User declarations
 
 	void EnableCheckControls();
 
+    TList* m_ListOut;
+
 
 	int TfmToolGenerStruct::exit_proverka_simb(TEdit *Edit);
 	float TfmToolGenerStruct::exit_proverka_0_1(TEdit *Edit);

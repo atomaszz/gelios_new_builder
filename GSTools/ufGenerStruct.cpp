@@ -94,7 +94,9 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 	WorkAlternativ* WA;
 	for (int i = 0; i < m_ListWorkOper->Count; i++)
 	{
-		WO = static_cast<WorkOperation*>(m_ListWorkOper->Items[i]);
+  //		BasisOperation* BS = static_cast<BasisOperation*>(m_ListWorkOper->Items[i]);
+  //		BS->PutOnWork(Maker);
+ /*		WO = static_cast<WorkOperation*>(m_ListWorkOper->Items[i]);
 		if (WO->m_pCheckAlone!=NULL)
 		{
 			WS = Maker->AddTFSToCurrentLevel(6, pMain->f_IdAlternative, pMain->f_NumAlternative);
@@ -113,8 +115,43 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 		   PA->T = WA->m_dT;
 		   PA->V = WA->m_dV;
 		}
-		idx++;
+		idx++;  */
 	}
+	TList* ll = new TList;
+	ParallWorkOperation* PWP1 = new ParallWorkOperation;
+	PWP1->m_op1 = static_cast<WorkOperation*>(m_ListWorkOper->Items[0]);
+	PWP1->m_op11 = static_cast<WorkOperation*>(m_ListWorkOper->Items[1]);
+	PWP1->m_bParal1 =true;
+	ll->Add(PWP1);
+
+	ParallWorkOperation* PWP2 = new ParallWorkOperation;
+	PWP2->m_op1 = static_cast<WorkOperation*>(m_ListWorkOper->Items[0]);
+	PWP2->m_op11 = static_cast<WorkOperation*>(m_ListWorkOper->Items[1]);
+	PWP2->m_op2 = static_cast<WorkOperation*>(m_ListWorkOper->Items[2]);
+	PWP2->m_bParal1 =true;
+	ll->Add(PWP2);
+
+   ParallWorkOperation* PWP3 = new ParallWorkOperation;
+	PWP3->m_op1 = static_cast<WorkOperation*>(m_ListWorkOper->Items[0]);
+	PWP3->m_op11 = static_cast<WorkOperation*>(m_ListWorkOper->Items[1]);
+	PWP3->m_op2 = static_cast<WorkOperation*>(m_ListWorkOper->Items[2]);
+	PWP3->m_op22 = static_cast<WorkOperation*>(m_ListWorkOper->Items[3]);
+	PWP3->m_bParal1 =true;
+	ll->Add(PWP3);
+
+	ParallWorkOperation* PWP4 = new ParallWorkOperation;
+	PWP4->m_op1 = static_cast<WorkOperation*>(m_ListWorkOper->Items[0]);
+	PWP4->m_op11 = static_cast<WorkOperation*>(m_ListWorkOper->Items[1]);
+	PWP4->m_op2 = static_cast<WorkOperation*>(m_ListWorkOper->Items[2]);
+	PWP4->m_op22 = static_cast<WorkOperation*>(m_ListWorkOper->Items[3]);
+	PWP4->m_bParal1 =true;
+	PWP4->m_bParal2 =true;
+	ll->Add(PWP4);
+	for (int i = 0; i < ll->Count; i++)
+	{
+		BasisOperation* BS = static_cast<BasisOperation*>(ll->Items[i]);
+		BS->PutOnWork(Maker);
+    }
 
 		/*	PA = Maker->CreateNewParamAlternative(2);
 		PA->NAME = "tEST";
@@ -1203,7 +1240,8 @@ void ParallWorkOperation::PutOnWork(TMakerTFS* Maker)
 	   else
 	   {
 			Maker->SetCurrentLevel(currId2);
-			Maker->AddTFSToCurrentLevel(2, pMain->f_IdAlternative, pMain->f_NumAlternative); // добавление Функ-ый контроль
+			Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
+			Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
 			int nID = pMain->MainList->TFEMaxID;
 			m_op1->PutOnAlter(Maker, nID-1);
 			m_op11->PutOnAlter(Maker, nID);
@@ -1231,7 +1269,8 @@ void ParallWorkOperation::PutOnWork(TMakerTFS* Maker)
 	   else
 	   {
 			Maker->SetCurrentLevel(currId2);
-			Maker->AddTFSToCurrentLevel(2, pMain->f_IdAlternative, pMain->f_NumAlternative); // добавление Функ-ый контроль
+			Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
+			Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
 			int nID = pMain->MainList->TFEMaxID;
 			m_op2->PutOnAlter(Maker, nID-1);
 			m_op22->PutOnAlter(Maker, nID);
@@ -1264,7 +1303,8 @@ void ParallWorkOperation::PutOnWork(TMakerTFS* Maker)
 	   else
 	   {
 			Maker->SetCurrentLevel(currId2);
-			Maker->AddTFSToCurrentLevel(2, pMain->f_IdAlternative, pMain->f_NumAlternative); // добавление Функ-ый контроль
+			Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
+            Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
 			int nID = pMain->MainList->TFEMaxID;
 			m_op1->PutOnAlter(Maker, nID-1);
 			m_op11->PutOnAlter(Maker, nID);
@@ -1297,7 +1337,7 @@ void ParallWorkOperation::PutOnWork(TMakerTFS* Maker)
 			m_op11->PutOnAlter(Maker, currId2);
 
 	}
-
+	Maker->SetCurrentLevel(0);
 }
 
 void ParallWorkOperation::PutOnAlter(TMakerTFS* Maker, int nId)
@@ -1315,18 +1355,19 @@ void CheckOperation::PutOnWork(TMakerTFS* Maker)
 
 	for (int i = 0; i < m_ListCheckAlter->Count; i++) {
 		CA = static_cast<CheckAlternativ*>(m_ListCheckAlter->Items[i]);
-		PA = Maker->CreateNewParamAlternative(nId);
+		PA = Maker->CreateNewParamAlternative(nId+2);
 		PA->NAME = CA->m_sName;
 		PA->K_11 = CA->m_dK11;
 		PA->K_00 = CA->m_dK00;
 		PA->T_F = CA->m_dTf;
 		PA->V_F = CA->m_dVf;
 	}
-
+	Maker->SetCurrentLevel(nId+1);
 	for (int i = 0; i < m_ListCheckWork->Count; i++) {
 		BasisOperation* BO = static_cast<BasisOperation*>(m_ListCheckWork->Items[i]);
 		BO->PutOnWork(Maker);
 	}
+	Maker->SetCurrentLevel(0);
 }
 
 void CheckOperation::PutOnAlter(TMakerTFS* Maker, int nId)

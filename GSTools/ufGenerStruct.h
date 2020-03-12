@@ -67,14 +67,17 @@ class ParallWorkOperation : public BasisOperation
 public:
 	WorkOperation *m_op1, *m_op11, *m_op2, *m_op22;
 	bool m_bParal1, m_bParal2;
+	ParallWorkOperation()
+	{
+	  m_op1 = NULL;
+	  m_op11 = NULL;
+	  m_op2 = NULL;
+	  m_op22 = NULL;
+	  m_bParal1 = m_bParal2 = false;
+	}
 	void PutOnWork(TMakerTFS* Maker);
 	void PutOnAlter(TMakerTFS* Maker, int nId);
 
-	ParallWorkOperation()
-	{
-		m_bParal1 = false;
-        m_bParal2 = false;
-	}
 };
 
 //---------------------------------------------------------------------------

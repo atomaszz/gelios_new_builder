@@ -31,6 +31,8 @@ struct CheckAlternativ
 class BasisOperation
 {
 public:
+	TList *m_ListOperationBefore;
+
 	virtual void PutOnWork(TMakerTFS* Maker) {};
 	virtual void PutOnAlter(TMakerTFS* Maker, int nId) {};
 };
@@ -42,8 +44,6 @@ public:
 	TList *m_ListCheckWork;
 	TList *m_ListCheckAlter;
 
-	TList *m_ListOperationBefore;
-
 	void PutOnWork(TMakerTFS* Maker);
 	void PutOnAlter(TMakerTFS* Maker, int nId);
 };
@@ -52,7 +52,6 @@ class WorkOperation : public BasisOperation
 {
 public:
 	int m_nID;
-	TList *m_ListWorkBefore;
 	TList *m_ListWorkAlter;
 
 	CheckOperation* m_pCheckAlone;

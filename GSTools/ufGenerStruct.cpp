@@ -47,7 +47,7 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 	for (int i = 0; i < m_ListCheckOper->Count; i++)
 	{
 		 CO = static_cast<CheckOperation*>(m_ListCheckOper->Items[i]);
-		 if (CO->m_ListCheckWork->Count==1) {
+		 if (CO->m_ListCheckWork->Count<2) {
 			m_ListCheckOper->Delete(i--);
 		 }
 	}
@@ -61,9 +61,9 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 		 {
 		   WO =  static_cast<WorkOperation*>(CO->m_ListCheckWork->Items[j]); //Рабочая операция
 		   bool bGlobal = true;
-		   for (int l = 0; l < WO->m_ListWorkBefore->Count; l++)
+		   for (int l = 0; l < WO->m_ListOperationBefore->Count; l++)
 		   {
-			  WOB =  static_cast<WorkOperation*>(WO->m_ListWorkBefore->Items[l]); //Предшевст. раюб операция
+			  WOB =  static_cast<WorkOperation*>(WO->m_ListOperationBefore->Items[l]); //Предшевст. раюб операция
 			  for (int k = 0; k < CO->m_ListCheckWork->Count; k++) {
 			  WorkOperation* WWO = static_cast<WorkOperation*>(CO->m_ListCheckWork->Items[k]);
 				  if (WOB->m_nID == WWO->m_nID) {
@@ -73,7 +73,7 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 			  }
 			  if (bGlobal) {
 				CO->m_ListOperationBefore->Add(WOB);
-				WO->m_ListWorkBefore->Delete(l--);
+				WO->m_ListOperationBefore->Delete(l--);
 			  }
 		   }
 		 }
@@ -218,22 +218,22 @@ void TfmToolGenerStruct::RefillWorkGrid()
 
 		sgWorkOperation->Cells[2][i+1] = IntToStr(WO->m_ListWorkAlter->Count);
 		AnsiString  sMAsAlt ="-";
-		if (WO->m_ListWorkBefore->Count >0)
+		if (WO->m_ListOperationBefore->Count >0)
 		{
 			WorkOperation* WOT;
 			sMAsAlt ="";
-			for (int j = 0; j < WO->m_ListWorkBefore->Count; j++)
+			for (int j = 0; j < WO->m_ListOperationBefore->Count; j++)
 			{
-				WOT =  static_cast<WorkOperation*>(WO->m_ListWorkBefore->Items[j]);
+				WOT =  static_cast<WorkOperation*>(WO->m_ListOperationBefore->Items[j]);
 				if (WOT && WOT->m_nID>0) {
 					sMAsAlt += IntToStr(WOT->m_nID) + " ";
 				}
 				else
-					WO->m_ListWorkBefore->Delete(j--);
+					WO->m_ListOperationBefore->Delete(j--);
 			}
 		}
 		sgWorkOperation->Cells[3][i+1] = sMAsAlt;
-		sgWorkOperation->Cells[4][i+1] = WO->m_pGroupCheck!=NULL || WO->m_pCheckAlone!=NULL ? "ДА" : "НЕТ";
+		sgWorkOperation->Cells[4][i+1] = (WO->m_pGroupCheck!=NULL && WO->m_pGroupCheck->m_nID !=-1) || (WO->m_pCheckAlone!=NULL && WO->m_pCheckAlone->m_nID !=-1) ? "ДА" : "НЕТ";
 	}
 }
 
@@ -339,7 +339,7 @@ void __fastcall TfmToolGenerStruct::addWorkBtnClick(TObject *Sender)
 		WorkOperation* Item = new WorkOperation;
 
 		Item->m_nID = m_ListWorkOper->Count+1;
-		Item->m_ListWorkBefore = new TList;
+		Item->m_ListOperationBefore = new TList;
 		Item->m_pGroupCheck = NULL;
 		Item->m_ListWorkAlter = new TList;
 		Item->m_pCheckAlone = NULL;
@@ -382,7 +382,7 @@ void __fastcall TfmToolGenerStruct::editWorkBtnClick(TObject *Sender)
 		TStringList * list = new TStringList();
 		list->DelimitedText = Trim(editBeforeOperation->Text);
 		list->Delimiter = ' ';
-		currWorkOper->m_ListWorkBefore->Clear();
+		currWorkOper->m_ListOperationBefore->Clear();
 		WorkOperation* WOT;
 		for (int i=0; i < list->Count; i++)
 		{
@@ -390,7 +390,7 @@ void __fastcall TfmToolGenerStruct::editWorkBtnClick(TObject *Sender)
 			if (idx<=0 || idx>m_ListWorkOper->Count)
 				continue;
 			WOT = static_cast<WorkOperation*>(m_ListWorkOper->Items[idx-1]);
-			currWorkOper->m_ListWorkBefore->Add(WOT);
+			currWorkOper->m_ListOperationBefore->Add(WOT);
 		}
 		RefillWorkGrid();
 	}
@@ -552,12 +552,12 @@ void TfmToolGenerStruct::InitFieldsWorkOper()
 	}
 
 	editBeforeOperation->Text = "";
-	if (currWorkOper->m_ListWorkBefore->Count>0)
+	if (currWorkOper->m_ListOperationBefore->Count>0)
 	{
 		WorkOperation* WOT;
-		for (int i=0; i < currWorkOper->m_ListWorkBefore->Count; i++)
+		for (int i=0; i < currWorkOper->m_ListOperationBefore->Count; i++)
 		{
-			WOT = static_cast<WorkOperation*>(currWorkOper->m_ListWorkBefore->Items[i]);
+			WOT = static_cast<WorkOperation*>(currWorkOper->m_ListOperationBefore->Items[i]);
 			if (WOT) {
 			  editBeforeOperation->Text = editBeforeOperation->Text + IntToStr(WOT->m_nID) + " ";
 			}
@@ -839,14 +839,14 @@ void __fastcall TfmToolGenerStruct::editControlBtnClick(TObject *Sender)
 			if (idx>0 && idx<=m_ListWorkOper->Count)
 			{
 			  WOT = static_cast<WorkOperation*>(m_ListWorkOper->Items[idx-1]);
-			  if (WOT->m_pCheckAlone == NULL) {
-				WOT->m_pCheckAlone = currCheckOper;
-				currCheckOper->m_ListCheckWork->Add(WOT);
+			  if (WOT->m_pCheckAlone != NULL && WOT->m_pCheckAlone->m_nID!=-1) {
+				Application->MessageBox(_T("Индивидуальный контроль данной операции уже осуществляется."), _T("Ошибка!"), MB_OK);
+				return;
 			  }
 			  else
 			  {
-				Application->MessageBox(_T("Индивидуальный контроль данной операции уже осуществляется."), _T("Ошибка!"), MB_OK);
-				return;
+                WOT->m_pCheckAlone = currCheckOper;
+				currCheckOper->m_ListCheckWork->Add(WOT);
               }
 			}
 
@@ -865,14 +865,14 @@ void __fastcall TfmToolGenerStruct::editControlBtnClick(TObject *Sender)
 					continue;
 
 				WOT = static_cast<WorkOperation*>(m_ListWorkOper->Items[idx-1]);
-				if (WOT->m_pGroupCheck == NULL) {
-				   WOT->m_pGroupCheck = currCheckOper;
-				   currCheckOper->m_ListCheckWork->Add(WOT);
+				if (WOT->m_pGroupCheck != NULL && WOT->m_pGroupCheck->m_nID!=-1) {
+					Application->MessageBox(_T("Одна из операций уже пренадлежит другой группе контроля."), _T("Ошибка!"), MB_OK);
+					return;
 				}
 				else
 				{
-					Application->MessageBox(_T("Одна из операций уже пренадлежит другой группе контроля."), _T("Ошибка!"), MB_OK);
-					return;
+					WOT->m_pGroupCheck = currCheckOper;
+					currCheckOper->m_ListCheckWork->Add(WOT);
                 }
 			}
 		}
@@ -948,6 +948,7 @@ void __fastcall TfmToolGenerStruct::delControlBtnClick(TObject *Sender)
 			idx =  currCheckOper->m_nID-1;
 			m_ListCheckOper->Delete(idx);
 			currCheckOper->m_nID = -1;
+
 		}
 		InitCurrCheckOper(idx);
 		InitFieldsCheckOper();

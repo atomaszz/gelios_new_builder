@@ -61,9 +61,9 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 		 {
 		   WO =  static_cast<WorkOperation*>(CO->m_ListCheckWork->Items[j]); //Рабочая операция
 		   bool bGlobal = true;
-		   for (int l = 0; l < WO->m_ListWorkBefore->Count; l++)
+		   for (int l = 0; l < WO->m_ListOperationBefore->Count; l++)
 		   {
-			  WOB =  static_cast<WorkOperation*>(WO->m_ListWorkBefore->Items[l]); //Предшевст. раюб операция
+			  WOB =  static_cast<WorkOperation*>(WO->m_ListOperationBefore->Items[l]); //Предшевст. раюб операция
 			  for (int k = 0; k < CO->m_ListCheckWork->Count; k++) {
 			  WorkOperation* WWO = static_cast<WorkOperation*>(CO->m_ListCheckWork->Items[k]);
 				  if (WOB->m_nID == WWO->m_nID) {
@@ -73,13 +73,20 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 			  }
 			  if (bGlobal) {
 				CO->m_ListOperationBefore->Add(WOB);
-				WO->m_ListWorkBefore->Delete(l--);
+				WO->m_ListOperationBefore->Delete(l--);
 			  }
 		   }
 		 }
 	}
 
   /*-----*/
+  if(!SortOfGroup())
+	return;
+
+  if (!SortOfAll()) {
+     return;
+  }
+
   TBaseWorkShape* WS;
   TParamAlternativeItem* PA;
   TMakerTFS* Maker = new TMakerTFS(pMain->MainList, pMain->Grid, &pMain->ShapeCopy,
@@ -93,11 +100,10 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 	int idx =1;
 	WorkOperation* WO;
 	WorkAlternativ* WA;
-	TList* ll = new TList;
 
 	for (int i = 0; i < m_ListOut->Count; i++)
 	{
-		BasisOperation* BS = static_cast<BasisOperation*>(ll->Items[i]);
+		BasisOperation* BS = static_cast<BasisOperation*>(m_ListOut->Items[i]);
 		BS->PutOnWork(Maker);
     }
 
@@ -115,6 +121,7 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 	pMain->Grid->PreparePaint();
 	pMain->f_AlternateController->CoordinateCorrect();
 	pMain->SetNewPolygon();
+  this->Close();
 
 //	 SetNewPosition();
 }
@@ -218,18 +225,18 @@ void TfmToolGenerStruct::RefillWorkGrid()
 
 		sgWorkOperation->Cells[2][i+1] = IntToStr(WO->m_ListWorkAlter->Count);
 		AnsiString  sMAsAlt ="-";
-		if (WO->m_ListWorkBefore->Count >0)
+		if (WO->m_ListOperationBefore->Count >0)
 		{
 			WorkOperation* WOT;
 			sMAsAlt ="";
-			for (int j = 0; j < WO->m_ListWorkBefore->Count; j++)
+			for (int j = 0; j < WO->m_ListOperationBefore->Count; j++)
 			{
-				WOT =  static_cast<WorkOperation*>(WO->m_ListWorkBefore->Items[j]);
+				WOT =  static_cast<WorkOperation*>(WO->m_ListOperationBefore->Items[j]);
 				if (WOT && WOT->m_nID>0) {
 					sMAsAlt += IntToStr(WOT->m_nID) + " ";
 				}
 				else
-					WO->m_ListWorkBefore->Delete(j--);
+					WO->m_ListOperationBefore->Delete(j--);
 			}
 		}
 		sgWorkOperation->Cells[3][i+1] = sMAsAlt;
@@ -339,7 +346,7 @@ void __fastcall TfmToolGenerStruct::addWorkBtnClick(TObject *Sender)
 		WorkOperation* Item = new WorkOperation;
 
 		Item->m_nID = m_ListWorkOper->Count+1;
-		Item->m_ListWorkBefore = new TList;
+		Item->m_ListOperationBefore = new TList;
 		Item->m_pGroupCheck = NULL;
 		Item->m_ListWorkAlter = new TList;
 		Item->m_pCheckAlone = NULL;
@@ -382,7 +389,7 @@ void __fastcall TfmToolGenerStruct::editWorkBtnClick(TObject *Sender)
 		TStringList * list = new TStringList();
 		list->DelimitedText = Trim(editBeforeOperation->Text);
 		list->Delimiter = ' ';
-		currWorkOper->m_ListWorkBefore->Clear();
+		currWorkOper->m_ListOperationBefore->Clear();
 		WorkOperation* WOT;
 		for (int i=0; i < list->Count; i++)
 		{
@@ -390,7 +397,7 @@ void __fastcall TfmToolGenerStruct::editWorkBtnClick(TObject *Sender)
 			if (idx<=0 || idx>m_ListWorkOper->Count)
 				continue;
 			WOT = static_cast<WorkOperation*>(m_ListWorkOper->Items[idx-1]);
-			currWorkOper->m_ListWorkBefore->Add(WOT);
+			currWorkOper->m_ListOperationBefore->Add(WOT);
 		}
 		RefillWorkGrid();
 	}
@@ -552,12 +559,12 @@ void TfmToolGenerStruct::InitFieldsWorkOper()
 	}
 
 	editBeforeOperation->Text = "";
-	if (currWorkOper->m_ListWorkBefore->Count>0)
+	if (currWorkOper->m_ListOperationBefore->Count>0)
 	{
 		WorkOperation* WOT;
-		for (int i=0; i < currWorkOper->m_ListWorkBefore->Count; i++)
+		for (int i=0; i < currWorkOper->m_ListOperationBefore->Count; i++)
 		{
-			WOT = static_cast<WorkOperation*>(currWorkOper->m_ListWorkBefore->Items[i]);
+			WOT = static_cast<WorkOperation*>(currWorkOper->m_ListOperationBefore->Items[i]);
 			if (WOT) {
 			  editBeforeOperation->Text = editBeforeOperation->Text + IntToStr(WOT->m_nID) + " ";
 			}
@@ -779,7 +786,7 @@ void __fastcall TfmToolGenerStruct::sgControlOperationSelectCell(TObject *Sender
 //---------------------------------------------------------------------------
 
 void __fastcall TfmToolGenerStruct::sgControlAlterOperationSelectCell(TObject *Sender,
-          int ACol, int ARow, bool &CanSelect)
+		  int ACol, int ARow, bool &CanSelect)
 {
 		InitCurrCheckAlter(ARow);
 }
@@ -977,7 +984,7 @@ void __fastcall TfmToolGenerStruct::extBtnClick(TObject *Sender)
 {
   TList *list = new TList;
 
-   WorkOperation* wwo = new WorkOperation;
+  /* WorkOperation* wwo = new WorkOperation;
    CheckOperation* cwo = new CheckOperation;
    ParallWorkOperation* pwo = new ParallWorkOperation;
 
@@ -990,7 +997,7 @@ void __fastcall TfmToolGenerStruct::extBtnClick(TObject *Sender)
 	  // bb->PutOn();
 	}
 
-
+	 */
   TBaseWorkShape* WS;
   TParamAlternativeItem* PA;
   TMakerTFS* Maker = new TMakerTFS(pMain->MainList, pMain->Grid, &pMain->ShapeCopy,
@@ -1112,133 +1119,52 @@ void WorkOperation::PutOnAlter(TMakerTFS* Maker, int nId)
 
 void ParallWorkOperation::PutOnWork(TMakerTFS* Maker)
 {
-	Maker->AddTFSToCurrentLevel(3, pMain->f_IdAlternative, pMain->f_NumAlternative);
 	WorkAlternativ* WA;
-	if (m_op2!=NULL && m_op22!=NULL)
+	if (m_bParal)
 	{
-		int currId1 = pMain->MainList->TFEMaxID-1;
-		int currId2 = pMain->MainList->TFEMaxID;
-		if (m_bParal1)
-		{
-			Maker->SetCurrentLevel(currId1);
-			Maker->AddTFSToCurrentLevel(3, pMain->f_IdAlternative, pMain->f_NumAlternative);
-			int currInId1 = pMain->MainList->TFEMaxID-1;
-			int currInId2 = pMain->MainList->TFEMaxID;
-			if (m_op1->m_pCheckAlone) {
-			  Maker->SetCurrentLevel(currInId1);
-			  m_op1->PutOnWork(Maker);
-			}
-			else
-				m_op1->PutOnAlter(Maker, currInId1);
-			Maker->SetCurrentLevel(0);
-			if (m_op11->m_pCheckAlone) {
-			  Maker->SetCurrentLevel(currInId2);
-			  m_op11->PutOnWork(Maker);
-			}
-			else
-				m_op11->PutOnAlter(Maker, currInId2);
-	   }
-	   else
-	   {
-			Maker->SetCurrentLevel(currId2);
-			Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
-			Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
-			int nID = pMain->MainList->TFEMaxID;
-			m_op1->PutOnAlter(Maker, nID-1);
-			m_op11->PutOnAlter(Maker, nID);
-	   }
-	   if (m_bParal2)
-		{
-			Maker->SetCurrentLevel(currId2);
-			Maker->AddTFSToCurrentLevel(3, pMain->f_IdAlternative, pMain->f_NumAlternative);
-			int currInId1 = pMain->MainList->TFEMaxID-1;
-			int currInId2 = pMain->MainList->TFEMaxID;
-			if (m_op2->m_pCheckAlone) {
-			  Maker->SetCurrentLevel(currInId1);
-			  m_op2->PutOnWork(Maker);
-			}
-			else
-				m_op2->PutOnAlter(Maker, currInId1);
-			Maker->SetCurrentLevel(0);
-			if (m_op22->m_pCheckAlone) {
-			  Maker->SetCurrentLevel(currInId2);
-			  m_op22->PutOnWork(Maker);
-			}
-			else
-				m_op22->PutOnAlter(Maker, currInId2);
-	   }
-	   else
-	   {
-			Maker->SetCurrentLevel(currId2);
-			Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
-			Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
-			int nID = pMain->MainList->TFEMaxID;
-			m_op2->PutOnAlter(Maker, nID-1);
-			m_op22->PutOnAlter(Maker, nID);
-	   }
-	}
-	else if (m_op2!=NULL)
-	{
-		int currId1 = pMain->MainList->TFEMaxID-1;
-		int currId2 = pMain->MainList->TFEMaxID;
-		if (m_bParal1)
-		{
-			Maker->SetCurrentLevel(currId1);
-			Maker->AddTFSToCurrentLevel(3, pMain->f_IdAlternative, pMain->f_NumAlternative);
-			int currInId1 = pMain->MainList->TFEMaxID-1;
-			int currInId2 = pMain->MainList->TFEMaxID;
-			if (m_op1->m_pCheckAlone) {
-			  Maker->SetCurrentLevel(currInId1);
-			  m_op1->PutOnWork(Maker);
-			}
-			else
-				m_op1->PutOnAlter(Maker, currInId1);
-			Maker->SetCurrentLevel(0);
-			if (m_op11->m_pCheckAlone) {
-			  Maker->SetCurrentLevel(currInId2);
-			  m_op11->PutOnWork(Maker);
-			}
-			else
-				m_op11->PutOnAlter(Maker, currInId2);
-	   }
-	   else
-	   {
-			Maker->SetCurrentLevel(currId2);
-			Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
-            Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
-			int nID = pMain->MainList->TFEMaxID;
-			m_op1->PutOnAlter(Maker, nID-1);
-			m_op11->PutOnAlter(Maker, nID);
-	   }
-
-	   if (m_op2->m_pCheckAlone) {
-			Maker->SetCurrentLevel(currId2);
-			m_op2->PutOnWork(Maker);
-	   }
-	   else
-			m_op2->PutOnAlter(Maker, currId2);
+	  Maker->AddTFSToCurrentLevel(3, pMain->f_IdAlternative, pMain->f_NumAlternative);
 	}
 	else
 	{
-		int currId1 = pMain->MainList->TFEMaxID-1;
-		int currId2 = pMain->MainList->TFEMaxID;
+		Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
+		Maker->AddTFSToCurrentLevel(1, pMain->f_IdAlternative, pMain->f_NumAlternative);
+	}
+	int currId1 = pMain->MainList->TFEMaxID-1;
+	int currId2 = pMain->MainList->TFEMaxID;
 
-		if (m_op1->m_pCheckAlone) {
+
+	if (m_op1->m_nType ==1) {
+	  WorkOperation *WO1 = static_cast<WorkOperation*>(m_op1);
+	  if (WO1->m_pCheckAlone)
+		{
 			Maker->SetCurrentLevel(currId1);
-			m_op1->PutOnWork(Maker);
-	   }
-	   else
-			m_op1->PutOnAlter(Maker, currId2);
-
-	   if (m_op11->m_pCheckAlone) {
-			Maker->SetCurrentLevel(currId2);
-			m_op11->PutOnWork(Maker);
-	   }
-	   else
-			m_op11->PutOnAlter(Maker, currId2);
-
+			WO1->PutOnWork(Maker);
+		}
+		else
+			WO1->PutOnAlter(Maker, currId1);
+	}
+	else
+	{
+		Maker->SetCurrentLevel(currId1);
+		m_op1->PutOnWork(Maker);
 	}
 	Maker->SetCurrentLevel(0);
+	if (m_op2->m_nType ==1) {
+	  WorkOperation *WO2 = static_cast<WorkOperation*>(m_op2);
+	  if (WO2->m_pCheckAlone)
+		{
+			Maker->SetCurrentLevel(currId2);
+			WO2->PutOnWork(Maker);
+		}
+		else
+			WO2->PutOnAlter(Maker, currId2);
+	}
+	else
+	{
+		Maker->SetCurrentLevel(currId2);
+		m_op2->PutOnWork(Maker);
+	}
+
 }
 
 void ParallWorkOperation::PutOnAlter(TMakerTFS* Maker, int nId)
@@ -1272,7 +1198,133 @@ void CheckOperation::PutOnWork(TMakerTFS* Maker)
 }
 
 void CheckOperation::PutOnAlter(TMakerTFS* Maker, int nId)
-{
+{}
 
+bool TfmToolGenerStruct::SortOfGroup()
+{
+	for (int i=0; i < m_ListCheckOper->Count; i++)
+	{
+	   CheckOperation* CO = static_cast<CheckOperation*>(m_ListCheckOper->Items[i]);
+	   TList *tmpList = new TList;
+	   TList *befList = new TList;
+	   for (int j = 0; j < CO->m_ListCheckWork->Count; j++) {
+		 tmpList->Add(m_ListCheckOper->Items[j]);
+	   }
+	   CO->m_ListCheckWork->Clear();
+	   for (int j = 0; j < tmpList->Count; j++) {
+		BasisOperation* BO = static_cast<BasisOperation*>(tmpList->Items[j]);
+		for (int k = 0; k < BO->m_ListOperationBefore->Count; k++) {
+			bool ka =false;
+			for (int l = 0; l < befList->Count; l++) {
+				if (static_cast<BasisOperation*>(BO->m_ListOperationBefore->Items[k])
+				==static_cast<BasisOperation*>(befList->Items[l])) {
+				   ka = true;
+				   break;
+				}
+			}
+			if (!ka) {
+				Application->MessageBox(_T("error 1"), _T("Ошибка!"), MB_OK);
+			   return false;
+			}
+		}
+		for (int k = 0; k < BO->m_ListOperationBefore->Count; k++) {
+			befList->Add(BO->m_ListOperationBefore->Items[k]);
+		}
+		bool tka = false;
+		if (CO->m_ListCheckWork->Count>0) {
+			tka =true;
+		   for (int k = 0; k < BO->m_ListOperationBefore->Count; k++) {
+			if (static_cast<BasisOperation*>(BO->m_ListOperationBefore->Items[k])
+				==static_cast<BasisOperation*>(CO->m_ListCheckWork->Items[CO->m_ListCheckWork->Count-1])) {
+				   tka = false;
+				   break;
+				}
+		   }
+		   ParallWorkOperation *POW = new ParallWorkOperation(static_cast<BasisOperation*>(CO->m_ListCheckWork->Items[CO->m_ListCheckWork->Count-1]), BO, true);
+		   CO->m_ListCheckWork->Delete(CO->m_ListCheckWork->Count-1);
+		   CO->m_ListCheckWork->Add(POW);
+
+		}
+		if (!tka) {
+		  CO->m_ListCheckWork->Add(BO);
+		}
+		tmpList->Delete(j);
+		j = 0;
+	   }
+	   if (tmpList->Count>0) {
+			Application->MessageBox(_T("error 2"), _T("Ошибка!"), MB_OK);
+		   return false;
+	   }
+	   tmpList->Clear();
+	   befList->Clear();
+	}
+	return true;
 }
 
+bool TfmToolGenerStruct::SortOfAll()
+{
+	TList *tmpList = new TList;
+	TList *befList = new TList;
+	for (int i = 0; i < m_ListWorkOper->Count; i++) {
+		 tmpList->Add(m_ListWorkOper->Items[i]);
+	   }
+	for (int i = 0; i < m_ListCheckOper->Count; i++) {
+		 tmpList->Add(m_ListWorkOper->Items[i]);
+	   }
+
+	int j =0;
+	while (j<tmpList->Count) {
+		BasisOperation* BO = static_cast<BasisOperation*>(tmpList->Items[j]);
+		bool bAdd =true;
+		for (int k = 0; k < BO->m_ListOperationBefore->Count; k++) {
+			bool ka =false;
+			for (int l = 0; l < befList->Count; l++) {
+				if (static_cast<BasisOperation*>(BO->m_ListOperationBefore->Items[k])
+				==static_cast<BasisOperation*>(befList->Items[l])) {
+				   ka = true;
+				   break;
+				}
+			}
+			if (!ka) {
+				bAdd = false;
+				break;
+			}
+		}
+		if (bAdd) {
+			for (int k = 0; k < BO->m_ListOperationBefore->Count; k++) {
+				befList->Add(BO->m_ListOperationBefore->Items[k]);
+			}
+			if (BO->m_nType==1) {
+			  befList->Add(BO);
+			}
+			bool tka = false;
+			if (m_ListOut->Count>0) {
+				tka =true;
+			   for (int k = 0; k < BO->m_ListOperationBefore->Count; k++) {
+				if (static_cast<BasisOperation*>(BO->m_ListOperationBefore->Items[k])
+					== static_cast<BasisOperation*>(m_ListOut->Items[m_ListOut->Count-1])) {
+					   tka = false;
+					   break;
+					}
+			   }
+			}
+			if (tka) {
+				ParallWorkOperation *POW = new ParallWorkOperation(static_cast<BasisOperation*>(m_ListOut->Items[m_ListOut->Count-1]), BO, true);
+				m_ListOut->Delete(m_ListOut->Count-1);
+				m_ListOut->Add(POW);
+			}
+			else{
+			 m_ListOut->Add(BO);
+			}
+			tmpList->Delete(j);
+			j = 0;
+		}
+		else
+			j++;
+	   }
+	   if (tmpList->Count>0) {
+			Application->MessageBox(_T("error 3"), _T("Ошибка!"), MB_OK);
+		   return false;
+	   }
+	   return true;
+}

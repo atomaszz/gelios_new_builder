@@ -33,7 +33,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
       Height = 25
       Anchors = [akTop, akRight]
       Caption = #1055#1088#1080#1085#1103#1090#1100
-      ModalResult = 1
       TabOrder = 0
       OnClick = acptBtnClick
     end

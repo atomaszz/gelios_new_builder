@@ -31,6 +31,12 @@ struct CheckAlternativ
 class BasisOperation
 {
 public:
+	TList *m_ListOperationBefore;
+	BasisOperation(int nType)
+	{
+	  m_nType = nType;
+    }
+	int m_nType;
 	virtual void PutOnWork(TMakerTFS* Maker) {};
 	virtual void PutOnAlter(TMakerTFS* Maker, int nId) {};
 };
@@ -38,12 +44,12 @@ public:
 class CheckOperation : public BasisOperation
 {
 public:
+	CheckOperation() : BasisOperation(2) {}
+
 	int m_nID;
 	TList *m_ListCheckWork;
 	TList *m_ListCheckAlter;
-
-	TList *m_ListOperationBefore;
-
+	
 	void PutOnWork(TMakerTFS* Maker);
 	void PutOnAlter(TMakerTFS* Maker, int nId);
 };
@@ -51,8 +57,9 @@ public:
 class WorkOperation : public BasisOperation
 {
 public:
+	WorkOperation() : BasisOperation(1) {}
+
 	int m_nID;
-	TList *m_ListWorkBefore;
 	TList *m_ListWorkAlter;
 
 	CheckOperation* m_pCheckAlone;
@@ -65,15 +72,39 @@ public:
 class ParallWorkOperation : public BasisOperation
 {
 public:
-	WorkOperation *m_op1, *m_op11, *m_op2, *m_op22;
-	bool m_bParal1, m_bParal2;
-	ParallWorkOperation()
+	BasisOperation *m_op1, *m_op2;
+	bool m_bParal;
+	ParallWorkOperation(BasisOperation *op1, BasisOperation *op2, bool bParal) : BasisOperation(3)
 	{
-	  m_op1 = NULL;
-	  m_op11 = NULL;
-	  m_op2 = NULL;
-	  m_op22 = NULL;
-	  m_bParal1 = m_bParal2 = false;
+	  m_op1 = op1;
+	  m_op2 = op2;
+	  m_bParal =  bParal;
+      m_ListOperationBefore = new TList;
+
+	  for (int i = 0; i < op1->m_ListOperationBefore->Count; i++) {
+		m_ListOperationBefore->Add(op1->m_ListOperationBefore->Items[i]);		
+	  }
+
+	  for (int i = 0; i < op2->m_ListOperationBefore->Count; i++) {
+		bool bAdd = true;
+		for (int j = 0; j < m_ListOperationBefore->Count; j++) {
+		 BasisOperation* BO = static_cast<BasisOperation*>(op2->m_ListOperationBefore->Items[i]);
+		  if (static_cast<BasisOperation*>(m_ListOperationBefore->Items[j]) == static_cast<BasisOperation*>(op2->m_ListOperationBefore->Items[i])) {
+			bAdd = false;
+			break;
+		  }	
+		}
+		if (bAdd) {
+		   m_ListOperationBefore->Add(op2->m_ListOperationBefore->Items[i]);
+		}
+	  }
+	  if (m_op1->m_nType ==1) {
+		m_ListOperationBefore->Add(m_op1);
+	  }
+	  if (m_op2->m_nType ==1) {
+		m_ListOperationBefore->Add(m_op2);
+	  }
+
 	}
 	void PutOnWork(TMakerTFS* Maker);
 	void PutOnAlter(TMakerTFS* Maker, int nId);
@@ -205,7 +236,10 @@ public:		// User declarations
 
 	void EnableCheckControls();
 
-    TList* m_ListOut;
+	TList* m_ListOut;
+
+	bool SortOfGroup();
+	bool SortOfAll();
 
 
 	int TfmToolGenerStruct::exit_proverka_simb(TEdit *Edit);

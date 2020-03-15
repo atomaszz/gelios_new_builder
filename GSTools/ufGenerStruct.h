@@ -37,6 +37,7 @@ public:
 	  m_nType = nType;
     }
 	int m_nType;
+
 	virtual void PutOnWork(TMakerTFS* Maker) {};
 	virtual void PutOnAlter(TMakerTFS* Maker, int nId) {};
 };
@@ -49,7 +50,7 @@ public:
 	int m_nID;
 	TList *m_ListCheckWork;
 	TList *m_ListCheckAlter;
-	
+
 	void PutOnWork(TMakerTFS* Maker);
 	void PutOnAlter(TMakerTFS* Maker, int nId);
 };

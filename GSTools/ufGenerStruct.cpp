@@ -47,7 +47,7 @@ void __fastcall TfmToolGenerStruct::acptBtnClick(TObject *Sender)
 	for (int i = 0; i < m_ListCheckOper->Count; i++)
 	{
 		 CO = static_cast<CheckOperation*>(m_ListCheckOper->Items[i]);
-		 if (CO->m_ListCheckWork->Count==1) {
+		 if (CO->m_ListCheckWork->Count<2) {
 			m_ListCheckOper->Delete(i--);
 		 }
 	}
@@ -240,7 +240,7 @@ void TfmToolGenerStruct::RefillWorkGrid()
 			}
 		}
 		sgWorkOperation->Cells[3][i+1] = sMAsAlt;
-		sgWorkOperation->Cells[4][i+1] = WO->m_pGroupCheck!=NULL || WO->m_pCheckAlone!=NULL ? "ДА" : "НЕТ";
+		sgWorkOperation->Cells[4][i+1] = (WO->m_pGroupCheck!=NULL && WO->m_pGroupCheck->m_nID !=-1) || (WO->m_pCheckAlone!=NULL && WO->m_pCheckAlone->m_nID !=-1) ? "ДА" : "НЕТ";
 	}
 }
 
@@ -846,14 +846,14 @@ void __fastcall TfmToolGenerStruct::editControlBtnClick(TObject *Sender)
 			if (idx>0 && idx<=m_ListWorkOper->Count)
 			{
 			  WOT = static_cast<WorkOperation*>(m_ListWorkOper->Items[idx-1]);
-			  if (WOT->m_pCheckAlone == NULL) {
-				WOT->m_pCheckAlone = currCheckOper;
-				currCheckOper->m_ListCheckWork->Add(WOT);
+			  if (WOT->m_pCheckAlone != NULL && WOT->m_pCheckAlone->m_nID!=-1) {
+				Application->MessageBox(_T("Индивидуальный контроль данной операции уже осуществляется."), _T("Ошибка!"), MB_OK);
+				return;
 			  }
 			  else
 			  {
-				Application->MessageBox(_T("Индивидуальный контроль данной операции уже осуществляется."), _T("Ошибка!"), MB_OK);
-				return;
+                WOT->m_pCheckAlone = currCheckOper;
+				currCheckOper->m_ListCheckWork->Add(WOT);
               }
 			}
 
@@ -872,14 +872,14 @@ void __fastcall TfmToolGenerStruct::editControlBtnClick(TObject *Sender)
 					continue;
 
 				WOT = static_cast<WorkOperation*>(m_ListWorkOper->Items[idx-1]);
-				if (WOT->m_pGroupCheck == NULL) {
-				   WOT->m_pGroupCheck = currCheckOper;
-				   currCheckOper->m_ListCheckWork->Add(WOT);
+				if (WOT->m_pGroupCheck != NULL && WOT->m_pGroupCheck->m_nID!=-1) {
+					Application->MessageBox(_T("Одна из операций уже пренадлежит другой группе контроля."), _T("Ошибка!"), MB_OK);
+					return;
 				}
 				else
 				{
-					Application->MessageBox(_T("Одна из операций уже пренадлежит другой группе контроля."), _T("Ошибка!"), MB_OK);
-					return;
+					WOT->m_pGroupCheck = currCheckOper;
+					currCheckOper->m_ListCheckWork->Add(WOT);
                 }
 			}
 		}
@@ -955,6 +955,7 @@ void __fastcall TfmToolGenerStruct::delControlBtnClick(TObject *Sender)
 			idx =  currCheckOper->m_nID-1;
 			m_ListCheckOper->Delete(idx);
 			currCheckOper->m_nID = -1;
+
 		}
 		InitCurrCheckOper(idx);
 		InitFieldsCheckOper();

@@ -351,6 +351,7 @@ void __fastcall TfmToolGenerStruct::addWorkBtnClick(TObject *Sender)
 		Item->m_ListWorkAlter = new TList;
 		Item->m_pCheckAlone = NULL;
 		m_ListWorkOper->Add(Item);
+		Item->m_ListOperationIn->Add(Item);
 		RefillWorkGrid();
 		if (currWorkOper == NULL)
 		{
@@ -840,6 +841,7 @@ void __fastcall TfmToolGenerStruct::editControlBtnClick(TObject *Sender)
 		  WOT->m_pCheckAlone = NULL;
 		}
 		currCheckOper->m_ListCheckWork->Clear();
+		currCheckOper->m_ListOperationIn->Clear();
 
 		if (list->Count == 1) {
 			int idx = StrToInt(list->Strings[0]);
@@ -854,6 +856,7 @@ void __fastcall TfmToolGenerStruct::editControlBtnClick(TObject *Sender)
 			  {
                 WOT->m_pCheckAlone = currCheckOper;
 				currCheckOper->m_ListCheckWork->Add(WOT);
+                currCheckOper->m_ListOperationIn->Add(WOT);
               }
 			}
 
@@ -1207,57 +1210,80 @@ bool TfmToolGenerStruct::SortOfGroup()
 	{
 	   CheckOperation* CO = static_cast<CheckOperation*>(m_ListCheckOper->Items[i]);
 	   TList *tmpList = new TList;
-	   TList *befList = new TList;
 	   for (int j = 0; j < CO->m_ListCheckWork->Count; j++) {
 		 tmpList->Add(m_ListCheckOper->Items[j]);
 	   }
 	   CO->m_ListCheckWork->Clear();
-	   for (int j = 0; j < tmpList->Count; j++) {
-		BasisOperation* BO = static_cast<BasisOperation*>(tmpList->Items[j]);
-		for (int k = 0; k < BO->m_ListOperationBefore->Count; k++) {
-			bool ka =false;
-			for (int l = 0; l < befList->Count; l++) {
-				if (static_cast<BasisOperation*>(BO->m_ListOperationBefore->Items[k])
-				==static_cast<BasisOperation*>(befList->Items[l])) {
-				   ka = true;
-				   break;
-				}
-			}
-			if (!ka) {
-				Application->MessageBox(_T("error 1"), _T("Ошибка!"), MB_OK);
-			   return false;
-			}
-		}
-		for (int k = 0; k < BO->m_ListOperationBefore->Count; k++) {
-			befList->Add(BO->m_ListOperationBefore->Items[k]);
-		}
-		bool tka = false;
-		if (CO->m_ListCheckWork->Count>0) {
-			tka =true;
-		   for (int k = 0; k < BO->m_ListOperationBefore->Count; k++) {
-			if (static_cast<BasisOperation*>(BO->m_ListOperationBefore->Items[k])
-				==static_cast<BasisOperation*>(CO->m_ListCheckWork->Items[CO->m_ListCheckWork->Count-1])) {
-				   tka = false;
-				   break;
-				}
-		   }
-		   ParallWorkOperation *POW = new ParallWorkOperation(static_cast<BasisOperation*>(CO->m_ListCheckWork->Items[CO->m_ListCheckWork->Count-1]), BO, true);
-		   CO->m_ListCheckWork->Delete(CO->m_ListCheckWork->Count-1);
-		   CO->m_ListCheckWork->Add(POW);
 
+	   int j =0;
+	   while (j<tmpList->Count) {
+		BasisOperation* BOinsert = static_cast<BasisOperation*>(tmpList->Items[j]);
+		bool bAdd =true;
+		int iout = 0;
+		for (iout = 0; iout < CO->m_ListCheckWork->Count; iout++) {
+			bool bIsBeforeOut = true;
+			BasisOperation* BOout = static_cast<BasisOperation*>(CO->m_ListCheckWork->Items[iout]);
+			for (int iinsert = 0; iinsert < BOinsert->m_ListOperationBefore->Count; iinsert++) {
+			   bool bInAdd = false;
+			   for (int ibef = 0; ibef < BOout->m_ListOperationBefore->Count; ibef++)
+			   {
+				  if ((static_cast<BasisOperation*>(BOout->m_ListOperationBefore->Items[ibef])
+				  == static_cast<BasisOperation*>(BOinsert->m_ListOperationBefore->Items[iout]))) {
+					 bInAdd = true;
+					 break;
+				  }
+			   }
+			   if (!bInAdd) {
+				for (int ibef = 0; ibef < BOout->m_ListOperationIn->Count; ibef++)
+				{
+					if ((static_cast<BasisOperation*>(BOout->m_ListOperationIn->Items[ibef])
+					== static_cast<BasisOperation*>(BOinsert->m_ListOperationBefore->Items[iout]))) {
+					 bInAdd = true;
+					 break;
+				  }
+				} 
+			   }
+			   if (!bInAdd) {
+				   bIsBeforeOut = false;
+				   break;
+			   }
+			}
+			if (!bIsBeforeOut) {
+			   bAdd = false;
+			   break;
+			}
 		}
-		if (!tka) {
-		  CO->m_ListCheckWork->Add(BO);
+		if (bAdd) {
+			if (iout+1<CO->m_ListCheckWork->Count) {
+				ParallWorkOperation *POW = new ParallWorkOperation(static_cast<BasisOperation*>(CO->m_ListCheckWork->Items[iout+1]), BOinsert, true);
+				CO->m_ListCheckWork->Delete(iout+1);
+				CO->m_ListCheckWork->Insert(iout+1,POW); 
+			}
+			else
+			{
+			   CO->m_ListCheckWork->Add(BOinsert);	
+			}
+			for (int iout2 = 0; iout2 < iout+1; iout2++) {
+				BasisOperation* BOout2 = static_cast<BasisOperation*>(CO->m_ListCheckWork->Items[iout2]);
+				for (int ibef = 0; ibef < BOout2->m_ListOperationBefore->Count; ibef++)
+				{
+				  BOinsert->m_ListOperationBefore->Add(static_cast<BasisOperation*>(BOout2->m_ListOperationBefore->Items[ibef]));	
+				}
+			}
+			for (int iout2 = iout+1; iout2 < CO->m_ListCheckWork->Count; iout2++) {
+				BasisOperation* BOout2 = static_cast<BasisOperation*>(CO->m_ListCheckWork->Items[iout2]);
+				BOout2->m_ListOperationBefore->Add(BOinsert);
+			}
+			tmpList->Delete(j);
+			j = 0;
 		}
-		tmpList->Delete(j);
-		j = 0;
-	   }
-	   if (tmpList->Count>0) {
-			Application->MessageBox(_T("error 2"), _T("Ошибка!"), MB_OK);
-		   return false;
-	   }
-	   tmpList->Clear();
-	   befList->Clear();
+		else 
+			j++;
+		}
+		if (tmpList->Count>0) {
+			Application->MessageBox(_T("error 1"), _T("Ошибка!"), MB_OK);
+			return false;
+		}
 	}
 	return true;
 }
@@ -1265,7 +1291,6 @@ bool TfmToolGenerStruct::SortOfGroup()
 bool TfmToolGenerStruct::SortOfAll()
 {
 	TList *tmpList = new TList;
-	TList *befList = new TList;
 	for (int i = 0; i < m_ListWorkOper->Count; i++) {
 		 tmpList->Add(m_ListWorkOper->Items[i]);
 	   }
@@ -1275,57 +1300,72 @@ bool TfmToolGenerStruct::SortOfAll()
 
 	int j =0;
 	while (j<tmpList->Count) {
-		BasisOperation* BO = static_cast<BasisOperation*>(tmpList->Items[j]);
+		BasisOperation* BOinsert = static_cast<BasisOperation*>(tmpList->Items[j]);
 		bool bAdd =true;
-		for (int k = 0; k < BO->m_ListOperationBefore->Count; k++) {
-			bool ka =false;
-			for (int l = 0; l < befList->Count; l++) {
-				if (static_cast<BasisOperation*>(BO->m_ListOperationBefore->Items[k])
-				==static_cast<BasisOperation*>(befList->Items[l])) {
-				   ka = true;
+		int iout = 0;
+		for (iout = 0; iout < m_ListOut->Count; iout++) {
+			bool bIsBeforeOut = true;
+			BasisOperation* BOout = static_cast<BasisOperation*>(m_ListOut->Items[iout]);
+			for (int iinsert = 0; iinsert < BOinsert->m_ListOperationBefore->Count; iinsert++) {
+			   bool bInAdd = false;
+			   for (int ibef = 0; ibef < BOout->m_ListOperationBefore->Count; ibef++)
+			   {
+				  if ((static_cast<BasisOperation*>(BOout->m_ListOperationBefore->Items[ibef])
+				  == static_cast<BasisOperation*>(BOinsert->m_ListOperationBefore->Items[iout]))) {
+					 bInAdd = true;
+					 break;
+				  }
+			   }
+			   if (!bInAdd) {
+				for (int ibef = 0; ibef < BOout->m_ListOperationIn->Count; ibef++)
+				{
+					if ((static_cast<BasisOperation*>(BOout->m_ListOperationIn->Items[ibef])
+					== static_cast<BasisOperation*>(BOinsert->m_ListOperationBefore->Items[iout]))) {
+					 bInAdd = true;
+					 break;
+				  }
+				} 
+			   }
+			   if (!bInAdd) {
+				   bIsBeforeOut = false;
 				   break;
-				}
+			   }
 			}
-			if (!ka) {
-				bAdd = false;
-				break;
+			if (!bIsBeforeOut) {
+			   bAdd = false;
+			   break;
 			}
 		}
 		if (bAdd) {
-			for (int k = 0; k < BO->m_ListOperationBefore->Count; k++) {
-				befList->Add(BO->m_ListOperationBefore->Items[k]);
+			if (iout+1<m_ListOut->Count) {
+				ParallWorkOperation *POW = new ParallWorkOperation(static_cast<BasisOperation*>(m_ListOut->Items[iout+1]), BOinsert, true);
+				m_ListOut->Delete(iout+1);
+				m_ListOut->Insert(iout+1,POW); 
 			}
-			if (BO->m_nType==1) {
-			  befList->Add(BO);
+			else
+			{
+			   m_ListOut->Add(BOinsert);	
 			}
-			bool tka = false;
-			if (m_ListOut->Count>0) {
-				tka =true;
-			   for (int k = 0; k < BO->m_ListOperationBefore->Count; k++) {
-				if (static_cast<BasisOperation*>(BO->m_ListOperationBefore->Items[k])
-					== static_cast<BasisOperation*>(m_ListOut->Items[m_ListOut->Count-1])) {
-					   tka = false;
-					   break;
-					}
-			   }
+			for (int iout2 = 0; iout2 < iout+1; iout2++) {
+				BasisOperation* BOout2 = static_cast<BasisOperation*>(m_ListOut->Items[iout2]);
+				for (int ibef = 0; ibef < BOout2->m_ListOperationBefore->Count; ibef++)
+				{
+				  BOinsert->m_ListOperationBefore->Add(static_cast<BasisOperation*>(BOout2->m_ListOperationBefore->Items[ibef]));	
+				}
 			}
-			if (tka) {
-				ParallWorkOperation *POW = new ParallWorkOperation(static_cast<BasisOperation*>(m_ListOut->Items[m_ListOut->Count-1]), BO, true);
-				m_ListOut->Delete(m_ListOut->Count-1);
-				m_ListOut->Add(POW);
-			}
-			else{
-			 m_ListOut->Add(BO);
+			for (int iout2 = iout+1; iout2 < m_ListOut->Count; iout2++) {
+				BasisOperation* BOout2 = static_cast<BasisOperation*>(m_ListOut->Items[iout2]);
+				BOout2->m_ListOperationBefore->Add(BOinsert);
 			}
 			tmpList->Delete(j);
 			j = 0;
 		}
-		else
+		else 
 			j++;
-	   }
-	   if (tmpList->Count>0) {
-			Application->MessageBox(_T("error 3"), _T("Ошибка!"), MB_OK);
-		   return false;
-	   }
-	   return true;
+	}
+	if (tmpList->Count>0) {
+		Application->MessageBox(_T("error 1"), _T("Ошибка!"), MB_OK);
+		return false;
+	}
+	return true;	
 }

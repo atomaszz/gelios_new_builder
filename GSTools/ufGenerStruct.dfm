@@ -128,10 +128,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
         OnChange = PageControl3Change
         object TabSheet5: TTabSheet
           Caption = #1056#1072#1073'. '#1086#1087#1077#1088#1072#1094#1080#1103
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Panel9: TPanel
             Left = 0
             Top = 0
@@ -189,10 +185,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
         object TabSheet6: TTabSheet
           Caption = #1040#1083#1100#1090#1077#1088#1085#1072#1090#1080#1074#1072
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Label7: TLabel
             Left = 6
             Top = 6
@@ -268,10 +260,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
       OnChange = PageControl2Change
       object TabSheet3: TTabSheet
         Caption = #1056#1072#1073#1086#1095#1080#1077' '#1086#1087#1077#1088#1072#1094#1080#1080
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object sgWorkOperation: TStringGrid
           Left = 0
           Top = 0
@@ -297,10 +285,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
       object TabSheet4: TTabSheet
         Caption = #1040#1083#1100#1090#1077#1088#1085#1072#1090#1080#1074#1099
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object sgWorkAlterOperation: TStringGrid
           Left = 0
           Top = 0
@@ -406,10 +390,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
         OnChange = PageControl4Change
         object TabSheet7: TTabSheet
           Caption = #1050#1086#1085#1090#1088#1086#1083#1100
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Label4: TLabel
             Left = 6
             Top = 65
@@ -459,10 +439,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
         object TabSheet8: TTabSheet
           Caption = #1040#1083#1100#1090#1077#1088#1088#1085#1072#1090#1080#1074#1072
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Label11: TLabel
             Left = 6
             Top = 36
@@ -565,10 +541,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
       OnChange = PageControl1Change
       object TabSheet1: TTabSheet
         Caption = #1054#1087#1077#1088#1072#1094#1080#1080' '#1082#1086#1085#1090#1088#1086#1083#1103
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object sgControlOperation: TStringGrid
           Left = 0
           Top = 0
@@ -594,10 +566,6 @@ object fmToolGenerStruct: TfmToolGenerStruct
       object TabSheet2: TTabSheet
         Caption = #1040#1083#1100#1090#1077#1088#1085#1072#1090#1080#1074#1099
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object sgControlAlterOperation: TStringGrid
           Left = 0
           Top = 0

@@ -31,10 +31,12 @@ struct CheckAlternativ
 class BasisOperation
 {
 public:
+	TList *m_ListOperationIn;
 	TList *m_ListOperationBefore;
 	BasisOperation(int nType)
 	{
 	  m_nType = nType;
+	  m_ListOperationIn = new TList;
     }
 	int m_nType;
 
@@ -83,27 +85,37 @@ public:
       m_ListOperationBefore = new TList;
 
 	  for (int i = 0; i < op1->m_ListOperationBefore->Count; i++) {
-		m_ListOperationBefore->Add(op1->m_ListOperationBefore->Items[i]);		
+		m_ListOperationBefore->Add(op1->m_ListOperationBefore->Items[i]);
 	  }
 
 	  for (int i = 0; i < op2->m_ListOperationBefore->Count; i++) {
 		bool bAdd = true;
 		for (int j = 0; j < m_ListOperationBefore->Count; j++) {
-		 BasisOperation* BO = static_cast<BasisOperation*>(op2->m_ListOperationBefore->Items[i]);
 		  if (static_cast<BasisOperation*>(m_ListOperationBefore->Items[j]) == static_cast<BasisOperation*>(op2->m_ListOperationBefore->Items[i])) {
 			bAdd = false;
 			break;
-		  }	
+		  }
 		}
 		if (bAdd) {
 		   m_ListOperationBefore->Add(op2->m_ListOperationBefore->Items[i]);
 		}
 	  }
-	  if (m_op1->m_nType ==1) {
-		m_ListOperationBefore->Add(m_op1);
+
+	  for (int i = 0; i < op1->m_ListOperationIn->Count; i++) {
+		m_ListOperationIn->Add(op1->m_ListOperationIn->Items[i]);
 	  }
-	  if (m_op2->m_nType ==1) {
-		m_ListOperationBefore->Add(m_op2);
+
+	  for (int i = 0; i < op2->m_ListOperationIn->Count; i++) {
+		bool bAdd = true;
+		for (int j = 0; j < m_ListOperationIn->Count; j++) {
+		  if (static_cast<BasisOperation*>(m_ListOperationIn->Items[j]) == static_cast<BasisOperation*>(op2->m_ListOperationIn->Items[i])) {
+			bAdd = false;
+			break;
+		  }
+		}
+		if (bAdd) {
+		   m_ListOperationIn->Add(op2->m_ListOperationIn->Items[i]);
+		}
 	  }
 
 	}

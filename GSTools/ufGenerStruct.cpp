@@ -1211,7 +1211,7 @@ bool TfmToolGenerStruct::SortOfGroup()
 	   CheckOperation* CO = static_cast<CheckOperation*>(m_ListCheckOper->Items[i]);
 	   TList *tmpList = new TList;
 	   for (int j = 0; j < CO->m_ListCheckWork->Count; j++) {
-		 tmpList->Add(m_ListCheckOper->Items[j]);
+		 tmpList->Add(CO->m_ListCheckWork->Items[j]);
 	   }
 	   CO->m_ListCheckWork->Clear();
 
@@ -1286,7 +1286,7 @@ bool TfmToolGenerStruct::SortOfGroup()
 					BOout2->m_ListOperationBefore->Add(BOinsert);
 				}
 			}
-			CO->m_ListCheckWork->Delete(j);
+			tmpList->Delete(j);
 			j = 0;
 		}
 		else
@@ -1304,10 +1304,13 @@ bool TfmToolGenerStruct::SortOfAll()
 {
 	TList *tmpList = new TList;
 	for (int i = 0; i < m_ListWorkOper->Count; i++) {
-		 tmpList->Add(m_ListWorkOper->Items[i]);
+		WorkOperation* WO = static_cast<WorkOperation*>(m_ListWorkOper->Items[i]);
+		 if(WO->m_pGroupCheck != NULL && WO->m_pGroupCheck->m_nID!=-1)
+			continue;
+		 tmpList->Add(WO);
 	   }
 	for (int i = 0; i < m_ListCheckOper->Count; i++) {
-		 tmpList->Add(m_ListWorkOper->Items[i]);
+		 tmpList->Add(m_ListCheckOper->Items[i]);
 	   }
 
 	int j =0;

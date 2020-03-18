@@ -1218,8 +1218,10 @@ bool TfmToolGenerStruct::SortOfGroup()
 	   int j =0;
 	   while (j<tmpList->Count) {
 		BasisOperation* BOinsert = static_cast<BasisOperation*>(tmpList->Items[j]);
-		bool bAdd =BOinsert->m_ListOperationBefore->Count == 0;
+		bool bAddStart = BOinsert->m_ListOperationBefore->Count == 0;
+		bool bAdd = true;
 		int iout = 0;
+		if (!bAdd) {
 		for (iout = 0; iout < CO->m_ListCheckWork->Count; iout++) {
 			bool bIsBeforeOut = true;
 			BasisOperation* BOout = static_cast<BasisOperation*>(CO->m_ListCheckWork->Items[iout]);
@@ -1258,8 +1260,14 @@ bool TfmToolGenerStruct::SortOfGroup()
 				break;
 			}
 		}
+		}
 		if (bAdd) {
-			if (iout+1<CO->m_ListCheckWork->Count) {
+			if (iout==0 && CO->m_ListCheckWork->Count>0 && bAddStart) {
+				ParallWorkOperation *POW = new ParallWorkOperation(static_cast<BasisOperation*>(CO->m_ListCheckWork->Items[iout]), BOinsert, true);
+				CO->m_ListCheckWork->Delete(iout);
+				CO->m_ListCheckWork->Insert(iout,POW);
+			}
+			else if (iout+1<CO->m_ListCheckWork->Count) {
 				ParallWorkOperation *POW = new ParallWorkOperation(static_cast<BasisOperation*>(CO->m_ListCheckWork->Items[iout+1]), BOinsert, true);
 				CO->m_ListCheckWork->Delete(iout+1);
 				CO->m_ListCheckWork->Insert(iout+1,POW);
@@ -1293,7 +1301,7 @@ bool TfmToolGenerStruct::SortOfGroup()
 			j++;
 		}
 		if (tmpList->Count>0) {
-			Application->MessageBox(_T("error 1"), _T("Ошибка!"), MB_OK);
+			Application->MessageBox(_T("Внутри одного из блоков контроля не может быть определена последовательность выполнения операций!"), _T("Ошибка!"), MB_OK);
 			return false;
 		}
 	}
@@ -1316,8 +1324,10 @@ bool TfmToolGenerStruct::SortOfAll()
 	int j =0;
 	while (j<tmpList->Count) {
 		BasisOperation* BOinsert = static_cast<BasisOperation*>(tmpList->Items[j]);
-		bool bAdd =BOinsert->m_ListOperationBefore->Count == 0;
+		bool bAddStart =BOinsert->m_ListOperationBefore->Count == 0;
+		bool bAdd = true;
 		int iout = 0;
+		if (!bAddStart) {
 		for (iout = 0; iout < m_ListOut->Count; iout++) {
 			bool bIsBeforeOut = true;
 			BasisOperation* BOout = static_cast<BasisOperation*>(m_ListOut->Items[iout]);
@@ -1356,11 +1366,17 @@ bool TfmToolGenerStruct::SortOfAll()
 				break;
 			}
 		}
+		}
 		if (bAdd) {
-			if (iout+1<m_ListOut->Count) {
+			if (iout==0 && m_ListOut->Count>0 && bAddStart) {
+				ParallWorkOperation *POW = new ParallWorkOperation(static_cast<BasisOperation*>(m_ListOut->Items[iout]), BOinsert, true);
+				m_ListOut->Delete(iout);
+				m_ListOut->Insert(iout,POW);
+			}
+			else if (iout+1<m_ListOut->Count) {
 				ParallWorkOperation *POW = new ParallWorkOperation(static_cast<BasisOperation*>(m_ListOut->Items[iout+1]), BOinsert, true);
 				m_ListOut->Delete(iout+1);
-				m_ListOut->Insert(iout+1,POW); 
+				m_ListOut->Insert(iout+1,POW);
 			}
 			else
 			{
@@ -1391,7 +1407,7 @@ bool TfmToolGenerStruct::SortOfAll()
 			j++;
 	}
 	if (tmpList->Count>0) {
-		Application->MessageBox(_T("error 1"), _T("Ошибка!"), MB_OK);
+		Application->MessageBox(_T("Для одного ид итоговыз блоков не может быть определена последовательность!"), _T("Ошибка!"), MB_OK);
 		return false;
 	}
 	return true;	
